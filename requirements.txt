@@ -1,0 +1,4 @@
+pyarrow
+numpy
+scipy
+pytest

@@ -1,0 +1,144 @@
+{
+  "spend_usd": 3.7820659019999945,
+  "sub_cap_usd": 25.0,
+  "n_pairs": 807,
+  "n_cells": 370,
+  "second_backbone_pass_available": true,
+  "pass_success": {
+    "extract_ok": 797,
+    "same_quantity_ok": 802,
+    "agreement_ok": 791
+  },
+  "instrument_check": {
+    "note": "agreement between the model reading of a citing span and the frozen upstream extraction of the same span; disagreement bounds how much of the census reflects extraction error rather than citation behaviour",
+    "model_value_matches_extracted_value": {
+      "point": 0.7626262626262627,
+      "ci95_lo": 0.727391874180865,
+      "ci95_hi": 0.7956756756756757,
+      "n_families": 365,
+      "n_observations": 792,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "model_split_matches_extracted_split": {
+      "point": 0.2032828282828283,
+      "ci95_lo": 0.16582278481012658,
+      "ci95_hi": 0.2459016393442623,
+      "n_families": 365,
+      "n_observations": 792,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "two_backbones_agree_on_stated_split": {
+      "point": 0.9961587708066582,
+      "ci95_lo": 0.9912609238451935,
+      "ci95_hi": 1.0,
+      "n_families": 361,
+      "n_observations": 781,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    }
+  },
+  "same_quantity_adjudication": {
+    "relation_counts": {
+      "different_configuration": 292,
+      "same_quantity": 262,
+      "cannot_tell": 248
+    },
+    "share_same_quantity": {
+      "point": 0.3244949494949495,
+      "ci95_lo": 0.2727272727272727,
+      "ci95_hi": 0.3790322580645161,
+      "n_families": 365,
+      "n_observations": 792,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "share_different_configuration": {
+      "point": 0.36237373737373735,
+      "ci95_lo": 0.30684931506849317,
+      "ci95_hi": 0.4160919540229885,
+      "n_families": 365,
+      "n_observations": 792,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    }
+  },
+  "copy_fidelity_adjudicated": {
+    "note": "copy fidelity restricted to pairs the adjudicator judges to be the same quantity; this is the honest denominator for a claim about copying",
+    "exact_or_rounding_among_same_quantity": {
+      "point": 0.8949416342412452,
+      "ci95_lo": 0.8523206751054853,
+      "ci95_hi": 0.9326599326599326,
+      "n_families": 181,
+      "n_observations": 257,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "mismatch_among_same_quantity": {
+      "point": 0.10505836575875487,
+      "ci95_lo": 0.06734006734006734,
+      "ci95_hi": 0.14767932489451477,
+      "n_families": 181,
+      "n_observations": 257,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "n_same_quantity_pairs": 257,
+    "mismatch_among_different_configuration": {
+      "point": 0.952054794520548,
+      "ci95_lo": 0.9120879120879121,
+      "ci95_hi": 0.98125,
+      "n_families": 147,
+      "n_observations": 292,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    }
+  },
+  "qualifier_statement_in_the_citing_span": {
+    "note": "measured by the model on the span that actually carries the number; a span that omits the split is a span a reader can consume without ever seeing the qualifier, which is the phenomenon of interest",
+    "split_explicitly_stated": {
+      "point": 0.01893939393939394,
+      "ci95_lo": 0.00764525993883792,
+      "ci95_hi": 0.0324254215304799,
+      "n_families": 365,
+      "n_observations": 792,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "split_explicitly_stated_among_same_quantity": {
+      "point": 0.0038910505836575876,
+      "ci95_lo": 0.0,
+      "ci95_hi": 0.012552301255230125,
+      "n_families": 181,
+      "n_observations": 257,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "split_explicitly_stated_when_source_is_validation": {
+      "point": 0.04081632653061224,
+      "ci95_lo": 0.0,
+      "ci95_hi": 0.10869565217391304,
+      "n_families": 33,
+      "n_observations": 49,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    }
+  },
+  "validation_cited_as_test": {
+    "n_validation_source_pairs": 50,
+    "model_states_test_when_source_is_validation": {
+      "point": 0.0,
+      "ci95_lo": 0.0,
+      "ci95_hi": 0.0,
+      "n_families": 33,
+      "n_observations": 49,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "qualifier_absent_when_source_is_validation": {
+      "point": 0.9591836734693877,
+      "ci95_lo": 0.8913043478260869,
+      "ci95_hi": 1.0,
+      "n_families": 33,
+      "n_observations": 49,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "deterministic_validation_cited_as_test": {
+      "point": 0.4,
+      "ci95_lo": 0.21739130434782608,
+      "ci95_hi": 0.5714285714285714,
+      "n_families": 33,
+      "n_observations": 50,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    }
+  }
+}

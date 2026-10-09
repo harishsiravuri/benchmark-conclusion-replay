@@ -1,0 +1,141 @@
+{
+  "resource": "replaykg: chronological replay of protocol-qualified benchmark conclusions",
+  "version": "1.0",
+  "license": "CC-BY-SA 4.0, matching the upstream comparability resource it is derived from. Pointers only, no excerpt text.",
+  "derived_from": {
+    "substrate": "upstream/data/cleaned_leaderboards/cleaned_leaderboards.jsonl",
+    "substrate_sha256": "b2dd904793a6f5dac0815a2936553d67aac2005e2dbb1cdc735fd79073ef2472",
+    "snapshot": "Papers-with-Code archive frozen 2025-07-28",
+    "extraction": "upstream/data/extractions/tuples.parquet (Phase 3 only)"
+  },
+  "evidence_policy": "POINTERS ONLY (arxiv_id, arxiv_abs_url, source_location); NO excerpt text. Enforced by a guard in scripts/phase5_release.py.",
+  "seed": 13,
+  "files": [
+    {
+      "path": "DATASHEET.md",
+      "sha256": "f2ab69e43690d04b25adc1e0191b640c71739eae51eb71f53cd94af2425c7024",
+      "size_bytes": 9441,
+      "rows": 1
+    },
+    {
+      "path": "REPRODUCE.md",
+      "sha256": "07503166a11b805a1623418d1e2a3c593dbf0a8c3e7ba5cb1de82b954f3d5f53",
+      "size_bytes": 5664,
+      "rows": 1
+    },
+    {
+      "path": "adjudication_sheet.json",
+      "sha256": "5b3e9ae7b9808679314b224dc6746c03ec164a79f591b1a20963f2ed3120d626",
+      "size_bytes": 46455,
+      "rows": 47
+    },
+    {
+      "path": "adjudication_verdicts.md",
+      "sha256": "f05b78da66f53378cea22f41814d8b3afb2f23ca19e3ca1a32c1b74961615479",
+      "size_bytes": 5579,
+      "rows": 1
+    },
+    {
+      "path": "metrics/band_check_all.json",
+      "sha256": "6f860f9f238f1012026830e4298900afa7a8607c9b39c8b5cd09208a3f428aa8",
+      "size_bytes": 13837,
+      "rows": 1
+    },
+    {
+      "path": "metrics/dating_robustness.json",
+      "sha256": "b8e94d935ef8d484ce7bacf8486bc72931ab6b91ed0bbc45e92987c5724930c1",
+      "size_bytes": 5400,
+      "rows": 1
+    },
+    {
+      "path": "metrics/gate0_grid.json",
+      "sha256": "bad6b5ac5da3a11c02a93a1e321cf8ce709c5cda88578616b09ebb91e4bdb6fc",
+      "size_bytes": 1629,
+      "rows": 1
+    },
+    {
+      "path": "metrics/metrics_all.json",
+      "sha256": "a91b70b2a21421243320e4a5797e3b5e317fc3e6a0f1196e5c2632dc83692c9e",
+      "size_bytes": 60440,
+      "rows": 1
+    },
+    {
+      "path": "metrics/metrics_dev.json",
+      "sha256": "ca2acf33b72d33c3c85c1dcb7f3536c25ee567bc8ed80de174d5cb94230a03fb",
+      "size_bytes": 59633,
+      "rows": 1
+    },
+    {
+      "path": "metrics/metrics_test.json",
+      "sha256": "82c36bcd8dbf2983432dbfd1e6b493a351640754bee2acfce4426bfa554b0d18",
+      "size_bytes": 59016,
+      "rows": 1
+    },
+    {
+      "path": "metrics/phase3_cost_projection.json",
+      "sha256": "22645517fc70594995f8cac06cbaa9827014a94aae336a97d490108288a35fea",
+      "size_bytes": 786,
+      "rows": 1
+    },
+    {
+      "path": "metrics/propagation_census.json",
+      "sha256": "1a4c2a33cf670faed6f0c5dda0490433a7384dc5931d2914debee0e591bc2466",
+      "size_bytes": 7106,
+      "rows": 1
+    },
+    {
+      "path": "metrics/propagation_llm_analysis.json",
+      "sha256": "0a882dbd7afd5b8484cc343174a09e61299a48659cbd4d49a6634a5fe217e70e",
+      "size_bytes": 5220,
+      "rows": 1
+    },
+    {
+      "path": "metrics/sensitivity_all.json",
+      "sha256": "7c80d25eb06a0cf4fa3c17e325a53c00443893884b9852ec901aca385697e49b",
+      "size_bytes": 43902,
+      "rows": 1
+    },
+    {
+      "path": "metrics/sensitivity_dev.json",
+      "sha256": "ff68ab91c1f7b1818cf6cc85ae25dda45887355837acb2149b4edd9cf04616ef",
+      "size_bytes": 30372,
+      "rows": 1
+    },
+    {
+      "path": "propagation_llm.jsonl",
+      "sha256": "f0bbaf72edf8d7ca3648bc3d85ba672ccb9f2a7b37cf5d5ff99482406e9fdff5",
+      "size_bytes": 950208,
+      "rows": 807
+    },
+    {
+      "path": "propagation_pairs.jsonl",
+      "sha256": "dbd9951255acfbda08afe71c2d5bad6ff001b7a4aa88b1a0b52a6514457ad584",
+      "size_bytes": 622267,
+      "rows": 807
+    },
+    {
+      "path": "replay_certificates.jsonl",
+      "sha256": "4fe29d13646ef47b3c7c559a5855d87f229dc9aa82251cd3933732d655644e88",
+      "size_bytes": 3513882,
+      "rows": 2580
+    },
+    {
+      "path": "replay_families.json",
+      "sha256": "c02dd81a739228e7462068a1c9cff5e53a07dbae3c81eafac7bc210fb3fb4b14",
+      "size_bytes": 52181,
+      "rows": 1
+    },
+    {
+      "path": "split_map.json",
+      "sha256": "b132796d741ead534d415658d826f6ca7bb17a148f1912b86abbb0a051763a09",
+      "size_bytes": 6064,
+      "rows": 1
+    },
+    {
+      "path": "transitions.jsonl",
+      "sha256": "4c00e22a6fda43184a3b037377dea724d31b83b92c92902ae80c3674c3142f9a",
+      "size_bytes": 894313,
+      "rows": 2184
+    }
+  ]
+}

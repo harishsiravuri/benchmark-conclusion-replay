@@ -1,0 +1,244 @@
+{
+  "spend_usd": 0.0,
+  "definition": "a propagation pair is one own-result reading of a canonical cell in the earliest paper that reports it, together with one quoted reading of the same cell in a later, different paper",
+  "full_corpus": {
+    "n_pairs": 807,
+    "n_cells": 370,
+    "n_source_papers": 162,
+    "n_citing_papers": 240,
+    "copy_fidelity": {
+      "exact": {
+        "point": 0.27137546468401486,
+        "ci95_lo": 0.22573099415204678,
+        "ci95_hi": 0.31983805668016196,
+        "n_families": 370,
+        "n_observations": 807,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "exact_or_rounding": {
+        "point": 0.3705080545229244,
+        "ci95_lo": 0.31592039800995025,
+        "ci95_hi": 0.42738589211618255,
+        "n_families": 370,
+        "n_observations": 807,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "mismatch": {
+        "point": 0.6294919454770755,
+        "ci95_lo": 0.5726708074534161,
+        "ci95_hi": 0.6840909090909091,
+        "n_families": 370,
+        "n_observations": 807,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "counts": {
+        "mismatch": 508,
+        "exact": 219,
+        "rounding": 80
+      }
+    },
+    "qualifier_preservation": {
+      "all_observed_facets_preserved": {
+        "point": 0.5811648079306072,
+        "ci95_lo": 0.5271049596309112,
+        "ci95_hi": 0.6394948335246843,
+        "n_families": 370,
+        "n_observations": 807,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "split_dropped": {
+        "point": 0.15117719950433706,
+        "ci95_lo": 0.11830635118306351,
+        "ci95_hi": 0.1880920162381597,
+        "n_families": 370,
+        "n_observations": 807,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "split_changed": {
+        "point": 0.07558859975216853,
+        "ci95_lo": 0.04539722572509458,
+        "ci95_hi": 0.10981912144702842,
+        "n_families": 370,
+        "n_observations": 807,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "facet_counts": {
+        "split": {
+          "both_missing": 27,
+          "added": 61,
+          "dropped": 122,
+          "preserved": 536,
+          "changed": 61
+        },
+        "unit": {
+          "both_missing": 310,
+          "preserved": 334,
+          "dropped": 75,
+          "added": 88
+        },
+        "metric_surface": {
+          "preserved": 685,
+          "changed": 122
+        }
+      }
+    },
+    "validation_cited_as_test": {
+      "among_validation_sources": {
+        "point": 0.4,
+        "ci95_lo": 0.21739130434782608,
+        "ci95_hi": 0.5714285714285714,
+        "n_families": 33,
+        "n_observations": 50,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "qualifier_lost_among_validation_sources": {
+        "point": 0.46,
+        "ci95_lo": 0.2857142857142857,
+        "ci95_hi": 0.625,
+        "n_families": 33,
+        "n_observations": 50,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "n_validation_source_pairs": 50,
+      "n_validation_cited_as_test": 20
+    },
+    "source_split_distribution": {
+      "null": 88,
+      "test": 668,
+      "val": 50,
+      "train": 1
+    },
+    "citation_lag_years": {
+      "2": 193,
+      "1": 329,
+      "3": 91,
+      "0": 135,
+      "5": 15,
+      "6": 5,
+      "4": 31,
+      "9": 2,
+      "7": 3,
+      "8": 3
+    }
+  },
+  "intersecting_the_99_replay_families": {
+    "n_pairs": 622,
+    "n_cells": 259,
+    "n_source_papers": 114,
+    "n_citing_papers": 176,
+    "copy_fidelity": {
+      "exact": {
+        "point": 0.2491961414790997,
+        "ci95_lo": 0.20096463022508038,
+        "ci95_hi": 0.3022875816993464,
+        "n_families": 259,
+        "n_observations": 622,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "exact_or_rounding": {
+        "point": 0.3617363344051447,
+        "ci95_lo": 0.29765395894428154,
+        "ci95_hi": 0.43147208121827413,
+        "n_families": 259,
+        "n_observations": 622,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "mismatch": {
+        "point": 0.6382636655948553,
+        "ci95_lo": 0.5685483870967742,
+        "ci95_hi": 0.7023622047244095,
+        "n_families": 259,
+        "n_observations": 622,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "counts": {
+        "exact": 155,
+        "mismatch": 397,
+        "rounding": 70
+      }
+    },
+    "qualifier_preservation": {
+      "all_observed_facets_preserved": {
+        "point": 0.5868167202572347,
+        "ci95_lo": 0.5214067278287462,
+        "ci95_hi": 0.6539735099337748,
+        "n_families": 259,
+        "n_observations": 622,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "split_dropped": {
+        "point": 0.1270096463022508,
+        "ci95_lo": 0.09544159544159544,
+        "ci95_hi": 0.1632,
+        "n_families": 259,
+        "n_observations": 622,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "split_changed": {
+        "point": 0.06591639871382636,
+        "ci95_lo": 0.03333333333333333,
+        "ci95_hi": 0.1054172767203514,
+        "n_families": 259,
+        "n_observations": 622,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "facet_counts": {
+        "split": {
+          "both_missing": 24,
+          "dropped": 79,
+          "preserved": 433,
+          "changed": 41,
+          "added": 45
+        },
+        "unit": {
+          "both_missing": 258,
+          "preserved": 244,
+          "dropped": 60,
+          "added": 60
+        },
+        "metric_surface": {
+          "preserved": 516,
+          "changed": 106
+        }
+      }
+    },
+    "validation_cited_as_test": {
+      "among_validation_sources": {
+        "point": 0.2903225806451613,
+        "ci95_lo": 0.125,
+        "ci95_hi": 0.4642857142857143,
+        "n_families": 20,
+        "n_observations": 31,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "qualifier_lost_among_validation_sources": {
+        "point": 0.3225806451612903,
+        "ci95_lo": 0.16,
+        "ci95_hi": 0.5,
+        "n_families": 20,
+        "n_observations": 31,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "n_validation_source_pairs": 31,
+      "n_validation_cited_as_test": 9
+    },
+    "source_split_distribution": {
+      "null": 69,
+      "test": 521,
+      "val": 31,
+      "train": 1
+    },
+    "citation_lag_years": {
+      "1": 249,
+      "0": 77,
+      "5": 14,
+      "2": 160,
+      "3": 78,
+      "6": 5,
+      "4": 31,
+      "9": 2,
+      "7": 3,
+      "8": 3
+    }
+  }
+}

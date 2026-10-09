@@ -1,0 +1,264 @@
+{
+  "entries_joined_to_pwc": 34247,
+  "years_agree": 34189,
+  "agreement_rate": 0.9983064210003796,
+  "n_disagreements": 58,
+  "disagreement_sample": [
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2401.00028",
+      "arxiv_prefix_year": 2024,
+      "pwc_year": 2023
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    },
+    {
+      "arxiv_id": "2301.00182",
+      "arxiv_prefix_year": 2023,
+      "pwc_year": 2022
+    }
+  ],
+  "n_unresolved_by_arxiv_rule": 0,
+  "qualifying_set_under_pwc_dating": 99,
+  "qualifying_set_under_arxiv_dating": 99,
+  "qualifying_set_identical": true,
+  "only_arxiv": [],
+  "only_pwc": []
+}

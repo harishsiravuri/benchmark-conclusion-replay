@@ -1,0 +1,32 @@
+{
+  "sub_cap_usd": 25.0,
+  "projected_total_usd": 5.291189024,
+  "by_stage": [
+    {
+      "n_calls": 807,
+      "est_tokens_in": 428808,
+      "est_tokens_out": 177540,
+      "projected_usd": 2.633016,
+      "stage": "extract",
+      "model_id": "anthropic/claude-sonnet-5"
+    },
+    {
+      "n_calls": 807,
+      "est_tokens_in": 402976,
+      "est_tokens_out": 177540,
+      "projected_usd": 2.581352,
+      "stage": "same_quantity",
+      "model_id": "anthropic/claude-sonnet-5"
+    },
+    {
+      "n_calls": 807,
+      "est_tokens_in": 428808,
+      "est_tokens_out": 177540,
+      "projected_usd": 0.07682102400000002,
+      "stage": "extract_agreement",
+      "model_id": "deepseek/deepseek-v4-flash"
+    }
+  ],
+  "within_sub_cap": true,
+  "cumulative_spend_before": 0.011916
+}

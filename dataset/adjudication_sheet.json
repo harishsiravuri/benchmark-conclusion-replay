@@ -1,0 +1,1652 @@
+{
+  "n": 47,
+  "seed": 13,
+  "items": [
+    {
+      "index": 170,
+      "stratum": [
+        "cannot_tell",
+        "exact"
+      ],
+      "cell": {
+        "method": "Point-MAE",
+        "dataset": "ScanObjectNN",
+        "metric": "Accuracy"
+      },
+      "source": {
+        "paper": "2203.06604",
+        "value": 85.18,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2408.08753",
+        "value": 85.18,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 90.35,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "improvement of +5.17 over baseline shown in parentheses"
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "unclear which ScanObjectNN split/variant (OBJ-BG/OBJ-ONLY/PB-T50-RS) or setting is being compared",
+        "rationale": "The later excerpt shows different numbers (90.35) not matching 85.18, making the comparison ambiguous without more context."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 10,
+      "stratum": [
+        "cannot_tell",
+        "exact"
+      ],
+      "cell": {
+        "method": "UltraGCN",
+        "dataset": "Yelp2018",
+        "metric": "NDCG@20"
+      },
+      "source": {
+        "paper": "2110.15114",
+        "value": 0.0561,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2204.02338",
+        "value": 0.0561,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": null,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": null,
+        "rationale": "The later excerpt lacks clear method/column labeling to confirm it refers to the same UltraGCN NDCG@20 quantity despite matching value."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 432,
+      "stratum": [
+        "cannot_tell",
+        "exact"
+      ],
+      "cell": {
+        "method": "DLinear",
+        "dataset": "weather",
+        "metric": "MSE"
+      },
+      "source": {
+        "paper": "2312.06786",
+        "value": 0.176,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2310.00655",
+        "value": 0.176,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": null,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "possible different forecasting horizon or configuration not specified",
+        "rationale": "The later paper's excerpt lists multiple values across settings, making it unclear if 0.176 refers to the same horizon/configuration as the original."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 500,
+      "stratum": [
+        "cannot_tell",
+        "exact"
+      ],
+      "cell": {
+        "method": "BMN",
+        "dataset": "ActivityNet-1.3",
+        "metric": "AUC"
+      },
+      "source": {
+        "paper": "1907.09702",
+        "value": 67.1,
+        "split": "val"
+      },
+      "citing": {
+        "paper": "2009.07641",
+        "value": 67.1,
+        "split": "val"
+      },
+      "model_extract": {
+        "cited_value": null,
+        "stated_split": "val",
+        "split_is_explicit": true,
+        "other_stated_conditions": "AR@100 metric context, not AUC"
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": null,
+        "rationale": "Later excerpt's table appears to list AR@100 values, not AUC, making it unclear if the cited 67.1 truly corresponds to the same AUC metric."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 374,
+      "stratum": [
+        "cannot_tell",
+        "exact"
+      ],
+      "cell": {
+        "method": "QMIX",
+        "dataset": "StarCraft II",
+        "metric": "Test Win Rate"
+      },
+      "source": {
+        "paper": "1803.11485",
+        "value": 0.8,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2104.06655",
+        "value": 0.8,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": null,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "maps 8m, 1c3s5z, 3m, 3s5z; comparison described as similar asymptotic performance to QMIX"
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "map/scenario used for evaluation",
+        "rationale": "The excerpts lack sufficient detail on which specific map or training conditions were used to confirm identical evaluation setups."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 768,
+      "stratum": [
+        "cannot_tell",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "PSPNet",
+        "dataset": "Cityscapes",
+        "metric": "mIoU"
+      },
+      "source": {
+        "paper": "1612.01105",
+        "value": 80.2,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1901.02985",
+        "value": 81.2,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 81.2,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "unspecified training data/backbone or evaluation setting",
+        "rationale": "The value differs (80.2 vs 81.2) but no details are given about backbone, resolution, or training data to confirm if it's the same configuration."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 375,
+      "stratum": [
+        "cannot_tell",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "AdaLNet",
+        "dataset": "Citeseer",
+        "metric": "Test accuracy"
+      },
+      "source": {
+        "paper": "1902.07153",
+        "value": 70.6,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1901.01484",
+        "value": 68.7,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": 68.7,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "\u00b1 1.0 standard deviation"
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "unknown experimental setup/split",
+        "rationale": "No details given to confirm same setup; value differs and no configuration info is provided to justify it."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 617,
+      "stratum": [
+        "cannot_tell",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "ConvE",
+        "dataset": "WN18",
+        "metric": "MRR"
+      },
+      "source": {
+        "paper": "1707.01476",
+        "value": 0.943,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2507.03947",
+        "value": 0.588,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.588,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "unspecified",
+        "rationale": "The large discrepancy suggests a different dataset variant or configuration, but insufficient detail to confirm the exact cause."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 690,
+      "stratum": [
+        "cannot_tell",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "GCN",
+        "dataset": "Cora",
+        "metric": "Accuracy"
+      },
+      "source": {
+        "paper": "1911.05485",
+        "value": 81.71,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1907.10903",
+        "value": 85.8,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 86.1,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "unclear which column/split/setting corresponds to Cora in later paper",
+        "rationale": "The later paper's table structure and value don't clearly align with the original's reported configuration, making comparison ambiguous."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 257,
+      "stratum": [
+        "cannot_tell",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "ComplEx",
+        "dataset": "WN18",
+        "metric": "MRR"
+      },
+      "source": {
+        "paper": "1606.06357",
+        "value": 0.941,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1812.06410",
+        "value": 0.8046,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.8046,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "pretrained model"
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "unclear dataset/metric alignment; later paper's table structure and values don't clearly correspond to WN18 filtered MRR",
+        "rationale": "The later excerpt's numbers and format don't obviously map to the same WN18 filtered MRR cell, so it's unclear if it's the same quantity."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 607,
+      "stratum": [
+        "cannot_tell",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "ConvE",
+        "dataset": "FB15k",
+        "metric": "MRR"
+      },
+      "source": {
+        "paper": "1707.01476",
+        "value": 0.657,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2507.03947",
+        "value": 0.423,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.423,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "unspecified",
+        "rationale": "The values differ substantially but no clear configuration difference (e.g., dataset split, hyperparameters) is stated in either excerpt."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 407,
+      "stratum": [
+        "cannot_tell",
+        "rounding"
+      ],
+      "cell": {
+        "method": "DLinear",
+        "dataset": "ETTm2",
+        "metric": "MSE"
+      },
+      "source": {
+        "paper": "2312.06786",
+        "value": 0.166,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2412.17323",
+        "value": 0.177,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": 0.177,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "unspecified (possibly different forecasting horizon or lookback window)",
+        "rationale": "The excerpts lack context on horizon/settings, so it's unclear if the discrepancy stems from a different configuration or a copying error."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 402,
+      "stratum": [
+        "cannot_tell",
+        "rounding"
+      ],
+      "cell": {
+        "method": "DLinear",
+        "dataset": "ETTm1",
+        "metric": "MSE"
+      },
+      "source": {
+        "paper": "2312.06786",
+        "value": 0.301,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2412.17323",
+        "value": 0.32,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": 0.32,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "unspecified (possibly different forecasting horizon or lookback window)",
+        "rationale": "The excerpts lack context on horizon/settings, so it's unclear if the discrepancy stems from a different configuration or a copying error."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 409,
+      "stratum": [
+        "cannot_tell",
+        "rounding"
+      ],
+      "cell": {
+        "method": "DLinear",
+        "dataset": "ETTh2",
+        "metric": "MSE"
+      },
+      "source": {
+        "paper": "2312.06786",
+        "value": 0.282,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2305.10721",
+        "value": 0.331,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": 0.381,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "unclear which forecasting horizon/setting corresponds to the reported value",
+        "rationale": "The later paper's excerpt shows multiple values across horizons without clear alignment to the original single value, making direct comparison impossible."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 511,
+      "stratum": [
+        "cannot_tell",
+        "rounding"
+      ],
+      "cell": {
+        "method": "MMGCN",
+        "dataset": "MELD",
+        "metric": "Accuracy"
+      },
+      "source": {
+        "paper": "2107.06779",
+        "value": 0.749,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2203.02385",
+        "value": 0.71,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.71,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": null,
+        "rationale": "The discrepancy could stem from a different configuration or evaluation setup, but the later excerpt lacks details to confirm this."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 193,
+      "stratum": [
+        "cannot_tell",
+        "rounding"
+      ],
+      "cell": {
+        "method": "VRT",
+        "dataset": "DVD",
+        "metric": "PSNR"
+      },
+      "source": {
+        "paper": "2201.12288",
+        "value": 34.27,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2206.02146",
+        "value": 34.24,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": null,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": "unclear which model/configuration corresponds to 34.24 in the later paper's table",
+        "rationale": "The later excerpt lacks clear labeling to confirm it refers to the same VRT configuration as the original 34.27 result."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 329,
+      "stratum": [
+        "cannot_tell",
+        "rounding"
+      ],
+      "cell": {
+        "method": "D-MPNN",
+        "dataset": "QM9",
+        "metric": "MAE"
+      },
+      "source": {
+        "paper": "1904.01561",
+        "value": 0.0,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2106.06130",
+        "value": 0.00814,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.00814,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "cannot_tell",
+        "differing_condition": null,
+        "rationale": "The original excerpt provides no specific numeric value or configuration details to compare against the later paper's precise figure."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 368,
+      "stratum": [
+        "different_configuration",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "SeHGNN",
+        "dataset": "Freebase",
+        "metric": "micro-f1"
+      },
+      "source": {
+        "paper": "2207.02547",
+        "value": 65.08,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2310.14481",
+        "value": 68.21,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 68.21,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "Pre (pretrained embeddings) variant, \u00b1 0.32 std dev"
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "Use of pretrained embeddings ('Pre') variant vs original setting",
+        "rationale": "The later paper reports a 'Pre' variant of SeHGNN, a different configuration from the original reported number."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 198,
+      "stratum": [
+        "different_configuration",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "LLoVi",
+        "dataset": "EgoSchema",
+        "metric": "Acc"
+      },
+      "source": {
+        "paper": "2312.17235",
+        "value": 50.3,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2503.16032",
+        "value": 67.7,
+        "split": "full"
+      },
+      "model_extract": {
+        "cited_value": 61.2,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "GPT-4 backbone"
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "different subset/setting of EgoSchema (full test set vs subset, and possibly different LLM backbone/version) leading to different accuracy",
+        "rationale": "The large jump from 50.3 to 67.7 suggests a different evaluation subset or backbone configuration rather than the same measurement."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 76,
+      "stratum": [
+        "different_configuration",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "CasRel",
+        "dataset": "NYT",
+        "metric": "F1"
+      },
+      "source": {
+        "paper": "1909.03227",
+        "value": 89.6,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2108.12202",
+        "value": 93.5,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 89.6,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "value in parentheses (93.5) appears alongside 89.6, marked with \u2020 (source unclear which column corresponds to NYT)"
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "different dataset variant (NYT* vs NYT, possibly precision/recall vs F1 or different split)",
+        "rationale": "The later paper lists two values (93.5 and 89.6) suggesting different dataset versions or metrics, with 89.6 matching the original F1 while 93.5 is a different configuration."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 171,
+      "stratum": [
+        "different_configuration",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "Point-MAE",
+        "dataset": "ScanObjectNN",
+        "metric": "Accuracy"
+      },
+      "source": {
+        "paper": "2203.06604",
+        "value": 85.18,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2408.08753",
+        "value": 90.02,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 90.02,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "ScanObjectNN split/variant or evaluation setting (e.g., OBJ_BG vs PB_T50_RS) differs",
+        "rationale": "The large accuracy gap suggests the later paper reports a different ScanObjectNN split or setting than the original."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 662,
+      "stratum": [
+        "different_configuration",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "GAT",
+        "dataset": "Cora",
+        "metric": "Accuracy"
+      },
+      "source": {
+        "paper": "1911.05485",
+        "value": 80.1,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1909.11715",
+        "value": 83.0,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 83.0,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "\u00b10.7% standard deviation; part of a three-dataset row (Cora likely first column)"
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "different experimental setup/split (original paper's uncertainty-based reproduction vs. GAT's own reported standard split result)",
+        "rationale": "The values (80.10 vs 83.0) correspond to different reported benchmarks, likely reflecting different train/test splits or evaluation protocols for Cora."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 598,
+      "stratum": [
+        "different_configuration",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "TextScanner",
+        "dataset": "IIIT",
+        "metric": "Accuracy"
+      },
+      "source": {
+        "paper": "1912.12422",
+        "value": 92.6,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2203.03382",
+        "value": 93.9,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 93.9,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "ResNet50 backbone, input resolution 64\u00d7256, AAAI2020"
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "different backbone/input resolution or training setup for TextScanner on IIIT",
+        "rationale": "The later paper lists a specific backbone (ResNet50) and resolution (64x256) with a different reported accuracy (93.9 vs 92.6), indicating a different configuration."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 645,
+      "stratum": [
+        "different_configuration",
+        "rounding"
+      ],
+      "cell": {
+        "method": "APPNP",
+        "dataset": "PubMed",
+        "metric": "Accuracy"
+      },
+      "source": {
+        "paper": "1810.05997",
+        "value": 79.73,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1911.05485",
+        "value": 79.78,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 79.78,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "std \u00b10.33"
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "likely different experimental setup/hyperparameters or split despite same method-dataset-metric",
+        "rationale": "Values are close but not identical (79.73 vs 79.78), suggesting a rerun or slightly different configuration rather than a direct copy."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 424,
+      "stratum": [
+        "different_configuration",
+        "rounding"
+      ],
+      "cell": {
+        "method": "DLinear",
+        "dataset": "ETTh1",
+        "metric": "MSE"
+      },
+      "source": {
+        "paper": "2312.06786",
+        "value": 0.376,
+        "split": null
+      },
+      "citing": {
+        "paper": "2411.17257",
+        "value": 0.403,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.403,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "different input length/lookback window or forecasting horizon setting used in later evaluation",
+        "rationale": "The later value (0.403) differs consistently from the original (0.376), suggesting a different experimental setup such as input length rather than a copying error."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 626,
+      "stratum": [
+        "different_configuration",
+        "rounding"
+      ],
+      "cell": {
+        "method": "ConvE",
+        "dataset": "WN18RR",
+        "metric": "MRR"
+      },
+      "source": {
+        "paper": "1707.01476",
+        "value": 0.43,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2004.10037",
+        "value": 0.46,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.46,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "table row listing multiple metrics (rank 5277, MRR .46, Hits@1 .39, Hits@3 .43, Hits@10 .48)"
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "different reported mean rank/other metrics suggest different experimental setup or hyperparameters",
+        "rationale": "The MR and metric breakdown differ substantially, indicating a different training/evaluation configuration rather than a copy of the same run."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 621,
+      "stratum": [
+        "different_configuration",
+        "rounding"
+      ],
+      "cell": {
+        "method": "ConvE",
+        "dataset": "WN18RR",
+        "metric": "MRR"
+      },
+      "source": {
+        "paper": "1707.01476",
+        "value": 0.43,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1806.07297",
+        "value": 0.46,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": null,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "different experimental setup/variant (marked with * and different metric columns) suggesting different training/evaluation configuration",
+        "rationale": "The later paper's table structure and value differ substantially, indicating a different setup or variant rather than the same reported MRR."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 625,
+      "stratum": [
+        "different_configuration",
+        "rounding"
+      ],
+      "cell": {
+        "method": "ConvE",
+        "dataset": "WN18RR",
+        "metric": "MRR"
+      },
+      "source": {
+        "paper": "1707.01476",
+        "value": 0.43,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1905.10702",
+        "value": 0.46,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.46,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "row also reports MR=5277 and Hits@10=0.48 for WN18RR alongside FB15k-237 values (MR=246, MRR=0.316, Hits@10=0.491)"
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "different evaluation setup/hyperparameters or reproduced results with different mean rank and hits@k values",
+        "rationale": "The mean rank (5277 vs 4187) and other metrics differ substantially, indicating a different experimental configuration rather than a simple copying error."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 503,
+      "stratum": [
+        "different_configuration",
+        "rounding"
+      ],
+      "cell": {
+        "method": "MMGCN",
+        "dataset": "IEMOCAP",
+        "metric": "Accuracy"
+      },
+      "source": {
+        "paper": "2107.06779",
+        "value": 0.835,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2203.02385",
+        "value": 0.82,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.82,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "different_configuration",
+        "differing_condition": "possibly different data split or evaluation protocol (e.g., classes considered, fold setup)",
+        "rationale": "The values differ by 1.5 points, suggesting a different experimental setup rather than a simple copy of the same reported figure."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 38,
+      "stratum": [
+        "same_quantity",
+        "exact"
+      ],
+      "cell": {
+        "method": "SimplE",
+        "dataset": "WN18",
+        "metric": "MRR"
+      },
+      "source": {
+        "paper": "1802.04868",
+        "value": 0.942,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1905.10702",
+        "value": 0.942,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": 0.942,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report the identical MRR value of 0.942 for SimplE on WN18."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 647,
+      "stratum": [
+        "same_quantity",
+        "exact"
+      ],
+      "cell": {
+        "method": "CLIP",
+        "dataset": "Flickr30k",
+        "metric": "R@1"
+      },
+      "source": {
+        "paper": "2103.00020",
+        "value": 88.0,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2301.12597",
+        "value": 88.0,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": 88.0,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "428M parameters; part of a table row with multiple R@1/R@5/R@10 values across datasets"
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report 88.0 for CLIP on Flickr30k R@1, same value and metric."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 591,
+      "stratum": [
+        "same_quantity",
+        "exact"
+      ],
+      "cell": {
+        "method": "EDVR",
+        "dataset": "Vid4",
+        "metric": "PSNR"
+      },
+      "source": {
+        "paper": "1905.02716",
+        "value": 27.35,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2206.02146",
+        "value": 27.35,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 27.35,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "PSNR/SSIM values listed across multiple datasets, Vid4 value not explicitly labeled with a split"
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "The later paper reports the identical 27.35/0.8264 PSNR/SSIM value for EDVR on Vid4, matching the original."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 586,
+      "stratum": [
+        "same_quantity",
+        "exact"
+      ],
+      "cell": {
+        "method": "EDVR",
+        "dataset": "Vid4",
+        "metric": "PSNR"
+      },
+      "source": {
+        "paper": "1905.02716",
+        "value": 27.35,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2008.05765",
+        "value": 27.35,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 27.35,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report identical PSNR value 27.35 for EDVR on Vid4, matching exactly."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 750,
+      "stratum": [
+        "same_quantity",
+        "exact"
+      ],
+      "cell": {
+        "method": "MPRNet",
+        "dataset": "GoPro",
+        "metric": "PSNR"
+      },
+      "source": {
+        "paper": "2102.02808",
+        "value": 32.66,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2302.09554",
+        "value": 32.66,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": 32.66,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report identical PSNR (32.66) and SSIM (0.959) for MPRNet on GoPro, indicating the same configuration."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 187,
+      "stratum": [
+        "same_quantity",
+        "exact"
+      ],
+      "cell": {
+        "method": "VFC",
+        "dataset": "NEXT-QA",
+        "metric": "accuracy"
+      },
+      "source": {
+        "paper": "2304.06708",
+        "value": 51.5,
+        "split": null
+      },
+      "citing": {
+        "paper": "2403.16998",
+        "value": 51.5,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 51.5,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report identical value 51.5 for VFC on NEXT-QA accuracy."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 533,
+      "stratum": [
+        "same_quantity",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "OSTrack-256",
+        "dataset": "LaSOT",
+        "metric": "AUC"
+      },
+      "source": {
+        "paper": "2203.11991",
+        "value": 68.7,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2304.14394",
+        "value": 71.1,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 71.1,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "input resolution 256"
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report OSTrack-256 AUC on LaSOT, but the values differ (68.7 vs 71.1), indicating a copying discrepancy rather than a configuration change."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 439,
+      "stratum": [
+        "same_quantity",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "MaPLe",
+        "dataset": "ImageNet",
+        "metric": "Average Accuracy"
+      },
+      "source": {
+        "paper": "2210.03117",
+        "value": 66.3,
+        "split": null
+      },
+      "citing": {
+        "paper": "2312.06323",
+        "value": 70.72,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": null,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both excerpts report 70.72 as the first value in the row corresponding to ImageNet, matching the same source column for MaPLe."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 386,
+      "stratum": [
+        "same_quantity",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "byte mLSTM",
+        "dataset": "SUBJ",
+        "metric": "Acc"
+      },
+      "source": {
+        "paper": "1704.01444",
+        "value": 94.6,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1805.05388",
+        "value": 94.7,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": 92.2,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "4096-dimensional representation"
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report accuracy of byte mLSTM on SUBJ with nearly identical values, likely a rounding or transcription variation."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 377,
+      "stratum": [
+        "same_quantity",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "AdaLNet",
+        "dataset": "Cora",
+        "metric": "Test accuracy"
+      },
+      "source": {
+        "paper": "1902.07153",
+        "value": 81.9,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1901.01484",
+        "value": 77.7,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": 77.7,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "\u00b1 2.4 standard deviation"
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report AdaLNet's test accuracy on Cora under the same setup, but the values differ, indicating a copying discrepancy rather than a configuration change."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 52,
+      "stratum": [
+        "same_quantity",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "IconVSR",
+        "dataset": "Vid4",
+        "metric": "SSIM"
+      },
+      "source": {
+        "paper": "2012.02181",
+        "value": 28.04,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2212.14046",
+        "value": 0.857,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.857,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "PSNR/SSIM reported as 28.04/0.857"
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report SSIM 0.857 (rounded) for IconVSR on Vid4, matching the same PSNR/SSIM pair."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 563,
+      "stratum": [
+        "same_quantity",
+        "mismatch"
+      ],
+      "cell": {
+        "method": "BasicVSR",
+        "dataset": "Vimeo-90K-T",
+        "metric": "SSIM"
+      },
+      "source": {
+        "paper": "2012.02181",
+        "value": 37.53,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2204.04216",
+        "value": 0.9498,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.9498,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both excerpts report the same PSNR/SSIM pair 37.53/0.9498 for BasicVSR on Vimeo-90K-T."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 787,
+      "stratum": [
+        "same_quantity",
+        "rounding"
+      ],
+      "cell": {
+        "method": "RotatE",
+        "dataset": "WN18RR",
+        "metric": "MRR"
+      },
+      "source": {
+        "paper": "1902.10197",
+        "value": 0.477,
+        "split": null
+      },
+      "citing": {
+        "paper": "2008.04548",
+        "value": 0.476,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.476,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "row lists multiple metrics across datasets without labels; value corresponds to first column matching known RotatE WN18RR MRR"
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report RotatE's MRR on WN18RR with nearly identical values (0.477 vs 0.476), consistent with minor rounding or reproduction variance rather than a configuration change."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 638,
+      "stratum": [
+        "same_quantity",
+        "rounding"
+      ],
+      "cell": {
+        "method": "RESCAN",
+        "dataset": "Rain800",
+        "metric": "SSIM"
+      },
+      "source": {
+        "paper": "1807.05698",
+        "value": 0.841,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "1906.11129",
+        "value": 0.84,
+        "split": null
+      },
+      "model_extract": {
+        "cited_value": 0.84,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report RESCAN's SSIM on Rain800 with a rounding difference (0.8410 vs 0.84), not a configuration change."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 593,
+      "stratum": [
+        "same_quantity",
+        "rounding"
+      ],
+      "cell": {
+        "method": "RRA",
+        "dataset": "ActivityNet v1.3",
+        "metric": "mAP"
+      },
+      "source": {
+        "paper": "1810.11189",
+        "value": 83.42,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2006.15560",
+        "value": 83.4,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": null,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "ResNet-152 backbone, ImageNet pretraining, 25 (possibly frames/segments); two percentage values (78.8%, 83.4%) given without column headers, so which one is mAP is unclear"
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "83.4% is simply a rounded version of 83.42, referring to the same best RRA model result."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 631,
+      "stratum": [
+        "same_quantity",
+        "rounding"
+      ],
+      "cell": {
+        "method": "ConvE",
+        "dataset": "YAGO3-10",
+        "metric": "MRR"
+      },
+      "source": {
+        "paper": "1707.01476",
+        "value": 0.44,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2507.03947",
+        "value": 0.446,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.446,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report ConvE's MRR on YAGO3-10 with the same value rounded differently (0.44 vs 0.446)."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 428,
+      "stratum": [
+        "same_quantity",
+        "rounding"
+      ],
+      "cell": {
+        "method": "DLinear",
+        "dataset": "traffic",
+        "metric": "MSE"
+      },
+      "source": {
+        "paper": "2312.06786",
+        "value": 0.409,
+        "split": "test"
+      },
+      "citing": {
+        "paper": "2310.00655",
+        "value": 0.41,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": null,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": null
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "0.409 vs 0.410 is a negligible rounding difference for the same DLinear/Traffic/MSE result."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    },
+    {
+      "index": 786,
+      "stratum": [
+        "same_quantity",
+        "rounding"
+      ],
+      "cell": {
+        "method": "RotatE",
+        "dataset": "WN18RR",
+        "metric": "MRR"
+      },
+      "source": {
+        "paper": "1902.10197",
+        "value": 0.477,
+        "split": null
+      },
+      "citing": {
+        "paper": "2004.10037",
+        "value": 0.476,
+        "split": "test"
+      },
+      "model_extract": {
+        "cited_value": 0.476,
+        "stated_split": null,
+        "split_is_explicit": false,
+        "other_stated_conditions": "table row includes rank (3340) and Hits@1/Hits@3/Hits@10 values (.428/.492/.571)"
+      },
+      "model_relation": {
+        "relation": "same_quantity",
+        "differing_condition": null,
+        "rationale": "Both report RotatE's MRR on WN18RR with nearly identical values, consistent with normal rounding/reproduction variance."
+      },
+      "author_verdict": null,
+      "quote_redacted": true
+    }
+  ],
+  "note": "Spans are removed from the released copy because the substrate licence permits pointers only. Consult the cited arXiv paper directly."
+}

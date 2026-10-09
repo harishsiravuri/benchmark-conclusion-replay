@@ -1,0 +1,1749 @@
+{
+  "split": "dev",
+  "n_families": 68,
+  "n_multi_protocol": 31,
+  "families_with_unknown_metric_direction": {
+    "n": 1,
+    "family_ids": [
+      "pwc-dataset:imagenet-c|hash:c60d974101992c28"
+    ],
+    "note": "an argmax is undefined without a metric direction, so these families yield no declared winner at any cutoff and contribute only unresolved transitions; they are excluded from every winner-based and regret quantity by construction"
+  },
+  "substrate_sha256": "b2dd904793a6f5dac0815a2936553d67aac2005e2dbb1cdc735fd79073ef2472",
+  "noise_model": {
+    "source": "upstream/src/noise/model.py",
+    "sha256": "0d65cede988bdd74e2e4008fa7737970a93ec13d310c938092ae76dcfedb3b62",
+    "k": 2.0,
+    "sigma_default_rel": 0.021,
+    "sigma_default_bounded_pts": 0.71,
+    "dispersion_source": "defaulted for every call (substrate is pointer only)"
+  },
+  "spend_usd": 0.0,
+  "transitions": {
+    "naive_latest_max": {
+      "n_transitions": 380,
+      "status_counts": {
+        "weakened": 173,
+        "superseded_same_protocol": 91,
+        "remains_supported": 87,
+        "conditionally_superseded": 23,
+        "unresolved": 6
+      },
+      "status_shares": {
+        "remains_supported": {
+          "count": 87,
+          "share": 0.22894736842105262,
+          "point": 0.22894736842105262,
+          "ci95_lo": 0.15508021390374332,
+          "ci95_hi": 0.30886075949367087,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "superseded_same_protocol": {
+          "count": 91,
+          "share": 0.2394736842105263,
+          "point": 0.2394736842105263,
+          "ci95_lo": 0.1928020565552699,
+          "ci95_hi": 0.29048843187660667,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "conditionally_superseded": {
+          "count": 23,
+          "share": 0.060526315789473685,
+          "point": 0.060526315789473685,
+          "ci95_lo": 0.03494623655913978,
+          "ci95_hi": 0.09066666666666667,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "contradicted": {
+          "count": 0,
+          "share": 0.0,
+          "point": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "fragmented_by_protocol_drift": {
+          "count": 0,
+          "share": 0.0,
+          "point": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "weakened": {
+          "count": 173,
+          "share": 0.45526315789473687,
+          "point": 0.45526315789473687,
+          "ci95_lo": 0.3657289002557545,
+          "ci95_hi": 0.5412371134020618,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "unresolved": {
+          "count": 6,
+          "share": 0.015789473684210527,
+          "point": 0.015789473684210527,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.049315068493150684,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "established": {
+          "count": 0,
+          "share": 0.0,
+          "point": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      },
+      "supersession": {
+        "among_changes": {
+          "point": 0.20175438596491227,
+          "ci95_lo": 0.11965811965811966,
+          "ci95_hi": 0.29365079365079366,
+          "n_families": 58,
+          "n_observations": 114,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "among_all_transitions": {
+          "point": 0.060526315789473685,
+          "ci95_lo": 0.03494623655913978,
+          "ci95_hi": 0.09066666666666667,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      },
+      "structural_change": {
+        "definition": {
+          "unsettled": [
+            "superseded_same_protocol",
+            "conditionally_superseded",
+            "contradicted",
+            "fragmented_by_protocol_drift",
+            "weakened"
+          ],
+          "not_clean_advance": [
+            "conditionally_superseded",
+            "fragmented_by_protocol_drift",
+            "contradicted",
+            "weakened"
+          ],
+          "resolved": [
+            "superseded_same_protocol",
+            "conditionally_superseded",
+            "contradicted",
+            "fragmented_by_protocol_drift",
+            "weakened",
+            "remains_supported"
+          ]
+        },
+        "counts": {
+          "superseded_same_protocol": 91,
+          "conditionally_superseded": 23,
+          "contradicted": 0,
+          "fragmented_by_protocol_drift": 0,
+          "weakened": 173,
+          "remains_supported": 87,
+          "unresolved": 6,
+          "established": 0
+        },
+        "n_unsettled": 287,
+        "n_resolved": 374,
+        "not_clean_advance_among_unsettled": {
+          "point": 0.6829268292682927,
+          "ci95_lo": 0.6085271317829457,
+          "ci95_hi": 0.7484848484848485,
+          "n_families": 64,
+          "n_observations": 287,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "unsettled_among_resolved": {
+          "point": 0.767379679144385,
+          "ci95_lo": 0.6883468834688347,
+          "ci95_hi": 0.8433048433048433,
+          "n_families": 67,
+          "n_observations": 374,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "decomposition_among_unsettled": {
+          "superseded_same_protocol": {
+            "point": 0.3170731707317073,
+            "ci95_lo": 0.25157232704402516,
+            "ci95_hi": 0.3917525773195876,
+            "n_families": 64,
+            "n_observations": 287,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "conditionally_superseded": {
+            "point": 0.08013937282229965,
+            "ci95_lo": 0.046762589928057555,
+            "ci95_hi": 0.11827956989247312,
+            "n_families": 64,
+            "n_observations": 287,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "contradicted": {
+            "point": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.0,
+            "n_families": 64,
+            "n_observations": 287,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "fragmented_by_protocol_drift": {
+            "point": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.0,
+            "n_families": 64,
+            "n_observations": 287,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "weakened": {
+            "point": 0.6027874564459931,
+            "ci95_lo": 0.5267175572519084,
+            "ci95_hi": 0.6701030927835051,
+            "n_families": 64,
+            "n_observations": 287,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        },
+        "protocol_attributable_among_changes": {
+          "point": 0.20175438596491227,
+          "ci95_lo": 0.11965811965811966,
+          "ci95_hi": 0.29365079365079366,
+          "n_families": 58,
+          "n_observations": 114,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "protocol_attributable_among_unsettled": {
+          "point": 0.08013937282229965,
+          "ci95_lo": 0.046762589928057555,
+          "ci95_hi": 0.11827956989247312,
+          "n_families": 64,
+          "n_observations": 287,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      }
+    },
+    "protocol_partitioned": {
+      "n_transitions": 380,
+      "status_counts": {
+        "unresolved": 194,
+        "weakened": 108,
+        "fragmented_by_protocol_drift": 16,
+        "superseded_same_protocol": 17,
+        "remains_supported": 36,
+        "established": 7,
+        "conditionally_superseded": 2
+      },
+      "status_shares": {
+        "remains_supported": {
+          "count": 36,
+          "share": 0.09473684210526316,
+          "point": 0.09473684210526316,
+          "ci95_lo": 0.048,
+          "ci95_hi": 0.14659685863874344,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "superseded_same_protocol": {
+          "count": 17,
+          "share": 0.04473684210526316,
+          "point": 0.04473684210526316,
+          "ci95_lo": 0.02696078431372549,
+          "ci95_hi": 0.06419753086419754,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "conditionally_superseded": {
+          "count": 2,
+          "share": 0.005263157894736842,
+          "point": 0.005263157894736842,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.016483516483516484,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "contradicted": {
+          "count": 0,
+          "share": 0.0,
+          "point": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "fragmented_by_protocol_drift": {
+          "count": 16,
+          "share": 0.042105263157894736,
+          "point": 0.042105263157894736,
+          "ci95_lo": 0.024793388429752067,
+          "ci95_hi": 0.06030150753768844,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "weakened": {
+          "count": 108,
+          "share": 0.28421052631578947,
+          "point": 0.28421052631578947,
+          "ci95_lo": 0.1935483870967742,
+          "ci95_hi": 0.3806970509383378,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "unresolved": {
+          "count": 194,
+          "share": 0.5105263157894737,
+          "point": 0.5105263157894737,
+          "ci95_lo": 0.3952254641909814,
+          "ci95_hi": 0.628099173553719,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "established": {
+          "count": 7,
+          "share": 0.018421052631578946,
+          "point": 0.018421052631578946,
+          "ci95_lo": 0.00546448087431694,
+          "ci95_hi": 0.03278688524590164,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      },
+      "supersession": {
+        "among_changes": {
+          "point": 0.5142857142857142,
+          "ci95_lo": 0.39285714285714285,
+          "ci95_hi": 0.625,
+          "n_families": 23,
+          "n_observations": 35,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "among_all_transitions": {
+          "point": 0.04736842105263158,
+          "ci95_lo": 0.02680965147453083,
+          "ci95_hi": 0.07142857142857142,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      },
+      "structural_change": {
+        "definition": {
+          "unsettled": [
+            "superseded_same_protocol",
+            "conditionally_superseded",
+            "contradicted",
+            "fragmented_by_protocol_drift",
+            "weakened"
+          ],
+          "not_clean_advance": [
+            "conditionally_superseded",
+            "fragmented_by_protocol_drift",
+            "contradicted",
+            "weakened"
+          ],
+          "resolved": [
+            "superseded_same_protocol",
+            "conditionally_superseded",
+            "contradicted",
+            "fragmented_by_protocol_drift",
+            "weakened",
+            "remains_supported"
+          ]
+        },
+        "counts": {
+          "superseded_same_protocol": 17,
+          "conditionally_superseded": 2,
+          "contradicted": 0,
+          "fragmented_by_protocol_drift": 16,
+          "weakened": 108,
+          "remains_supported": 36,
+          "unresolved": 194,
+          "established": 7
+        },
+        "n_unsettled": 143,
+        "n_resolved": 179,
+        "not_clean_advance_among_unsettled": {
+          "point": 0.8811188811188811,
+          "ci95_lo": 0.8333333333333334,
+          "ci95_hi": 0.9230769230769231,
+          "n_families": 32,
+          "n_observations": 143,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "unsettled_among_resolved": {
+          "point": 0.7988826815642458,
+          "ci95_lo": 0.6942675159235668,
+          "ci95_hi": 0.8905472636815921,
+          "n_families": 36,
+          "n_observations": 179,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "decomposition_among_unsettled": {
+          "superseded_same_protocol": {
+            "point": 0.11888111888111888,
+            "ci95_lo": 0.07692307692307693,
+            "ci95_hi": 0.16666666666666666,
+            "n_families": 32,
+            "n_observations": 143,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "conditionally_superseded": {
+            "point": 0.013986013986013986,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.046511627906976744,
+            "n_families": 32,
+            "n_observations": 143,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "contradicted": {
+            "point": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.0,
+            "n_families": 32,
+            "n_observations": 143,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "fragmented_by_protocol_drift": {
+            "point": 0.11188811188811189,
+            "ci95_lo": 0.07142857142857142,
+            "ci95_hi": 0.1588785046728972,
+            "n_families": 32,
+            "n_observations": 143,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "weakened": {
+            "point": 0.7552447552447552,
+            "ci95_lo": 0.664,
+            "ci95_hi": 0.832258064516129,
+            "n_families": 32,
+            "n_observations": 143,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        },
+        "protocol_attributable_among_changes": {
+          "point": 0.5142857142857142,
+          "ci95_lo": 0.39285714285714285,
+          "ci95_hi": 0.625,
+          "n_families": 23,
+          "n_observations": 35,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "protocol_attributable_among_unsettled": {
+          "point": 0.1258741258741259,
+          "ci95_lo": 0.0759493670886076,
+          "ci95_hi": 0.18840579710144928,
+          "n_families": 32,
+          "n_observations": 143,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      }
+    },
+    "uncertainty_aware": {
+      "n_transitions": 380,
+      "status_counts": {
+        "unresolved": 194,
+        "weakened": 108,
+        "fragmented_by_protocol_drift": 16,
+        "superseded_same_protocol": 17,
+        "remains_supported": 36,
+        "established": 7,
+        "conditionally_superseded": 2
+      },
+      "status_shares": {
+        "remains_supported": {
+          "count": 36,
+          "share": 0.09473684210526316,
+          "point": 0.09473684210526316,
+          "ci95_lo": 0.048,
+          "ci95_hi": 0.14659685863874344,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "superseded_same_protocol": {
+          "count": 17,
+          "share": 0.04473684210526316,
+          "point": 0.04473684210526316,
+          "ci95_lo": 0.02696078431372549,
+          "ci95_hi": 0.06419753086419754,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "conditionally_superseded": {
+          "count": 2,
+          "share": 0.005263157894736842,
+          "point": 0.005263157894736842,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.016483516483516484,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "contradicted": {
+          "count": 0,
+          "share": 0.0,
+          "point": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "fragmented_by_protocol_drift": {
+          "count": 16,
+          "share": 0.042105263157894736,
+          "point": 0.042105263157894736,
+          "ci95_lo": 0.024793388429752067,
+          "ci95_hi": 0.06030150753768844,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "weakened": {
+          "count": 108,
+          "share": 0.28421052631578947,
+          "point": 0.28421052631578947,
+          "ci95_lo": 0.1935483870967742,
+          "ci95_hi": 0.3806970509383378,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "unresolved": {
+          "count": 194,
+          "share": 0.5105263157894737,
+          "point": 0.5105263157894737,
+          "ci95_lo": 0.3952254641909814,
+          "ci95_hi": 0.628099173553719,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "established": {
+          "count": 7,
+          "share": 0.018421052631578946,
+          "point": 0.018421052631578946,
+          "ci95_lo": 0.00546448087431694,
+          "ci95_hi": 0.03278688524590164,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      },
+      "supersession": {
+        "among_changes": {
+          "point": 0.5142857142857142,
+          "ci95_lo": 0.39285714285714285,
+          "ci95_hi": 0.625,
+          "n_families": 23,
+          "n_observations": 35,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "among_all_transitions": {
+          "point": 0.04736842105263158,
+          "ci95_lo": 0.02680965147453083,
+          "ci95_hi": 0.07142857142857142,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      },
+      "structural_change": {
+        "definition": {
+          "unsettled": [
+            "superseded_same_protocol",
+            "conditionally_superseded",
+            "contradicted",
+            "fragmented_by_protocol_drift",
+            "weakened"
+          ],
+          "not_clean_advance": [
+            "conditionally_superseded",
+            "fragmented_by_protocol_drift",
+            "contradicted",
+            "weakened"
+          ],
+          "resolved": [
+            "superseded_same_protocol",
+            "conditionally_superseded",
+            "contradicted",
+            "fragmented_by_protocol_drift",
+            "weakened",
+            "remains_supported"
+          ]
+        },
+        "counts": {
+          "superseded_same_protocol": 17,
+          "conditionally_superseded": 2,
+          "contradicted": 0,
+          "fragmented_by_protocol_drift": 16,
+          "weakened": 108,
+          "remains_supported": 36,
+          "unresolved": 194,
+          "established": 7
+        },
+        "n_unsettled": 143,
+        "n_resolved": 179,
+        "not_clean_advance_among_unsettled": {
+          "point": 0.8811188811188811,
+          "ci95_lo": 0.8333333333333334,
+          "ci95_hi": 0.9230769230769231,
+          "n_families": 32,
+          "n_observations": 143,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "unsettled_among_resolved": {
+          "point": 0.7988826815642458,
+          "ci95_lo": 0.6942675159235668,
+          "ci95_hi": 0.8905472636815921,
+          "n_families": 36,
+          "n_observations": 179,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "decomposition_among_unsettled": {
+          "superseded_same_protocol": {
+            "point": 0.11888111888111888,
+            "ci95_lo": 0.07692307692307693,
+            "ci95_hi": 0.16666666666666666,
+            "n_families": 32,
+            "n_observations": 143,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "conditionally_superseded": {
+            "point": 0.013986013986013986,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.046511627906976744,
+            "n_families": 32,
+            "n_observations": 143,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "contradicted": {
+            "point": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.0,
+            "n_families": 32,
+            "n_observations": 143,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "fragmented_by_protocol_drift": {
+            "point": 0.11188811188811189,
+            "ci95_lo": 0.07142857142857142,
+            "ci95_hi": 0.1588785046728972,
+            "n_families": 32,
+            "n_observations": 143,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "weakened": {
+            "point": 0.7552447552447552,
+            "ci95_lo": 0.664,
+            "ci95_hi": 0.832258064516129,
+            "n_families": 32,
+            "n_observations": 143,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        },
+        "protocol_attributable_among_changes": {
+          "point": 0.5142857142857142,
+          "ci95_lo": 0.39285714285714285,
+          "ci95_hi": 0.625,
+          "n_families": 23,
+          "n_observations": 35,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "protocol_attributable_among_unsettled": {
+          "point": 0.1258741258741259,
+          "ci95_lo": 0.0759493670886076,
+          "ci95_hi": 0.18840579710144928,
+          "n_families": 32,
+          "n_observations": 143,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      }
+    },
+    "conservative_update": {
+      "n_transitions": 380,
+      "status_counts": {
+        "unresolved": 194,
+        "weakened": 95,
+        "fragmented_by_protocol_drift": 16,
+        "remains_supported": 53,
+        "superseded_same_protocol": 15,
+        "established": 7
+      },
+      "status_shares": {
+        "remains_supported": {
+          "count": 53,
+          "share": 0.1394736842105263,
+          "point": 0.1394736842105263,
+          "ci95_lo": 0.08493150684931507,
+          "ci95_hi": 0.2004950495049505,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "superseded_same_protocol": {
+          "count": 15,
+          "share": 0.039473684210526314,
+          "point": 0.039473684210526314,
+          "ci95_lo": 0.020942408376963352,
+          "ci95_hi": 0.06162464985994398,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "conditionally_superseded": {
+          "count": 0,
+          "share": 0.0,
+          "point": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "contradicted": {
+          "count": 0,
+          "share": 0.0,
+          "point": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "fragmented_by_protocol_drift": {
+          "count": 16,
+          "share": 0.042105263157894736,
+          "point": 0.042105263157894736,
+          "ci95_lo": 0.024793388429752067,
+          "ci95_hi": 0.06030150753768844,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "weakened": {
+          "count": 95,
+          "share": 0.25,
+          "point": 0.25,
+          "ci95_lo": 0.16304347826086957,
+          "ci95_hi": 0.3435114503816794,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "unresolved": {
+          "count": 194,
+          "share": 0.5105263157894737,
+          "point": 0.5105263157894737,
+          "ci95_lo": 0.3952254641909814,
+          "ci95_hi": 0.628099173553719,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "established": {
+          "count": 7,
+          "share": 0.018421052631578946,
+          "point": 0.018421052631578946,
+          "ci95_lo": 0.00546448087431694,
+          "ci95_hi": 0.03278688524590164,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      },
+      "supersession": {
+        "among_changes": {
+          "point": 0.5161290322580645,
+          "ci95_lo": 0.40625,
+          "ci95_hi": 0.6428571428571429,
+          "n_families": 20,
+          "n_observations": 31,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "among_all_transitions": {
+          "point": 0.042105263157894736,
+          "ci95_lo": 0.024793388429752067,
+          "ci95_hi": 0.06030150753768844,
+          "n_families": 68,
+          "n_observations": 380,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      },
+      "structural_change": {
+        "definition": {
+          "unsettled": [
+            "superseded_same_protocol",
+            "conditionally_superseded",
+            "contradicted",
+            "fragmented_by_protocol_drift",
+            "weakened"
+          ],
+          "not_clean_advance": [
+            "conditionally_superseded",
+            "fragmented_by_protocol_drift",
+            "contradicted",
+            "weakened"
+          ],
+          "resolved": [
+            "superseded_same_protocol",
+            "conditionally_superseded",
+            "contradicted",
+            "fragmented_by_protocol_drift",
+            "weakened",
+            "remains_supported"
+          ]
+        },
+        "counts": {
+          "superseded_same_protocol": 15,
+          "conditionally_superseded": 0,
+          "contradicted": 0,
+          "fragmented_by_protocol_drift": 16,
+          "weakened": 95,
+          "remains_supported": 53,
+          "unresolved": 194,
+          "established": 7
+        },
+        "n_unsettled": 126,
+        "n_resolved": 179,
+        "not_clean_advance_among_unsettled": {
+          "point": 0.8809523809523809,
+          "ci95_lo": 0.8163265306122449,
+          "ci95_hi": 0.935064935064935,
+          "n_families": 30,
+          "n_observations": 126,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "unsettled_among_resolved": {
+          "point": 0.7039106145251397,
+          "ci95_lo": 0.5906040268456376,
+          "ci95_hi": 0.803030303030303,
+          "n_families": 36,
+          "n_observations": 179,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "decomposition_among_unsettled": {
+          "superseded_same_protocol": {
+            "point": 0.11904761904761904,
+            "ci95_lo": 0.06504065040650407,
+            "ci95_hi": 0.18382352941176472,
+            "n_families": 30,
+            "n_observations": 126,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "conditionally_superseded": {
+            "point": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.0,
+            "n_families": 30,
+            "n_observations": 126,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "contradicted": {
+            "point": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.0,
+            "n_families": 30,
+            "n_observations": 126,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "fragmented_by_protocol_drift": {
+            "point": 0.12698412698412698,
+            "ci95_lo": 0.08108108108108109,
+            "ci95_hi": 0.18181818181818182,
+            "n_families": 30,
+            "n_observations": 126,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "weakened": {
+            "point": 0.753968253968254,
+            "ci95_lo": 0.6517857142857143,
+            "ci95_hi": 0.8397435897435898,
+            "n_families": 30,
+            "n_observations": 126,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        },
+        "protocol_attributable_among_changes": {
+          "point": 0.5161290322580645,
+          "ci95_lo": 0.40625,
+          "ci95_hi": 0.6428571428571429,
+          "n_families": 20,
+          "n_observations": 31,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        },
+        "protocol_attributable_among_unsettled": {
+          "point": 0.12698412698412698,
+          "ci95_lo": 0.08108108108108109,
+          "ci95_hi": 0.18181818181818182,
+          "n_families": 30,
+          "n_observations": 126,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      }
+    }
+  },
+  "supersession_multi_protocol_subset": {
+    "among_changes": {
+      "point": 0.6,
+      "ci95_lo": 0.5,
+      "ci95_hi": 0.7083333333333334,
+      "n_families": 18,
+      "n_observations": 30,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "among_all_transitions": {
+      "point": 0.09523809523809523,
+      "ci95_lo": 0.06,
+      "ci95_hi": 0.13513513513513514,
+      "n_families": 31,
+      "n_observations": 189,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    }
+  },
+  "structural_change_multi_protocol_subset": {
+    "definition": {
+      "unsettled": [
+        "superseded_same_protocol",
+        "conditionally_superseded",
+        "contradicted",
+        "fragmented_by_protocol_drift",
+        "weakened"
+      ],
+      "not_clean_advance": [
+        "conditionally_superseded",
+        "fragmented_by_protocol_drift",
+        "contradicted",
+        "weakened"
+      ],
+      "resolved": [
+        "superseded_same_protocol",
+        "conditionally_superseded",
+        "contradicted",
+        "fragmented_by_protocol_drift",
+        "weakened",
+        "remains_supported"
+      ]
+    },
+    "counts": {
+      "superseded_same_protocol": 12,
+      "conditionally_superseded": 2,
+      "contradicted": 0,
+      "fragmented_by_protocol_drift": 16,
+      "weakened": 76,
+      "remains_supported": 34,
+      "unresolved": 43,
+      "established": 6
+    },
+    "n_unsettled": 106,
+    "n_resolved": 140,
+    "not_clean_advance_among_unsettled": {
+      "point": 0.8867924528301887,
+      "ci95_lo": 0.8351648351648352,
+      "ci95_hi": 0.9333333333333333,
+      "n_families": 23,
+      "n_observations": 106,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "unsettled_among_resolved": {
+      "point": 0.7571428571428571,
+      "ci95_lo": 0.6328125,
+      "ci95_hi": 0.8642857142857143,
+      "n_families": 26,
+      "n_observations": 140,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "decomposition_among_unsettled": {
+      "superseded_same_protocol": {
+        "point": 0.11320754716981132,
+        "ci95_lo": 0.06666666666666667,
+        "ci95_hi": 0.16483516483516483,
+        "n_families": 23,
+        "n_observations": 106,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "conditionally_superseded": {
+        "point": 0.018867924528301886,
+        "ci95_lo": 0.0,
+        "ci95_hi": 0.06521739130434782,
+        "n_families": 23,
+        "n_observations": 106,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "contradicted": {
+        "point": 0.0,
+        "ci95_lo": 0.0,
+        "ci95_hi": 0.0,
+        "n_families": 23,
+        "n_observations": 106,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "fragmented_by_protocol_drift": {
+        "point": 0.1509433962264151,
+        "ci95_lo": 0.10309278350515463,
+        "ci95_hi": 0.20618556701030927,
+        "n_families": 23,
+        "n_observations": 106,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "weakened": {
+        "point": 0.7169811320754716,
+        "ci95_lo": 0.6039603960396039,
+        "ci95_hi": 0.8083333333333333,
+        "n_families": 23,
+        "n_observations": 106,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      }
+    },
+    "protocol_attributable_among_changes": {
+      "point": 0.6,
+      "ci95_lo": 0.5,
+      "ci95_hi": 0.7083333333333334,
+      "n_families": 18,
+      "n_observations": 30,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "protocol_attributable_among_unsettled": {
+      "point": 0.16981132075471697,
+      "ci95_lo": 0.109375,
+      "ci95_hi": 0.24761904761904763,
+      "n_families": 23,
+      "n_observations": 106,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    }
+  },
+  "structural_change_single_protocol_subset": {
+    "definition": {
+      "unsettled": [
+        "superseded_same_protocol",
+        "conditionally_superseded",
+        "contradicted",
+        "fragmented_by_protocol_drift",
+        "weakened"
+      ],
+      "not_clean_advance": [
+        "conditionally_superseded",
+        "fragmented_by_protocol_drift",
+        "contradicted",
+        "weakened"
+      ],
+      "resolved": [
+        "superseded_same_protocol",
+        "conditionally_superseded",
+        "contradicted",
+        "fragmented_by_protocol_drift",
+        "weakened",
+        "remains_supported"
+      ]
+    },
+    "counts": {
+      "superseded_same_protocol": 5,
+      "conditionally_superseded": 0,
+      "contradicted": 0,
+      "fragmented_by_protocol_drift": 0,
+      "weakened": 32,
+      "remains_supported": 2,
+      "unresolved": 151,
+      "established": 1
+    },
+    "n_unsettled": 37,
+    "n_resolved": 39,
+    "not_clean_advance_among_unsettled": {
+      "point": 0.8648648648648649,
+      "ci95_lo": 0.7307692307692307,
+      "ci95_hi": 0.9534883720930233,
+      "n_families": 9,
+      "n_observations": 37,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "unsettled_among_resolved": {
+      "point": 0.9487179487179487,
+      "ci95_lo": 0.8,
+      "ci95_hi": 1.0,
+      "n_families": 10,
+      "n_observations": 39,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "decomposition_among_unsettled": {
+      "superseded_same_protocol": {
+        "point": 0.13513513513513514,
+        "ci95_lo": 0.046511627906976744,
+        "ci95_hi": 0.2692307692307692,
+        "n_families": 9,
+        "n_observations": 37,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "conditionally_superseded": {
+        "point": 0.0,
+        "ci95_lo": 0.0,
+        "ci95_hi": 0.0,
+        "n_families": 9,
+        "n_observations": 37,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "contradicted": {
+        "point": 0.0,
+        "ci95_lo": 0.0,
+        "ci95_hi": 0.0,
+        "n_families": 9,
+        "n_observations": 37,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "fragmented_by_protocol_drift": {
+        "point": 0.0,
+        "ci95_lo": 0.0,
+        "ci95_hi": 0.0,
+        "n_families": 9,
+        "n_observations": 37,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      },
+      "weakened": {
+        "point": 0.8648648648648649,
+        "ci95_lo": 0.7307692307692307,
+        "ci95_hi": 0.9534883720930233,
+        "n_families": 9,
+        "n_observations": 37,
+        "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+      }
+    },
+    "protocol_attributable_among_changes": {
+      "point": 0.0,
+      "ci95_lo": 0.0,
+      "ci95_hi": 0.0,
+      "n_families": 5,
+      "n_observations": 5,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "protocol_attributable_among_unsettled": {
+      "point": 0.0,
+      "ci95_lo": 0.0,
+      "ci95_hi": 0.0,
+      "n_families": 9,
+      "n_observations": 37,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    }
+  },
+  "regret": {
+    "definition": "regret at a cutoff is the direction-aware gap between the best value in the final-cutoff reference set and the declared method's best value in that same set, normalised by the reference spread; a declared method absent from the reference set takes the maximum in-set gap and is counted in the off-partition rate",
+    "oracles": {
+      "protocol_gated": "the largest valid comparison set at the final cutoff",
+      "ungated_naive": "every entry at the final cutoff, protocol ignored; naive latest-max has regret zero against this oracle at the final cutoff by construction"
+    },
+    "by_oracle": {
+      "protocol_gated": {
+        "n_families_scored": 50,
+        "n_families_excluded_no_reference": 18,
+        "by_policy": {
+          "naive_latest_max": {
+            "mean_fractional_regret": {
+              "point": 0.4387494983353621,
+              "ci95_lo": 0.3588376183278907,
+              "ci95_hi": 0.5207764519692542,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "mean_regret_points": {
+              "point": 11.948987503607505,
+              "ci95_lo": 8.75341178932179,
+              "ci95_hi": 15.612384949494949,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "off_partition_rate": {
+              "point": 0.3327748917748918,
+              "ci95_lo": 0.24725757575757576,
+              "ci95_hi": 0.4222012987012987,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            }
+          },
+          "protocol_partitioned": {
+            "mean_fractional_regret": {
+              "point": 0.1785573488694276,
+              "ci95_lo": 0.1175074763554137,
+              "ci95_hi": 0.24519610517097523,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "mean_regret_points": {
+              "point": 4.246064011544012,
+              "ci95_lo": 2.654857070707071,
+              "ci95_hi": 6.157048138528139,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "off_partition_rate": {
+              "point": 0.0551984126984127,
+              "ci95_lo": 0.017722222222222223,
+              "ci95_hi": 0.10142063492063493,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            }
+          },
+          "uncertainty_aware": {
+            "mean_fractional_regret": {
+              "point": 0.191644166453442,
+              "ci95_lo": 0.12986233972147831,
+              "ci95_hi": 0.2575603144811663,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "mean_regret_points": {
+              "point": 4.406175238095239,
+              "ci95_lo": 2.835720476190476,
+              "ci95_hi": 6.2877495238095245,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "off_partition_rate": {
+              "point": 0.0551984126984127,
+              "ci95_lo": 0.017722222222222223,
+              "ci95_hi": 0.10142063492063493,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            }
+          },
+          "conservative_update": {
+            "mean_fractional_regret": {
+              "point": 0.21853064692643712,
+              "ci95_lo": 0.14792230863902334,
+              "ci95_hi": 0.2940715725316015,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "mean_regret_points": {
+              "point": 5.190002871572871,
+              "ci95_lo": 3.378503997113997,
+              "ci95_hi": 7.231269220779222,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "off_partition_rate": {
+              "point": 0.052698412698412696,
+              "ci95_lo": 0.015555555555555553,
+              "ci95_hi": 0.09860317460317461,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            }
+          }
+        },
+        "paired_difference_vs_naive": {
+          "protocol_partitioned": {
+            "point": -0.2601921494659345,
+            "ci95_lo": -0.331408177378334,
+            "ci95_hi": -0.19267442345751074,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "uncertainty_aware": {
+            "point": -0.24710533188192005,
+            "ci95_lo": -0.3189359719348219,
+            "ci95_hi": -0.1793920664402992,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "conservative_update": {
+            "point": -0.22021885140892494,
+            "ci95_lo": -0.2972682169022438,
+            "ci95_hi": -0.14778278617949014,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        },
+        "paired_difference_vs_protocol_partitioned": {
+          "uncertainty_aware": {
+            "point": 0.013086817584014412,
+            "ci95_lo": 0.0030167904713709736,
+            "ci95_hi": 0.02868273386732115,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "conservative_update": {
+            "point": 0.03997329805700956,
+            "ci95_lo": 0.025021203747262452,
+            "ci95_hi": 0.05689553559297409,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        }
+      },
+      "ungated_naive": {
+        "n_families_scored": 50,
+        "n_families_excluded_no_reference": 18,
+        "by_policy": {
+          "naive_latest_max": {
+            "mean_fractional_regret": {
+              "point": 0.09065396615228133,
+              "ci95_lo": 0.06780690129718847,
+              "ci95_hi": 0.11547861644196504,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "mean_regret_points": {
+              "point": 6.12368734862915,
+              "ci95_lo": 4.440478599711399,
+              "ci95_hi": 7.980512031168832,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "off_partition_rate": {
+              "point": 0.0,
+              "ci95_lo": 0.0,
+              "ci95_hi": 0.0,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            }
+          },
+          "protocol_partitioned": {
+            "mean_fractional_regret": {
+              "point": 0.08129525340240193,
+              "ci95_lo": 0.05574309779897639,
+              "ci95_hi": 0.11061011025032737,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "mean_regret_points": {
+              "point": 5.032940582972583,
+              "ci95_lo": 3.4752346060606065,
+              "ci95_hi": 6.838259197691198,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "off_partition_rate": {
+              "point": 0.0,
+              "ci95_lo": 0.0,
+              "ci95_hi": 0.0,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            }
+          },
+          "uncertainty_aware": {
+            "mean_fractional_regret": {
+              "point": 0.08538907451343601,
+              "ci95_lo": 0.059838209595344985,
+              "ci95_hi": 0.11489601440731086,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "mean_regret_points": {
+              "point": 5.19605180952381,
+              "ci95_lo": 3.6316290476190476,
+              "ci95_hi": 7.006772761904764,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "off_partition_rate": {
+              "point": 0.0,
+              "ci95_lo": 0.0,
+              "ci95_hi": 0.0,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            }
+          },
+          "conservative_update": {
+            "mean_fractional_regret": {
+              "point": 0.09782321476472575,
+              "ci95_lo": 0.06885205304781444,
+              "ci95_hi": 0.130168643734011,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "mean_regret_points": {
+              "point": 6.088127062049063,
+              "ci95_lo": 4.310231774891775,
+              "ci95_hi": 8.106679746031748,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "off_partition_rate": {
+              "point": 0.0,
+              "ci95_lo": 0.0,
+              "ci95_hi": 0.0,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            }
+          }
+        },
+        "paired_difference_vs_naive": {
+          "protocol_partitioned": {
+            "point": -0.009358712749879405,
+            "ci95_lo": -0.04217953707756388,
+            "ci95_hi": 0.023544771962647374,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "uncertainty_aware": {
+            "point": -0.005264891638845321,
+            "ci95_lo": -0.038253140806768095,
+            "ci95_hi": 0.02757079449178151,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "conservative_update": {
+            "point": 0.007169248612444418,
+            "ci95_lo": -0.02670783808050227,
+            "ci95_hi": 0.04056138803223594,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        },
+        "paired_difference_vs_protocol_partitioned": {
+          "uncertainty_aware": {
+            "point": 0.004093821111034083,
+            "ci95_lo": 0.0011966867003947957,
+            "ci95_hi": 0.00807155778937832,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          },
+          "conservative_update": {
+            "point": 0.01652796136232382,
+            "ci95_lo": 0.010299517850193998,
+            "ci95_hi": 0.023842311277985893,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        }
+      }
+    }
+  },
+  "ranking_reversal": {
+    "policy": "protocol_partitioned",
+    "transition_level_all_families": {
+      "point": 0.029661016949152543,
+      "ci95_lo": 0.004201680672268907,
+      "ci95_hi": 0.0639269406392694,
+      "n_families": 50,
+      "n_observations": 236,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "transition_level_multi_protocol": {
+      "point": 0.0440251572327044,
+      "ci95_lo": 0.006134969325153374,
+      "ci95_hi": 0.0935672514619883,
+      "n_families": 31,
+      "n_observations": 159,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "pair_level_all_families": {
+      "point": 0.0011162252294462972,
+      "ci95_lo": 2.3815194093831866e-05,
+      "ci95_hi": 0.0031721485358551915,
+      "n_families": 50,
+      "n_observations": 72566,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    },
+    "pair_level_multi_protocol": {
+      "point": 0.0011672647096969435,
+      "ci95_lo": 2.4343931057987243e-05,
+      "ci95_hi": 0.0033648790746582543,
+      "n_families": 31,
+      "n_observations": 69393,
+      "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+    }
+  },
+  "cross_partition_disagreement": {
+    "point": 0.0919661733615222,
+    "ci95_lo": 0.041379310344827586,
+    "ci95_hi": 0.16483516483516483,
+    "n_families": 8,
+    "n_observations": 946,
+    "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+  },
+  "survival": {
+    "naive_latest_max": {
+      "kaplan_meier": {
+        "times": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "survival": [
+          1.0,
+          0.655,
+          0.49876146788990827,
+          0.35848480504587155,
+          0.2560605750327654,
+          0.17070705002184364,
+          0.15173960001941655,
+          0.05057986667313886
+        ],
+        "median": 2,
+        "n": 200,
+        "n_events": 133
+      },
+      "median_half_life_cutoffs": 2,
+      "n_spells": 200,
+      "n_events": 133,
+      "n_censored": 67,
+      "mean_observed_duration": 2.205
+    },
+    "protocol_partitioned": {
+      "kaplan_meier": {
+        "times": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "survival": [
+          1.0,
+          0.7798165137614679,
+          0.6446483180428134,
+          0.48348623853211004,
+          0.41679848149319826,
+          0.324176596716932,
+          0.29470599701539274,
+          0.22102949776154457
+        ],
+        "median": 3,
+        "n": 109,
+        "n_events": 59
+      },
+      "median_half_life_cutoffs": 3,
+      "n_spells": 109,
+      "n_events": 59,
+      "n_censored": 50,
+      "mean_observed_duration": 2.697247706422018
+    },
+    "uncertainty_aware": {
+      "kaplan_meier": {
+        "times": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11
+        ],
+        "survival": [
+          1.0,
+          0.8314606741573034,
+          0.7445916484990777,
+          0.6078299171421042,
+          0.5541978656295656,
+          0.45781562812877163,
+          0.45781562812877163,
+          0.40058867461267517,
+          0.40058867461267517,
+          0.40058867461267517,
+          0.40058867461267517
+        ],
+        "median": 5,
+        "n": 89,
+        "n_events": 39
+      },
+      "median_half_life_cutoffs": 5,
+      "n_spells": 89,
+      "n_events": 39,
+      "n_censored": 50,
+      "mean_observed_duration": 3.303370786516854
+    },
+    "conservative_update": {
+      "kaplan_meier": {
+        "times": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "survival": [
+          1.0,
+          0.9574468085106383,
+          0.7061170212765958,
+          0.5764220581849762,
+          0.4648564985362711,
+          0.38033713516603995,
+          0.38033713516603995,
+          0.38033713516603995,
+          0.38033713516603995
+        ],
+        "median": 4,
+        "n": 94,
+        "n_events": 44
+      },
+      "median_half_life_cutoffs": 4,
+      "n_spells": 94,
+      "n_events": 44,
+      "n_censored": 50,
+      "mean_observed_duration": 3.127659574468085
+    }
+  },
+  "unknown_comparability_over_time": {
+    "2015": {
+      "unknown_entries": 31,
+      "entries": 55,
+      "unknown_share": 0.5636363636363636
+    },
+    "2016": {
+      "unknown_entries": 74,
+      "entries": 151,
+      "unknown_share": 0.4900662251655629
+    },
+    "2017": {
+      "unknown_entries": 172,
+      "entries": 331,
+      "unknown_share": 0.5196374622356495
+    },
+    "2018": {
+      "unknown_entries": 317,
+      "entries": 659,
+      "unknown_share": 0.48103186646433993
+    },
+    "2019": {
+      "unknown_entries": 569,
+      "entries": 1176,
+      "unknown_share": 0.483843537414966
+    },
+    "2020": {
+      "unknown_entries": 783,
+      "entries": 1530,
+      "unknown_share": 0.5117647058823529
+    },
+    "2021": {
+      "unknown_entries": 877,
+      "entries": 1900,
+      "unknown_share": 0.46157894736842103
+    },
+    "2022": {
+      "unknown_entries": 857,
+      "entries": 2041,
+      "unknown_share": 0.4198922097011269
+    },
+    "2023": {
+      "unknown_entries": 961,
+      "entries": 2298,
+      "unknown_share": 0.4181897302001741
+    },
+    "2024": {
+      "unknown_entries": 900,
+      "entries": 2128,
+      "unknown_share": 0.42293233082706766
+    },
+    "2025": {
+      "unknown_entries": 530,
+      "entries": 1222,
+      "unknown_share": 0.4337152209492635
+    }
+  },
+  "unknown_comparability_final_cutoff": {
+    "point": 0.4727602905569007,
+    "ci95_lo": 0.3805601317957166,
+    "ci95_hi": 0.5848909657320872,
+    "n_families": 68,
+    "n_observations": 3304,
+    "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+  },
+  "protocol_drift_rate": {
+    "definition": "share of transitions at which the number of valid comparison sets grew",
+    "point": 0.12631578947368421,
+    "ci95_lo": 0.09066666666666667,
+    "ci95_hi": 0.16580310880829016,
+    "n_families": 68,
+    "n_observations": 380,
+    "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+  },
+  "families_with_no_justified_conclusion_at_any_cutoff": {
+    "n": 18,
+    "share": 0.2647058823529412,
+    "family_ids": [
+      "hash:3aad6979181cd3bf|metric:psnr",
+      "hash:5459cd93a9f23b5d|hash:00516ed47225f296",
+      "hash:8ce1994f1ef53268|metric:psnr",
+      "hash:9523f6b16ca8bffe|metric:accuracy",
+      "hash:9523f6b16ca8bffe|metric:f1",
+      "hash:a22e4401a96e73de|metric:mrr",
+      "pwc-dataset:amazon-book|metric:recall",
+      "pwc-dataset:bace-scaffold|metric:auc",
+      "pwc-dataset:cifar-10|metric:fid",
+      "pwc-dataset:criteo|hash:00516ed47225f296",
+      "pwc-dataset:drive|metric:auc",
+      "pwc-dataset:drive|metric:f1",
+      "pwc-dataset:freesolv-scaffold|metric:rmse",
+      "pwc-dataset:gowalla|metric:recall",
+      "pwc-dataset:imagenet-c|hash:c60d974101992c28",
+      "pwc-dataset:sroie|metric:f1",
+      "pwc-dataset:stare|metric:f1",
+      "pwc-dataset:wn18rr|metric:mrr"
+    ]
+  }
+}
