@@ -19,12 +19,11 @@ PHD_ROOT = REPO_ROOT.parent
 # not redistributed here (see README). Point UPSTREAM_ROOT at your local copy to rerun
 # the phases that need it. Everything that reads only `dataset/` runs without it.
 UPSTREAM_ROOT = Path(os.environ.get("UPSTREAM_ROOT", PHD_ROOT / "upstream"))
-PAPER32_ROOT = UPSTREAM_ROOT
-PAPER32_SRC = PAPER32_ROOT / "src"
-CLEANED_LEADERBOARDS = PAPER32_ROOT / "data" / "cleaned_leaderboards" / "cleaned_leaderboards.jsonl"
-CLEANED_LEADERBOARDS_MANIFEST = PAPER32_ROOT / "data" / "cleaned_leaderboards" / "MANIFEST.json"
-PWC_PAPERS_MANIFEST = PAPER32_ROOT / "data" / "manifests" / "pwc_papers-with-abstracts.manifest.json"
-CH3_NOISE_MODEL = PAPER32_SRC / "noise" / "model.py"
+UPSTREAM_SRC = UPSTREAM_ROOT / "src"
+CLEANED_LEADERBOARDS = UPSTREAM_ROOT / "data" / "cleaned_leaderboards" / "cleaned_leaderboards.jsonl"
+CLEANED_LEADERBOARDS_MANIFEST = UPSTREAM_ROOT / "data" / "cleaned_leaderboards" / "MANIFEST.json"
+PWC_PAPERS_MANIFEST = UPSTREAM_ROOT / "data" / "manifests" / "pwc_papers-with-abstracts.manifest.json"
+UPSTREAM_NOISE_MODEL = UPSTREAM_SRC / "noise" / "model.py"
 
 # The sha256 pinned in the upstream MANIFEST at the time this study was built.
 CLEANED_LEADERBOARDS_SHA256 = (

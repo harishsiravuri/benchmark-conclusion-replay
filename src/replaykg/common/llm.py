@@ -1,10 +1,10 @@
 # PROVENANCE: copied 2026-07-23 from upstream/src/common/llm.py, which was itself
-#   copied from paper2_contribqa. The source repositories are READ-ONLY; this is the
+#   copied from an earlier project of ours. The source repositories are READ-ONLY; this is the
 #   working copy for this repository (replaykg, this study chronological replay). Only the import
 #   paths and the budget cap differ from the source.
 """Cached, cost-logged OpenRouter client.
 
-Adapted from paper1/src/paper1/openrouter.py (Paper 1 extraction pipeline);
+Adapted from an earlier extraction pipeline of ours;
 adds a sha256-pinned append-only disk cache and per-call cost logging with a
 hard budget guard.
 
@@ -220,7 +220,7 @@ class CachedLLM:
 def parse_json_response(text: str) -> dict[str, Any]:
     """Parse JSON from an LLM response, tolerating fences/preamble/truncation.
 
-    Ported verbatim in behavior from paper1.openrouter.parse_json_response.
+    Ported verbatim in behavior from an earlier pipeline of ours.
     """
     text = text.strip()
     if text.startswith("```"):

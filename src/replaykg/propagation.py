@@ -30,10 +30,10 @@ import sys
 from dataclasses import dataclass
 from functools import lru_cache
 
-from replaykg.paths import PAPER32_ROOT, PAPER32_SRC
+from replaykg.paths import UPSTREAM_ROOT, UPSTREAM_SRC
 from replaykg.substrate import arxiv_year
 
-TUPLES = PAPER32_ROOT / "data" / "extractions" / "tuples.parquet"
+TUPLES = UPSTREAM_ROOT / "data" / "extractions" / "tuples.parquet"
 
 # Facets a citing paper may or may not carry over from the source.
 FACETS = ("split", "unit", "metric_surface")
@@ -41,16 +41,16 @@ VALIDATION_FAMILIES = {"val", "dev", "validation"}
 
 
 @lru_cache(maxsize=1)
-def _ch3_rules():
+def _upstream_rules():
     """The the upstream resource split and surface normalisers, imported read-only, not copied."""
-    if str(PAPER32_SRC) not in sys.path:
-        sys.path.insert(0, str(PAPER32_SRC))
+    if str(UPSTREAM_SRC) not in sys.path:
+        sys.path.insert(0, str(UPSTREAM_SRC))
     spec = importlib.util.spec_from_file_location(
-        "ch3_census_surface", PAPER32_SRC / "census" / "surface.py")
+        "upstream_census_surface", UPSTREAM_SRC / "census" / "surface.py")
     surface = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = surface
     spec.loader.exec_module(surface)
-    spec2 = importlib.util.spec_from_file_location("ch3_judge_rules", PAPER32_SRC / "judge" / "rules.py")
+    spec2 = importlib.util.spec_from_file_location("upstream_judge_rules", UPSTREAM_SRC / "judge" / "rules.py")
     rules = importlib.util.module_from_spec(spec2)
     sys.modules[spec2.name] = rules
     spec2.loader.exec_module(rules)
@@ -58,12 +58,12 @@ def _ch3_rules():
 
 
 def split_family(raw):
-    _, rules = _ch3_rules()
+    _, rules = _upstream_rules()
     return rules._split_family(raw)
 
 
 def norm_surface(raw):
-    surface, _ = _ch3_rules()
+    surface, _ = _upstream_rules()
     return surface._norm(raw) or None
 
 

@@ -1,5 +1,5 @@
-# PROVENANCE: copied verbatim 2026-06-18 from paper2_contribqa/src/common/costlog.py
-#   (Paper 2 ContribQA infrastructure).
+# PROVENANCE: copied verbatim 2026-06-18 from an earlier project of ours
+#   (shared cost-logging infrastructure).
 # The source repository is READ-ONLY; this is the working copy for the upstream repository
 #   (the upstream resource, the upstream resource cross-paper result-cell disagreement census).
 # Do not edit the source; edit this copy if behavior must change here.

@@ -41,7 +41,10 @@ Four kinds of instance.
    per policy, carrying the ordered classifier's status and its stated reason.
 3. **Citation-propagation pairs**, 807 rows in `propagation_pairs.jsonl`, with the model
    readings joined in `propagation_llm.jsonl`. One row per (source reading, later quoting
-   reading) of the same canonical (method, dataset, metric) cell.
+   reading) of the same canonical (method, dataset, metric) cell. Note that 611 rows in
+   `propagation_llm.jsonl` carry a `same_quantity.rationale` field. These are the model's own
+   paraphrased justifications, not quotations: they are machine-generated text, and they
+   contain no passage copied from a source paper. The pointers-only policy is unaffected.
 4. **Supporting records**: the frozen family list, the split map, the manual adjudication
    sheet and its written verdicts, and every computed metrics checkpoint.
 

@@ -18,14 +18,14 @@ import importlib.util
 import sys
 from functools import lru_cache
 
-from replaykg.paths import CH3_NOISE_MODEL, PAPER32_SRC, sha256_file
+from replaykg.paths import UPSTREAM_NOISE_MODEL, UPSTREAM_SRC, sha256_file
 
 
 @lru_cache(maxsize=1)
-def _load_ch3_noise():
-    if str(PAPER32_SRC) not in sys.path:
-        sys.path.insert(0, str(PAPER32_SRC))
-    spec = importlib.util.spec_from_file_location("ch3_noise_model", CH3_NOISE_MODEL)
+def _load_upstream_noise():
+    if str(UPSTREAM_SRC) not in sys.path:
+        sys.path.insert(0, str(UPSTREAM_SRC))
+    spec = importlib.util.spec_from_file_location("upstream_noise_model", UPSTREAM_NOISE_MODEL)
     module = importlib.util.module_from_spec(spec)
     # registered before execution because `dataclasses` resolves a class's module by name
     sys.modules[spec.name] = module
@@ -35,10 +35,10 @@ def _load_ch3_noise():
 
 @lru_cache(maxsize=1)
 def noise_model_provenance() -> dict:
-    m = _load_ch3_noise()
+    m = _load_upstream_noise()
     return {
-        "source": str(CH3_NOISE_MODEL),
-        "sha256": sha256_file(CH3_NOISE_MODEL),
+        "source": str(UPSTREAM_NOISE_MODEL),
+        "sha256": sha256_file(UPSTREAM_NOISE_MODEL),
         "k": m.K,
         "sigma_default_rel": m.SIGMA_DEFAULT_REL,
         "sigma_default_bounded_pts": m.SIGMA_DEFAULT_BOUNDED_PTS,
@@ -47,7 +47,7 @@ def noise_model_provenance() -> dict:
 
 
 def classify_metric_range(metric_name: str) -> str:
-    return _load_ch3_noise().classify_metric_range(metric_name)
+    return _load_upstream_noise().classify_metric_range(metric_name)
 
 
 def beyond_noise(v1: float, v2: float, metric_name: str, band_scale: float = 1.0) -> bool:
@@ -58,7 +58,7 @@ def beyond_noise(v1: float, v2: float, metric_name: str, band_scale: float = 1.0
     """
     if v1 is None or v2 is None:
         return False
-    d = _load_ch3_noise().decide(v1, v2, metric_name)
+    d = _load_upstream_noise().decide(v1, v2, metric_name)
     if band_scale == 1.0:
         return bool(d.beyond_noise)
     if d.decision_units == "both(AND)":
@@ -69,7 +69,7 @@ def beyond_noise(v1: float, v2: float, metric_name: str, band_scale: float = 1.0
 
 
 def noise_detail(v1: float, v2: float, metric_name: str) -> dict:
-    d = _load_ch3_noise().decide(v1, v2, metric_name)
+    d = _load_upstream_noise().decide(v1, v2, metric_name)
     return {
         "beyond_noise": bool(d.beyond_noise),
         "range_type": d.range_type,
