@@ -36,6 +36,15 @@ uv venv --python 3.12 .venv && uv pip install pyarrow numpy scipy pytest
 .venv/bin/python -m pytest tests/ -q
 ```
 
+The phases that only read `dataset/` run as-is. The phases that rebuild the
+replay from the substrate need the upstream comparability resource, which is a
+read-only input and is not redistributed here. Point `UPSTREAM_ROOT` at a local
+copy to run those:
+
+```bash
+UPSTREAM_ROOT=/path/to/upstream .venv/bin/python scripts/phase1_replay.py --split all
+```
+
 `REPRODUCE.md` gives the full phase order. Every phase is a pure function of the
 frozen inputs and the recorded parameters, with seed 13 throughout, so a rerun
 reproduces the same bytes. Two exceptions are stated there: the model calls in

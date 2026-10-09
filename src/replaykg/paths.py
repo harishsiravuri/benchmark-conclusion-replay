@@ -8,13 +8,18 @@ working directory.
 from __future__ import annotations
 
 import hashlib
+import os
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PHD_ROOT = REPO_ROOT.parent
 
 # --- read-only upstream assets ------------------------------------------------------
-PAPER32_ROOT = PHD_ROOT / "the upstream repository"
+# The comparability resource this study consumes is a separate, read-only input and is
+# not redistributed here (see README). Point UPSTREAM_ROOT at your local copy to rerun
+# the phases that need it. Everything that reads only `dataset/` runs without it.
+UPSTREAM_ROOT = Path(os.environ.get("UPSTREAM_ROOT", PHD_ROOT / "upstream"))
+PAPER32_ROOT = UPSTREAM_ROOT
 PAPER32_SRC = PAPER32_ROOT / "src"
 CLEANED_LEADERBOARDS = PAPER32_ROOT / "data" / "cleaned_leaderboards" / "cleaned_leaderboards.jsonl"
 CLEANED_LEADERBOARDS_MANIFEST = PAPER32_ROOT / "data" / "cleaned_leaderboards" / "MANIFEST.json"
@@ -27,7 +32,9 @@ CLEANED_LEADERBOARDS_SHA256 = (
 )
 
 # --- writable outputs ---------------------------------------------------------------
-DATA = REPO_ROOT / "data"
+# The two frozen inputs the released code needs (replay_families.json, split_map.json)
+# ship inside `dataset/`. Fall back to it when the working `data/` tree is absent.
+DATA = REPO_ROOT / "data" if (REPO_ROOT / "data").exists() else REPO_ROOT / "dataset"
 CHECKPOINTS = REPO_ROOT / "checkpoints"
 FIGURES = REPO_ROOT / "figures"
 CONFIG = REPO_ROOT / "config"
