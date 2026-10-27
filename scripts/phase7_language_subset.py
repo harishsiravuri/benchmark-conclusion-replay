@@ -27,10 +27,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from replaykg.metrics import (  # noqa: E402
-    bootstrap_mean, bootstrap_paired_difference, bootstrap_ratio, family_regret,
+    bootstrap_mean, bootstrap_paired_difference, bootstrap_ratio, common_declared_cutoffs,
+    family_regret,
     structural_change_decomposition,
 )
-from replaykg.paths import CHECKPOINTS, DATA  # noqa: E402
+from replaykg.paths import CHECKPOINTS, DATA, ensure_dirs  # noqa: E402
 from replaykg.replay import replay_family  # noqa: E402
 from replaykg.substrate import load_families  # noqa: E402
 from replaykg.transitions import family_transitions  # noqa: E402
@@ -60,6 +61,7 @@ def tier(dataset: str) -> str:
 
 
 def main():
+    ensure_dirs()
     listing = json.loads((DATA / "replay_families.json").read_text(encoding="utf-8"))
     meta = {f["leaderboard_id"]: f for f in listing["families"]}
     families = [f for f in load_families() if f.leaderboard_id in meta]
@@ -109,8 +111,11 @@ def main():
 
         regret_pp, regret_naive = [], []
         for r in replayed:
-            a = family_regret(r, "protocol_partitioned", "protocol_gated")
-            b = family_regret(r, "naive_latest_max", "protocol_gated")
+            # same-cutoff basis, as in phase 2: score both policies only on the cutoffs
+            # where every policy declared, so the two means cover identical cutoffs
+            keep = common_declared_cutoffs(r)
+            a = family_regret(r, "protocol_partitioned", "protocol_gated", keep)
+            b = family_regret(r, "naive_latest_max", "protocol_gated", keep)
             if a and b:
                 regret_pp.append(a["mean_fractional_regret"])
                 regret_naive.append(b["mean_fractional_regret"])

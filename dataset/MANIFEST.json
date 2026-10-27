@@ -1,6 +1,6 @@
 {
   "resource": "replaykg: chronological replay of protocol-qualified benchmark conclusions",
-  "version": "1.0",
+  "version": "1.1",
   "license": "CC-BY-SA 4.0, matching the upstream comparability resource it is derived from. Pointers only, no excerpt text.",
   "derived_from": {
     "substrate": "upstream/data/cleaned_leaderboards/cleaned_leaderboards.jsonl",
@@ -19,15 +19,15 @@
     },
     {
       "path": "REPRODUCE.md",
-      "sha256": "07503166a11b805a1623418d1e2a3c593dbf0a8c3e7ba5cb1de82b954f3d5f53",
-      "size_bytes": 5664,
+      "sha256": "5d1c800e1fced055e95f9a7f139becefc69052b7b8c9e42f9ced46f54564787b",
+      "size_bytes": 7291,
       "rows": 1
     },
     {
       "path": "adjudication_sheet.json",
       "sha256": "5b3e9ae7b9808679314b224dc6746c03ec164a79f591b1a20963f2ed3120d626",
       "size_bytes": 46455,
-      "rows": 47
+      "rows": 1
     },
     {
       "path": "adjudication_verdicts.md",
@@ -54,22 +54,34 @@
       "rows": 1
     },
     {
+      "path": "metrics/language_subset.json",
+      "rows": 1,
+      "sha256": "ae12d9317e58c51a88a849231800cd3f0f11bc245082d655cd170e10764d959a",
+      "size_bytes": 23915
+    },
+    {
       "path": "metrics/metrics_all.json",
-      "sha256": "a91b70b2a21421243320e4a5797e3b5e317fc3e6a0f1196e5c2632dc83692c9e",
-      "size_bytes": 60440,
+      "sha256": "417e5312e71c4558d9ca7ca67d61d80d58b3b2fd2455418c301dde8c26a703ba",
+      "size_bytes": 76951,
       "rows": 1
     },
     {
       "path": "metrics/metrics_dev.json",
-      "sha256": "ca2acf33b72d33c3c85c1dcb7f3536c25ee567bc8ed80de174d5cb94230a03fb",
-      "size_bytes": 59633,
+      "sha256": "e5658c2a947399e6676575ab8d6ba63dd7bc06f8b38e2ad770baea33dfdb6163",
+      "size_bytes": 76191,
       "rows": 1
     },
     {
       "path": "metrics/metrics_test.json",
-      "sha256": "82c36bcd8dbf2983432dbfd1e6b493a351640754bee2acfce4426bfa554b0d18",
-      "size_bytes": 59016,
+      "sha256": "437e6eb8b2ab0d843518ce42f4e31a93286bce630acb1435fb93903bb3bd449e",
+      "size_bytes": 75494,
       "rows": 1
+    },
+    {
+      "path": "metrics/oracle_sensitivity.json",
+      "rows": 1,
+      "sha256": "e0191342a21d932ea038c9e1e82eda9ee7cc29f7f02a3a3c86d1e9d192a31e7a",
+      "size_bytes": 14671
     },
     {
       "path": "metrics/phase3_cost_projection.json",

@@ -23,11 +23,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from replaykg.metrics import (  # noqa: E402
     ORACLES, bootstrap_mean, bootstrap_paired_difference, bootstrap_ratio,
-    cross_partition_disagreement, family_regret, kaplan_meier, ranking_reversals,
-    structural_change_decomposition, supersession_rates, winner_spells,
+    common_declared_cutoffs, cross_partition_disagreement, declared_cutoffs, family_regret,
+    kaplan_meier, reference_partition,
+    ranking_reversals, structural_change_decomposition, supersession_rates, winner_spells,
 )
 from replaykg.noise_adapter import noise_model_provenance  # noqa: E402
-from replaykg.paths import CHECKPOINTS, SPLIT_MAP  # noqa: E402
+from replaykg.paths import CHECKPOINTS, SPLIT_MAP, ensure_dirs  # noqa: E402
 from replaykg.replay import POLICIES, replay_family  # noqa: E402
 from replaykg.substrate import load_families, verify_substrate  # noqa: E402
 from replaykg.transitions import STATUSES, family_transitions  # noqa: E402
@@ -35,7 +36,50 @@ from replaykg.transitions import STATUSES, family_transitions  # noqa: E402
 PRIMARY_POLICY = "protocol_partitioned"
 
 
+def _emit_regret(out: dict, oracle: str, basis: str, rows: dict, n_families: int) -> None:
+    """Write one oracle-by-basis regret block.
+
+    `scored` is the intersection over FAMILIES for which every policy produced a score, so
+    the per-policy means are over the same families. Whether they are also over the same
+    cutoffs is what `basis` selects.
+    """
+    scored = sorted(set.intersection(*[set(rows[p]) for p in POLICIES])) if rows else []
+    block = {
+        "basis": basis,
+        "n_families_scored": len(scored),
+        # NB: this counts families dropped for ANY reason, namely no usable reference and
+        # also no declared winner under some policy. It is not a count of missing references.
+        "n_families_not_scored": n_families - len(scored),
+        "n_cutoffs_scored_total": {
+            p: sum(rows[p][f]["n_cutoffs_scored"] for f in scored) for p in POLICIES},
+        "by_policy": {
+            p: {
+                "mean_fractional_regret": bootstrap_mean(
+                    [rows[p][f]["mean_fractional_regret"] for f in scored]).as_dict(),
+                "mean_regret_points": bootstrap_mean(
+                    [rows[p][f]["mean_regret_points"] for f in scored]).as_dict(),
+                "off_partition_rate": bootstrap_mean(
+                    [rows[p][f]["off_partition_rate"] for f in scored]).as_dict(),
+            } for p in POLICIES
+        },
+        "paired_difference_vs_naive": {
+            p: bootstrap_paired_difference(
+                [(rows[p][f]["mean_fractional_regret"],
+                  rows["naive_latest_max"][f]["mean_fractional_regret"]) for f in scored]
+            ).as_dict() for p in POLICIES if p != "naive_latest_max"
+        },
+        "paired_difference_vs_protocol_partitioned": {
+            p: bootstrap_paired_difference(
+                [(rows[p][f]["mean_fractional_regret"],
+                  rows[PRIMARY_POLICY][f]["mean_fractional_regret"]) for f in scored]
+            ).as_dict() for p in ("uncertainty_aware", "conservative_update")
+        },
+    }
+    out["regret"]["by_oracle"].setdefault(oracle, {})[basis] = block
+
+
 def main() -> int:
+    ensure_dirs()
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", choices=["dev", "test", "all"], default="dev")
     args = ap.parse_args()
@@ -120,42 +164,66 @@ def main() -> int:
                               "latest-max has regret zero against this oracle at the final "
                               "cutoff by construction"),
         },
+        "bases": {
+            "same_cutoff": ("each policy is averaged only over the cutoffs at which EVERY "
+                            "policy declared a winner, so the means cover identical cutoffs; "
+                            "this is the headline basis"),
+            "own_cutoffs": ("each policy is averaged over its own declared cutoffs; naive "
+                            "latest-max declares at cutoffs with no valid comparison set, "
+                            "where the gated policies decline and where naive does worst, so "
+                            "this basis is permissive toward gating"),
+        },
         "by_oracle": {},
     }
     for oracle in ORACLES:
-        rows = {p: {} for p in POLICIES}
-        for fid, r in replayed.items():
-            for p in POLICIES:
-                fr = family_regret(r, p, oracle)
-                if fr is not None:
-                    rows[p][fid] = fr
-        scored = sorted(set.intersection(*[set(rows[p]) for p in POLICIES])) if families else []
-        out["regret"]["by_oracle"][oracle] = {
-            "n_families_scored": len(scored),
-            "n_families_excluded_no_reference": len(families) - len(scored),
-            "by_policy": {
-                p: {
-                    "mean_fractional_regret": bootstrap_mean(
-                        [rows[p][f]["mean_fractional_regret"] for f in scored]).as_dict(),
-                    "mean_regret_points": bootstrap_mean(
-                        [rows[p][f]["mean_regret_points"] for f in scored]).as_dict(),
-                    "off_partition_rate": bootstrap_mean(
-                        [rows[p][f]["off_partition_rate"] for f in scored]).as_dict(),
-                } for p in POLICIES
-            },
-            "paired_difference_vs_naive": {
-                p: bootstrap_paired_difference(
-                    [(rows[p][f]["mean_fractional_regret"],
-                      rows["naive_latest_max"][f]["mean_fractional_regret"]) for f in scored]
-                ).as_dict() for p in POLICIES if p != "naive_latest_max"
-            },
-            "paired_difference_vs_protocol_partitioned": {
-                p: bootstrap_paired_difference(
-                    [(rows[p][f]["mean_fractional_regret"],
-                      rows[PRIMARY_POLICY][f]["mean_fractional_regret"]) for f in scored]
-                ).as_dict() for p in ("uncertainty_aware", "conservative_update")
-            },
-        }
+        for basis in ("same_cutoff", "own_cutoffs"):
+            rows = {p: {} for p in POLICIES}
+            for fid, r in replayed.items():
+                restrict = common_declared_cutoffs(r) if basis == "same_cutoff" else None
+                for p in POLICIES:
+                    fr = family_regret(r, p, oracle, restrict)
+                    if fr is not None:
+                        rows[p][fid] = fr
+            _emit_regret(out, oracle, basis, rows, len(families))
+
+    # --- why the two bases differ -------------------------------------------------------
+    # The cutoffs naive latest-max is scored on but the gated policies are not. These are
+    # exactly the cutoffs with no valid comparison set, so they are the whole gap between
+    # the two bases and they deserve to be quantified rather than asserted.
+    shared_means, extra_means, shared_off, extra_off = [], [], [], []
+    n_shared = n_extra = n_fam_extra = 0
+    for fid, r in replayed.items():
+        ref = reference_partition(r, "protocol_gated")
+        if ref is None:
+            continue
+        keep = common_declared_cutoffs(r)
+        sh = family_regret(r, "naive_latest_max", "protocol_gated", keep)
+        own = declared_cutoffs(r, "naive_latest_max")
+        ex = own - keep
+        if sh is not None:
+            shared_means.append(sh["mean_fractional_regret"])
+            shared_off.append(sh["off_partition_rate"])
+            n_shared += sh["n_cutoffs_scored"]
+        if ex:
+            exr = family_regret(r, "naive_latest_max", "protocol_gated", ex)
+            if exr is not None:
+                extra_means.append(exr["mean_fractional_regret"])
+                extra_off.append(exr["off_partition_rate"])
+                n_extra += exr["n_cutoffs_scored"]
+                n_fam_extra += 1
+    out["regret"]["basis_diagnostic"] = {
+        "note": ("naive latest-max declares a winner at cutoffs where no valid comparison "
+                 "set exists and the gated policies decline; these are the cutoffs present "
+                 "in the own-cutoffs basis and absent from the same-cutoff basis"),
+        "oracle": "protocol_gated",
+        "n_cutoffs_shared": n_shared,
+        "n_cutoffs_naive_only": n_extra,
+        "n_families_with_naive_only_cutoffs": n_fam_extra,
+        "naive_regret_on_shared_cutoffs": bootstrap_mean(shared_means).as_dict(),
+        "naive_regret_on_naive_only_cutoffs": bootstrap_mean(extra_means).as_dict(),
+        "naive_off_partition_on_shared_cutoffs": bootstrap_mean(shared_off).as_dict(),
+        "naive_off_partition_on_naive_only_cutoffs": bootstrap_mean(extra_off).as_dict(),
+    }
 
     # --- ranking reversal ---------------------------------------------------------------
     rev_all, rev_multi, pairs_all, pairs_multi = [], [], [], []

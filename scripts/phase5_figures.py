@@ -99,8 +99,9 @@ def fig_regret(m_all, m_test):
                ("ungated_naive", "ungated naive oracle\n(the best reported number)")]
     fig, axes = plt.subplots(1, 2, figsize=(8.4, 3.9), sharey=True)
     for ax, (oracle, title) in zip(axes, oracles):
-        d = m_all["regret"]["by_oracle"][oracle]["by_policy"]
-        t = m_test["regret"]["by_oracle"][oracle]["by_policy"]
+        # same-cutoff basis: every policy scored only on cutoffs where all four declared
+        d = m_all["regret"]["by_oracle"][oracle]["same_cutoff"]["by_policy"]
+        t = m_test["regret"]["by_oracle"][oracle]["same_cutoff"]["by_policy"]
         ys = list(range(len(policies)))[::-1]
         for y, p in zip(ys, policies):
             e = d[p]["mean_fractional_regret"]
@@ -121,9 +122,9 @@ def fig_regret(m_all, m_test):
     axes[0].plot([], [], "D", color=OI["black"], ms=3.6, mfc="white", mew=1.1,
                  label="held-out 31 families")
     axes[0].legend(fontsize=7.5, loc="lower right")
-    fig.suptitle("Retrospective regret by policy and by oracle. Protocol gating wins decisively "
-                 "against the\nprotocol-gated oracle and ties against the ungated one, so the "
-                 "claim is the narrow one.",
+    fig.suptitle("Retrospective regret by policy and by oracle, on the cutoffs where every "
+                 "policy declared.\nGating gains against the protocol-gated oracle and loses "
+                 "against the ungated one; the reference decides.",
                  fontsize=9, x=0.02, ha="left", y=1.06)
     save(fig, "fig2_regret_by_oracle")
 

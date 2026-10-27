@@ -26,7 +26,9 @@ from __future__ import annotations
 import random
 from dataclasses import dataclass
 
-from replaykg.replay import CutoffEvidence, best_entry, best_value_for_method, principal_cluster
+from replaykg.replay import (
+    POLICIES, CutoffEvidence, best_entry, best_value_for_method, principal_cluster,
+)
 from replaykg.transitions import CHANGE_STATUSES, PROTOCOL_CONDITIONAL_STATUSES
 
 BOOTSTRAP_REPLICATES = 10000
@@ -169,8 +171,32 @@ def _to_points(v: float, reference_max: float) -> float:
     return v * 100.0 if reference_max <= 1.5 else v
 
 
-def family_regret(replayed: dict, policy: str, oracle: str = "protocol_gated") -> dict | None:
-    """Mean regret over the family's cutoffs for one policy, in both units."""
+def declared_cutoffs(replayed: dict, policy: str) -> frozenset:
+    """Cutoffs at which this policy declared a winner, so could be scored."""
+    return frozenset(c.cutoff for c in replayed["conclusions"][policy]
+                     if c.winner_method is not None)
+
+
+def common_declared_cutoffs(replayed: dict, policies=POLICIES) -> frozenset:
+    """Cutoffs at which EVERY policy declared a winner.
+
+    This is the same-cutoff comparison basis. The own-cutoffs basis averages each policy
+    over its own declarations, which is not like for like: naive latest-max declares a
+    winner at every cutoff, including those with no valid comparison set, where the three
+    protocol-gated policies correctly decline. Those extra cutoffs are the ones on which
+    naive does worst, so scoring it there and its competitors not inflates its regret and
+    flatters gating. Both bases are reported; neither is left implicit.
+    """
+    return frozenset.intersection(*[declared_cutoffs(replayed, p) for p in policies])
+
+
+def family_regret(replayed: dict, policy: str, oracle: str = "protocol_gated",
+                  restrict_to: frozenset | None = None) -> dict | None:
+    """Mean regret over the family's cutoffs for one policy, in both units.
+
+    `restrict_to` limits scoring to a given set of cutoffs, which is how the same-cutoff
+    basis is computed. None scores every cutoff at which this policy declared a winner.
+    """
     ref = reference_partition(replayed, oracle)
     if ref is None:
         return None
@@ -179,10 +205,13 @@ def family_regret(replayed: dict, policy: str, oracle: str = "protocol_gated") -
     scale_ref = max(abs(ref["best"].value), abs(ref["worst"].value))
 
     frac, pts = [], []
-    off_partition = no_conclusion = 0
+    off_partition = no_conclusion = skipped = 0
     for c in replayed["conclusions"][policy]:
         if c.winner_method is None:
             no_conclusion += 1
+            continue
+        if restrict_to is not None and c.cutoff not in restrict_to:
+            skipped += 1
             continue
         v = best_value_for_method(entries, c.winner_method, direction)
         if v is None:
@@ -204,6 +233,8 @@ def family_regret(replayed: dict, policy: str, oracle: str = "protocol_gated") -
         "mean_regret_points": sum(pts) / n,
         "off_partition_rate": off_partition / n,
         "no_conclusion_cutoffs": no_conclusion,
+        "cutoffs_skipped_by_restriction": skipped,
+        "basis": "same_cutoff" if restrict_to is not None else "own_cutoffs",
         "reference_spread": spread,
     }
 

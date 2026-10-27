@@ -30,8 +30,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from replaykg.metrics import (  # noqa: E402
     _reference, _to_points, bootstrap_mean, bootstrap_paired_difference,
+    common_declared_cutoffs,
 )
-from replaykg.paths import CHECKPOINTS, DATA  # noqa: E402
+from replaykg.paths import CHECKPOINTS, DATA, ensure_dirs  # noqa: E402
 from replaykg.replay import best_value_for_method, replay_family  # noqa: E402
 from replaykg.substrate import load_families  # noqa: E402
 
@@ -108,7 +109,13 @@ def refs_per_cluster(ev):
 # regret against a prebuilt reference
 # ---------------------------------------------------------------------------------------
 
-def regret_against(replayed, policy, ref):
+def regret_against(replayed, policy, ref, restrict_to=None):
+    """Mean regret against a prebuilt reference.
+
+    `restrict_to` carries the same-cutoff basis used by phase 2: when given, only cutoffs
+    at which every policy declared a winner are scored, so the per-policy means cover
+    identical cutoffs.
+    """
     entries, direction = ref["entries"], ref["direction"]
     best_val, spread = ref["best"].value, ref["spread"]
     scale_ref = max(abs(ref["best"].value), abs(ref["worst"].value))
@@ -156,6 +163,7 @@ def summarise(per_family_by_policy, label, n_families):
 
 
 def main():
+    ensure_dirs()
     listing = json.loads((DATA / "replay_families.json").read_text(encoding="utf-8"))
     ids = {f["leaderboard_id"] for f in listing["families"]}
     families = [f for f in load_families() if f.leaderboard_id in ids]
@@ -187,7 +195,8 @@ def main():
             ref = sel(ev)
             if ref is None:
                 continue
-            vals = {p: regret_against(r, p, ref) for p in POLICIES}
+            keep = common_declared_cutoffs(r, POLICIES)
+            vals = {p: regret_against(r, p, ref, keep) for p in POLICIES}
             if any(v is None for v in vals.values()):
                 continue
             n_scored += 1
@@ -207,8 +216,9 @@ def main():
             if not refs:
                 continue
             rows = []
+            keep = common_declared_cutoffs(r, POLICIES)
             for ref in refs:
-                vals = {p: regret_against(r, p, ref) for p in POLICIES}
+                vals = {p: regret_against(r, p, ref, keep) for p in POLICIES}
                 if any(v is None for v in vals.values()):
                     continue
                 rows.append({p: vals[p]["mean_fractional_regret"] for p in POLICIES})
