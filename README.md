@@ -1,7 +1,7 @@
-# Chronological replay of protocol-qualified benchmark conclusions
+# Tracking benchmark rankings with incomplete evaluation conditions
 
-Code and released data for the paper "When Leaderboards Stop Separating Methods: A
-Chronological Replay" by Harish Varma Siravuri and Hamed Alhoori, Northern
+Code and released data for the paper "Tracking Benchmark Rankings with Incomplete
+Evaluation Conditions" by Harish Varma Siravuri and Hamed Alhoori, Northern
 Illinois University. This repository carries every artefact the paper's claims are
 traced to.
 
