@@ -205,8 +205,9 @@ def fig_transitions(m_all, m_test, band):
     ax.plot([], [], "o", color=OI["black"], ms=5.5, mfc="white", mew=1.4,
             label="same corpus, counted per transition")
     ax.legend(fontsize=8.5, loc="lower right")
+    n_ep = m_all["episode_decomposition"]["n_unsettled_episodes"]
     ax.set_title("Why a comparison stopped holding, counted once per episode\n"
-                 "99 families, 117 unsettled episodes, bars are 95% intervals",
+                 f"99 families, {n_ep} unsettled episodes, bars are 95% intervals",
                  fontsize=10, loc="left", pad=10)
 
     ax = axes[1]

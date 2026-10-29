@@ -90,7 +90,7 @@ def build(certs, trans):
     years = sorted(part)
 
     fig, (ax, bx) = plt.subplots(
-        2, 1, figsize=(9.6, 3.6), sharex=True,
+        2, 1, figsize=(9.6, 3.7), sharex=True,
         gridspec_kw={"height_ratios": [2.35, 1.0], "hspace": 0.14},
     )
 
@@ -125,7 +125,7 @@ def build(certs, trans):
                 label = short(win)
                 if val is not None:
                     label += f"\n{val:g}"
-                off = 0.15 if track_y == y_naive else -0.15
+                off = 0.17 if track_y == y_naive else -0.17
                 va = "bottom" if track_y == y_naive else "top"
                 ax.annotate(label, xy=(yr, track_y + off),
                             ha="center", va=va, fontsize=8.6, linespacing=1.05,
@@ -142,9 +142,9 @@ def build(certs, trans):
         ax.annotate("", xy=(yr + 0.92, y_part), xytext=(yr + 0.08, y_part),
                     arrowprops=dict(arrowstyle="-", color=col, lw=2.4, alpha=0.9))
         # stagger consecutive labels so that the long two-line ones do not collide
-        height = y_part + (0.13 if i % 2 == 0 else 0.32)
+        height = y_part + (0.14 if i % 2 == 0 else 0.40)
         ax.text(mid, height, STATUS_SHORT.get(t["status"], t["status"]),
-                ha="center", va="bottom", fontsize=7.6, color=col, linespacing=0.95)
+                ha="center", va="bottom", fontsize=8.4, color=col, linespacing=1.0)
 
     ax.set_title(
         "One family replayed: Pubmed, accuracy. The condition-blind track always names a winner; "
