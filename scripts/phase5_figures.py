@@ -177,7 +177,7 @@ def fig_transitions(m_all, m_test, band):
              ("fragmented_by_protocol_drift", "could not be combined\nacross groups", OI["blue"]),
              ("superseded_same_protocol", "new method\ntook the lead", OI["green"]),
              ("conditionally_superseded", "largest group\nchanged", OI["purple"]),
-             ("contradicted", "declared leader\nwas passed", OI["vermillion"])]
+             ("contradicted", "new leader was a previously\npresent method (narrow status)", OI["vermillion"])]
 
     fig, axes = plt.subplots(1, 2, figsize=(10.2, 3.5),
                              gridspec_kw={"width_ratios": [1.0, 1.0]})
@@ -188,16 +188,17 @@ def fig_transitions(m_all, m_test, band):
     ys = list(range(len(order)))[::-1]
     for y, (key, label, colour) in zip(ys, order):
         e = ep[key]
-        ax.barh(y, e["point"], color=colour, height=0.50, alpha=0.92)
-        ax.plot([e["ci95_lo"], e["ci95_hi"]], [y, y], color=OI["black"], lw=1.3)
-        ax.text(max(e["ci95_hi"], e["point"]) + 0.035, y, f"{e['point']:.3f}",
+        ax.barh(y, e["point"] * 100, color=colour, height=0.50, alpha=0.92)
+        ax.plot([e["ci95_lo"] * 100, e["ci95_hi"] * 100], [y, y],
+                color=OI["black"], lw=1.3)
+        ax.text(max(e["ci95_hi"], e["point"]) * 100 + 3.5, y, f"{e['point'] * 100:.1f}",
                 va="center", fontsize=10, fontweight="bold")
 
     ax.set_yticks(ys)
     ax.set_yticklabels([lbl for _, lbl, _ in order], fontsize=9.5)
-    ax.set_xlim(0, 1.0)
+    ax.set_xlim(0, 100)
     ax.set_ylim(-0.8, len(order) - 0.35)
-    ax.set_xlabel("share of unsettled episodes", fontsize=10)
+    ax.set_xlabel("percentage of unsettled episodes", fontsize=10)
     ax.tick_params(axis="x", labelsize=9)
     n_ep = m_all["episode_decomposition"]["n_unsettled_episodes"]
     ax.set_title("Why a comparison stopped holding, counted once per episode\n"
@@ -212,7 +213,7 @@ def fig_transitions(m_all, m_test, band):
     series = [("weakened", "margin inside the band", OI["sky"]),
               ("remains_supported", "lead clear of the band", OI["yellow"]),
               ("superseded_same_protocol", "new method took the lead", OI["green"]),
-              ("contradicted", "declared leader was passed", OI["vermillion"])]
+              ("contradicted", "new leader was previously present", OI["vermillion"])]
     for key, label, colour in series:
         ax.plot(scales, [r["status_counts"].get(key, 0) for r in band["by_band"]],
                 marker="o", ms=5.0, lw=2.2, color=colour,
@@ -229,7 +230,8 @@ def fig_transitions(m_all, m_test, band):
     ax.set_xlabel("noise-band scale", fontsize=10)
     ax.set_ylabel("transition count", fontsize=10)
     ax.set_title("The band moves transitions between three kinds\n"
-                 "their total is 245 at every band; the reversal status never fires",
+                 "their total is 245 at every band; the procedure assigned\n"
+                 "no transitions to the fourth status",
                  fontsize=10, loc="left", pad=10)
     ax.legend(fontsize=8.5, loc="upper left", ncol=1, handlelength=1.6,
               borderaxespad=0.3, labelspacing=0.35)
