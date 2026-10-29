@@ -2100,6 +2100,25 @@
         }
       }
     },
+    "recommendation_agreement": {
+      "note": "on the cutoffs where both rules name a method present in the reference group, how often they name the SAME method; where they agree, a paired shortfall difference scores one recommendation twice and cannot separate the rules",
+      "basis": "same_cutoff",
+      "oracle": "protocol_gated",
+      "pairs": {
+        "protocol_partitioned_vs_naive_latest_max": {
+          "cutoffs_both_scorable": 92,
+          "same_method_recommended": 92,
+          "different_method_recommended": 0,
+          "families_with_any_difference": 0
+        },
+        "protocol_partitioned_vs_naive_normalized": {
+          "cutoffs_both_scorable": 64,
+          "same_method_recommended": 64,
+          "different_method_recommended": 0,
+          "families_with_any_difference": 0
+        }
+      }
+    },
     "absence_causes": {
       "note": "absence from the SELECTED reference set, split by cause; a method in another valid comparison set is comparable there, so only the no-recorded-conditions and group-of-one causes are an absence of recoverable information",
       "basis": "same_cutoff",

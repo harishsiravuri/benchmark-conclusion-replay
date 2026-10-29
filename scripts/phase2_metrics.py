@@ -31,7 +31,9 @@ from replaykg.metrics import (  # noqa: E402
 )
 from replaykg.noise_adapter import noise_model_provenance  # noqa: E402
 from replaykg.paths import CHECKPOINTS, SPLIT_MAP, ensure_dirs  # noqa: E402
-from replaykg.replay import ALL_POLICIES, POLICIES, replay_family  # noqa: E402
+from replaykg.replay import (  # noqa: E402
+    ALL_POLICIES, POLICIES, best_value_for_method, replay_family,
+)
 from replaykg.substrate import load_families, verify_substrate  # noqa: E402
 from replaykg.transitions import STATUSES, family_transitions  # noqa: E402
 
@@ -295,6 +297,47 @@ def main() -> int:
         "shares": {
             k: bootstrap_ratio([(c.get(k, 0), sum(c.get(j, 0) for j in EP_UNS))
                                 for c in ep_per_family]).as_dict() for k in EP_UNS},
+    }
+
+    # --- do the rules even name different methods where both are scorable? -------------
+    # A paired shortfall comparison is only informative if the two rules recommend
+    # different methods on the cutoffs being compared. Where they name the same method,
+    # the comparison scores one recommendation twice.
+    agree_pairs = {}
+    for a, b in ((PRIMARY_POLICY, "naive_latest_max"),
+                 (PRIMARY_POLICY, "naive_normalized")):
+        same = diff = 0
+        fams_diff = set()
+        for fid, r in replayed.items():
+            ref = reference_partition(r, "protocol_gated")
+            if ref is None:
+                continue
+            ent, dirn = ref["entries"], ref["direction"]
+            keep = common_declared_cutoffs(r)
+            named = {}
+            for pol in (a, b):
+                named[pol] = {
+                    c.cutoff: c.winner_method for c in r["conclusions"][pol]
+                    if c.winner_method is not None and c.cutoff in keep
+                    and best_value_for_method(ent, c.winner_method, dirn) is not None}
+            for cut in set(named[a]) & set(named[b]):
+                if named[a][cut] == named[b][cut]:
+                    same += 1
+                else:
+                    diff += 1
+                    fams_diff.add(fid)
+        agree_pairs[f"{a}_vs_{b}"] = {
+            "cutoffs_both_scorable": same + diff,
+            "same_method_recommended": same,
+            "different_method_recommended": diff,
+            "families_with_any_difference": len(fams_diff),
+        }
+    out["regret"]["recommendation_agreement"] = {
+        "note": ("on the cutoffs where both rules name a method present in the reference "
+                 "group, how often they name the SAME method; where they agree, a paired "
+                 "shortfall difference scores one recommendation twice and cannot "
+                 "separate the rules"),
+        "basis": "same_cutoff", "oracle": "protocol_gated", "pairs": agree_pairs,
     }
 
     # --- why a named method is absent from the selected reference set -------------------
