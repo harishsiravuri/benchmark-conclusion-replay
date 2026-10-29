@@ -301,6 +301,59 @@ def main() -> int:
                                 for c in ep_per_family]).as_dict() for k in EP_UNS},
     }
 
+    # --- what the cautious rules gave up by waiting -------------------------------------
+    # At a cutoff where a cautious rule retained the incumbent while the plain rule
+    # switched, we can score both the retained method and the challenger against the same
+    # reference. This says whether waiting retained the better method or the worse one.
+    out["delayed_selection"] = {
+        "note": ("at cutoffs where a cautious rule kept the incumbent and the plain rule "
+                 "named a challenger, the shortfall of the retained method against the "
+                 "shortfall of that challenger, both measured in the same reference group"),
+        "oracle": "protocol_gated", "basis": "same_cutoff", "by_rule": {},
+    }
+    for cautious in ("uncertainty_aware", "conservative_update"):
+        rows = []; n_cut = retained_lower = challenger_lower = tied = 0
+        for fid, r in replayed.items():
+            ref = reference_partition(r, "protocol_gated")
+            if ref is None:
+                continue
+            ent, dirn = ref["entries"], ref["direction"]
+            best_val, spread = ref["best"].value, ref["spread"]
+            keep = common_declared_cutoffs(r)
+            plain = {c.cutoff: c.winner_method for c in r["conclusions"][PRIMARY_POLICY]
+                     if c.winner_method is not None}
+            caut = {c.cutoff: c.winner_method for c in r["conclusions"][cautious]
+                    if c.winner_method is not None}
+            per = []
+            for cut in sorted(set(plain) & set(caut) & keep):
+                if plain[cut] == caut[cut]:
+                    continue
+                v_ret = best_value_for_method(ent, caut[cut], dirn)
+                v_chal = best_value_for_method(ent, plain[cut], dirn)
+                if v_ret is None or v_chal is None:
+                    continue
+                g_ret = abs(best_val - v_ret) / spread
+                g_chal = abs(best_val - v_chal) / spread
+                per.append((g_ret, g_chal)); n_cut += 1
+                if g_ret < g_chal - 1e-12:
+                    retained_lower += 1
+                elif g_chal < g_ret - 1e-12:
+                    challenger_lower += 1
+                else:
+                    tied += 1
+            if per:
+                rows.append((sum(a for a, _ in per) / len(per),
+                             sum(b for _, b in per) / len(per)))
+        out["delayed_selection"]["by_rule"][cautious] = {
+            "n_cutoffs_where_the_rules_differed": n_cut,
+            "n_families": len(rows),
+            "retained_method_lower_shortfall": retained_lower,
+            "challenger_lower_shortfall": challenger_lower,
+            "tied": tied,
+            "paired_difference_retained_minus_challenger":
+                bootstrap_paired_difference(rows).as_dict() if rows else None,
+        }
+
     # --- groupability at the final cutoff, split by cause -------------------------------
     # The headline ungroupable share counts entries missing a required recorded field.
     # An entry can also have every field and still have no partner, which is a different

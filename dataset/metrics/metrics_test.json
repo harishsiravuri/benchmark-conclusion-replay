@@ -2425,6 +2425,43 @@
       }
     }
   },
+  "delayed_selection": {
+    "note": "at cutoffs where a cautious rule kept the incumbent and the plain rule named a challenger, the shortfall of the retained method against the shortfall of that challenger, both measured in the same reference group",
+    "oracle": "protocol_gated",
+    "basis": "same_cutoff",
+    "by_rule": {
+      "uncertainty_aware": {
+        "n_cutoffs_where_the_rules_differed": 15,
+        "n_families": 5,
+        "retained_method_lower_shortfall": 0,
+        "challenger_lower_shortfall": 15,
+        "tied": 0,
+        "paired_difference_retained_minus_challenger": {
+          "point": 0.1379975473331369,
+          "ci95_lo": 0.022908168889868807,
+          "ci95_hi": 0.3486384282385981,
+          "n_families": 5,
+          "n_observations": 5,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      },
+      "conservative_update": {
+        "n_cutoffs_where_the_rules_differed": 18,
+        "n_families": 14,
+        "retained_method_lower_shortfall": 0,
+        "challenger_lower_shortfall": 18,
+        "tied": 0,
+        "paired_difference_retained_minus_challenger": {
+          "point": 0.2106484069399824,
+          "ci95_lo": 0.10942433123394121,
+          "ci95_hi": 0.3264501523322692,
+          "n_families": 14,
+          "n_observations": 14,
+          "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+        }
+      }
+    }
+  },
   "groupability_final_cutoff": {
     "note": "entries at the final cutoff by why they can or cannot be compared; the headline ungroupable share is the first category, and an entry with every field but no partner is the second",
     "n_entries": 1575,

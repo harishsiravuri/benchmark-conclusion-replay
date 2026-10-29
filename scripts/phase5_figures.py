@@ -179,14 +179,12 @@ def fig_transitions(m_all, m_test, band):
              ("conditionally_superseded", "largest group\nchanged", OI["purple"]),
              ("contradicted", "status: contradicted\n(declared leader passed)", OI["vermillion"])]
 
-    fig, axes = plt.subplots(1, 2, figsize=(10.2, 4.1),
+    fig, axes = plt.subplots(1, 2, figsize=(10.2, 3.5),
                              gridspec_kw={"width_ratios": [1.0, 1.0]})
     fig.subplots_adjust(wspace=0.50)
 
     ax = axes[0]
     ep = m_all["episode_decomposition"]["shares"]
-    tr = m_all["transitions"]["protocol_partitioned"]["structural_change"][
-        "decomposition_among_unsettled"]
     ys = list(range(len(order)))[::-1]
     for y, (key, label, colour) in zip(ys, order):
         e = ep[key]
@@ -194,17 +192,13 @@ def fig_transitions(m_all, m_test, band):
         ax.plot([e["ci95_lo"], e["ci95_hi"]], [y, y], color=OI["black"], lw=1.3)
         ax.text(max(e["ci95_hi"], e["point"]) + 0.035, y, f"{e['point']:.3f}",
                 va="center", fontsize=10, fontweight="bold")
-        ax.plot([tr[key]["point"]], [y - 0.31], "o", color=colour, ms=5.5,
-                mfc="white", mew=1.4)
+
     ax.set_yticks(ys)
     ax.set_yticklabels([lbl for _, lbl, _ in order], fontsize=9.5)
     ax.set_xlim(0, 1.0)
     ax.set_ylim(-0.8, len(order) - 0.35)
     ax.set_xlabel("share of unsettled episodes", fontsize=10)
     ax.tick_params(axis="x", labelsize=9)
-    ax.plot([], [], "o", color=OI["black"], ms=5.5, mfc="white", mew=1.4,
-            label="same corpus, counted per transition")
-    ax.legend(fontsize=8.5, loc="lower right")
     n_ep = m_all["episode_decomposition"]["n_unsettled_episodes"]
     ax.set_title("Why a comparison stopped holding, counted once per episode\n"
                  f"99 families, {n_ep} unsettled episodes, bars are 95% intervals",
