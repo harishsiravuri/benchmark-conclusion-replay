@@ -2372,7 +2372,7 @@
     }
   },
   "episode_decomposition": {
-    "note": "the unsettled decomposition with a within-band stretch counted once as an episode rather than once per cutoff; the transition-counted version is a different measurement and is kept under transitions",
+    "note": "an episode is a run of consecutive transitions with the same status, applied to every status; the transition-counted version is a different measurement and is kept under transitions",
     "policy": "protocol_partitioned",
     "counts": {
       "weakened": 24,

@@ -2373,47 +2373,47 @@
     }
   },
   "episode_decomposition": {
-    "note": "the unsettled decomposition with a within-band stretch counted once as an episode rather than once per cutoff; the transition-counted version is a different measurement and is kept under transitions",
+    "note": "an episode is a run of consecutive transitions with the same status, applied to every status; the transition-counted version is a different measurement and is kept under transitions",
     "policy": "protocol_partitioned",
     "counts": {
       "weakened": 62,
       "fragmented_by_protocol_drift": 28,
       "superseded_same_protocol": 24,
-      "conditionally_superseded": 3,
+      "conditionally_superseded": 2,
       "contradicted": 0
     },
-    "n_unsettled_episodes": 117,
+    "n_unsettled_episodes": 116,
     "shares": {
       "weakened": {
-        "point": 0.5299145299145299,
-        "ci95_lo": 0.4672131147540984,
-        "ci95_hi": 0.5916666666666667,
+        "point": 0.5344827586206896,
+        "ci95_lo": 0.4765625,
+        "ci95_hi": 0.5929203539823009,
         "n_families": 51,
-        "n_observations": 117,
+        "n_observations": 116,
         "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
       },
       "fragmented_by_protocol_drift": {
-        "point": 0.23931623931623933,
-        "ci95_lo": 0.19607843137254902,
-        "ci95_hi": 0.2803738317757009,
+        "point": 0.2413793103448276,
+        "ci95_lo": 0.19672131147540983,
+        "ci95_hi": 0.2831858407079646,
         "n_families": 51,
-        "n_observations": 117,
+        "n_observations": 116,
         "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
       },
       "superseded_same_protocol": {
-        "point": 0.20512820512820512,
-        "ci95_lo": 0.15178571428571427,
-        "ci95_hi": 0.25925925925925924,
+        "point": 0.20689655172413793,
+        "ci95_lo": 0.15306122448979592,
+        "ci95_hi": 0.26153846153846155,
         "n_families": 51,
-        "n_observations": 117,
+        "n_observations": 116,
         "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
       },
       "conditionally_superseded": {
-        "point": 0.02564102564102564,
+        "point": 0.017241379310344827,
         "ci95_lo": 0.0,
-        "ci95_hi": 0.06666666666666667,
+        "ci95_hi": 0.04310344827586207,
         "n_families": 51,
-        "n_observations": 117,
+        "n_observations": 116,
         "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
       },
       "contradicted": {
@@ -2421,7 +2421,7 @@
         "ci95_lo": 0.0,
         "ci95_hi": 0.0,
         "n_families": 51,
-        "n_observations": 117,
+        "n_observations": 116,
         "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
       }
     }

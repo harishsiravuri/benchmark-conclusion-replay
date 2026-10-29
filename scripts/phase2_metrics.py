@@ -273,24 +273,26 @@ def main() -> int:
     # cutoff, so the episode counts are what a reader means by how often it happened.
     EP_UNS = ("weakened", "fragmented_by_protocol_drift", "superseded_same_protocol",
               "conditionally_superseded", "contradicted")
+    # An episode is a run of consecutive transitions carrying the SAME status. The rule
+    # is applied to every status, not only to the within-band one, so the denominator is
+    # consistent with the definition. In this corpus only the within-band status and one
+    # pair of conditional-supersession transitions actually collapse.
     ep_per_family = []
     for fid, r in replayed.items():
         counts = collections.Counter()
         prev = None
         for t in family_transitions(r, PRIMARY_POLICY):
-            if t.status == "weakened" and prev == "weakened":
-                prev = t.status
-                continue            # a continuation of the same episode
-            counts[t.status] += 1
+            if t.status != prev:
+                counts[t.status] += 1
             prev = t.status
         ep_per_family.append(dict(counts))
     pooled_ep = collections.Counter()
     for c in ep_per_family:
         pooled_ep.update(c)
     out["episode_decomposition"] = {
-        "note": ("the unsettled decomposition with a within-band stretch counted once as "
-                 "an episode rather than once per cutoff; the transition-counted version "
-                 "is a different measurement and is kept under transitions"),
+        "note": ("an episode is a run of consecutive transitions with the same status, "
+                 "applied to every status; the transition-counted version is a different "
+                 "measurement and is kept under transitions"),
         "policy": PRIMARY_POLICY,
         "counts": {k: pooled_ep.get(k, 0) for k in EP_UNS},
         "n_unsettled_episodes": sum(pooled_ep.get(k, 0) for k in EP_UNS),
