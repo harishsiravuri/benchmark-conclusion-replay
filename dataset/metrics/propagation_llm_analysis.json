@@ -10,7 +10,7 @@
     "agreement_ok": 791
   },
   "instrument_check": {
-    "note": "agreement between the model reading of a citing span and the frozen upstream extraction of the same span; disagreement bounds how much of the census reflects extraction error rather than citation behaviour",
+    "note": "agreement between the model reading of a citing span and the frozen Chapter 3 extraction of the same span; disagreement bounds how much of the census reflects extraction error rather than citation behaviour",
     "model_value_matches_extracted_value": {
       "point": 0.7626262626262627,
       "ci95_lo": 0.727391874180865,

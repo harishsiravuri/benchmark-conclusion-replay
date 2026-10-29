@@ -23,8 +23,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from replaykg.metrics import (  # noqa: E402
     ORACLES, bootstrap_mean, bootstrap_paired_difference, bootstrap_ratio,
-    common_declared_cutoffs, cross_partition_disagreement, declared_cutoffs, family_regret,
-    kaplan_meier, reference_partition, reversal_opportunities, weakened_runs,
+    absence_causes, common_declared_cutoffs, cross_partition_disagreement,
+    declared_cutoffs, family_regret, kaplan_meier, paired_shortfall,
+    reference_partition, reversal_opportunities, weakened_episode_outcomes,
+    weakened_runs,
     ranking_reversals, structural_change_decomposition, supersession_rates, winner_spells,
 )
 from replaykg.noise_adapter import noise_model_provenance  # noqa: E402
@@ -262,6 +264,111 @@ def main() -> int:
                          ("naive_normalized", "naive_latest_max"),
                          ("uncertainty_aware", PRIMARY_POLICY),
                          ("conservative_update", PRIMARY_POLICY))},
+    }
+
+    # --- the decomposition counted on episodes rather than transitions -----------------
+    # A within-band stretch is one episode. Counting transitions counts it once per
+    # cutoff, so the episode counts are what a reader means by how often it happened.
+    EP_UNS = ("weakened", "fragmented_by_protocol_drift", "superseded_same_protocol",
+              "conditionally_superseded", "contradicted")
+    ep_per_family = []
+    for fid, r in replayed.items():
+        counts = collections.Counter()
+        prev = None
+        for t in family_transitions(r, PRIMARY_POLICY):
+            if t.status == "weakened" and prev == "weakened":
+                prev = t.status
+                continue            # a continuation of the same episode
+            counts[t.status] += 1
+            prev = t.status
+        ep_per_family.append(dict(counts))
+    pooled_ep = collections.Counter()
+    for c in ep_per_family:
+        pooled_ep.update(c)
+    out["episode_decomposition"] = {
+        "note": ("the unsettled decomposition with a within-band stretch counted once as "
+                 "an episode rather than once per cutoff; the transition-counted version "
+                 "is a different measurement and is kept under transitions"),
+        "policy": PRIMARY_POLICY,
+        "counts": {k: pooled_ep.get(k, 0) for k in EP_UNS},
+        "n_unsettled_episodes": sum(pooled_ep.get(k, 0) for k in EP_UNS),
+        "shares": {
+            k: bootstrap_ratio([(c.get(k, 0), sum(c.get(j, 0) for j in EP_UNS))
+                                for c in ep_per_family]).as_dict() for k in EP_UNS},
+    }
+
+    # --- why a named method is absent from the selected reference set -------------------
+    # Absence from the chosen reference is not the same as having nothing comparable.
+    CAUSE_POL = ("naive_latest_max", "naive_normalized", PRIMARY_POLICY)
+    out["regret"]["absence_causes"] = {
+        "note": ("absence from the SELECTED reference set, split by cause; a method in "
+                 "another valid comparison set is comparable there, so only the "
+                 "no-recorded-conditions and group-of-one causes are an absence of "
+                 "recoverable information"),
+        "basis": "same_cutoff", "oracle": "protocol_gated", "by_policy": {},
+    }
+    for pol in CAUSE_POL:
+        per = []
+        for fid, r in replayed.items():
+            ac = absence_causes(r, pol, "protocol_gated", common_declared_cutoffs(r))
+            if ac is not None:
+                per.append(ac)
+        pooled = {k: sum(a["counts"][k] for a in per) for k in
+                  ("in_reference", "absent_in_another_valid_set",
+                   "absent_no_recorded_conditions", "absent_group_of_one")}
+        total = sum(pooled.values())
+        out["regret"]["absence_causes"]["by_policy"][pol] = {
+            "n_families": len(per),
+            "n_scored_cutoffs": total,
+            "pooled_counts": pooled,
+            "pooled_shares": {k: (v / total if total else None) for k, v in pooled.items()},
+            "family_mean_shares": {
+                k: bootstrap_mean([a["shares"][k] for a in per]).as_dict()
+                for k in pooled},
+        }
+
+    # --- shortfall paired at the cutoff, not only at the family -------------------------
+    out["regret"]["shortfall_paired_at_cutoff"] = {
+        "note": ("both rules restricted to the cutoffs where each names a method present "
+                 "in the reference set, so the difference is not between two different "
+                 "subsets of cutoffs"),
+        "basis": "same_cutoff", "oracle": "protocol_gated", "pairs": {},
+    }
+    for a, b in ((PRIMARY_POLICY, "naive_latest_max"),
+                 (PRIMARY_POLICY, "naive_normalized"),
+                 ("uncertainty_aware", PRIMARY_POLICY),
+                 ("conservative_update", PRIMARY_POLICY)):
+        rows, ncut = [], 0
+        for fid, r in replayed.items():
+            got = paired_shortfall(r, a, b, "protocol_gated", common_declared_cutoffs(r))
+            if got is not None:
+                rows.append((got[0], got[1]))
+                ncut += got[2]
+        out["regret"]["shortfall_paired_at_cutoff"]["pairs"][f"{a}_minus_{b}"] = {
+            "n_families": len(rows), "n_cutoffs": ncut,
+            "paired_difference": bootstrap_paired_difference(rows).as_dict(),
+        }
+
+    # --- how the within-band episodes ended, with censoring reported --------------------
+    outs = [weakened_episode_outcomes(r, PRIMARY_POLICY) for r in replayed.values()]
+    ended_by = {}
+    for o in outs:
+        for k, v in o["ended_by"].items():
+            ended_by[k] = ended_by.get(k, 0) + v
+    n_recovered = sum(o["recovered"] for o in outs)
+    n_other = sum(o["ended_other"] for o in outs)
+    n_ongoing = sum(o["ongoing_at_final_cutoff"] for o in outs)
+    out["repeated_states_outcomes"] = {
+        "note": ("an episode still inside the band at the final cutoff has no observed "
+                 "outcome; it is reported as ongoing and excluded from the recovery "
+                 "denominator rather than counted as a non-recovery"),
+        "policy": PRIMARY_POLICY,
+        "episodes_total": n_recovered + n_other + n_ongoing,
+        "episodes_with_an_observed_outcome": n_recovered + n_other,
+        "recovered_a_lead_beyond_the_band": n_recovered,
+        "ended_for_another_reason": n_other,
+        "ongoing_at_final_cutoff": n_ongoing,
+        "ended_by_status": ended_by,
     }
 
     # --- repeated states, and the opportunity denominator for a reversal ----------------

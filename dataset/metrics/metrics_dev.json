@@ -2099,6 +2099,218 @@
         }
       }
     },
+    "absence_causes": {
+      "note": "absence from the SELECTED reference set, split by cause; a method in another valid comparison set is comparable there, so only the no-recorded-conditions and group-of-one causes are an absence of recoverable information",
+      "basis": "same_cutoff",
+      "oracle": "protocol_gated",
+      "by_policy": {
+        "naive_latest_max": {
+          "n_families": 50,
+          "n_scored_cutoffs": 294,
+          "pooled_counts": {
+            "in_reference": 216,
+            "absent_in_another_valid_set": 37,
+            "absent_no_recorded_conditions": 34,
+            "absent_group_of_one": 7
+          },
+          "pooled_shares": {
+            "in_reference": 0.7346938775510204,
+            "absent_in_another_valid_set": 0.12585034013605442,
+            "absent_no_recorded_conditions": 0.11564625850340136,
+            "absent_group_of_one": 0.023809523809523808
+          },
+          "family_mean_shares": {
+            "in_reference": {
+              "point": 0.7466709956709957,
+              "ci95_lo": 0.6498614718614718,
+              "ci95_hi": 0.8368809523809523,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "absent_in_another_valid_set": {
+              "point": 0.11621428571428571,
+              "ci95_lo": 0.05088095238095239,
+              "ci95_hi": 0.19242857142857137,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "absent_no_recorded_conditions": {
+              "point": 0.10425757575757576,
+              "ci95_lo": 0.049142857142857134,
+              "ci95_hi": 0.16851948051948049,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "absent_group_of_one": {
+              "point": 0.032857142857142856,
+              "ci95_lo": 0.0,
+              "ci95_hi": 0.08285714285714285,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            }
+          }
+        },
+        "naive_normalized": {
+          "n_families": 50,
+          "n_scored_cutoffs": 294,
+          "pooled_counts": {
+            "in_reference": 181,
+            "absent_in_another_valid_set": 33,
+            "absent_no_recorded_conditions": 74,
+            "absent_group_of_one": 6
+          },
+          "pooled_shares": {
+            "in_reference": 0.6156462585034014,
+            "absent_in_another_valid_set": 0.11224489795918367,
+            "absent_no_recorded_conditions": 0.25170068027210885,
+            "absent_group_of_one": 0.02040816326530612
+          },
+          "family_mean_shares": {
+            "in_reference": {
+              "point": 0.6262424242424243,
+              "ci95_lo": 0.5218614718614719,
+              "ci95_hi": 0.7277186147186144,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "absent_in_another_valid_set": {
+              "point": 0.1047857142857143,
+              "ci95_lo": 0.04704761904761904,
+              "ci95_hi": 0.17085714285714285,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "absent_no_recorded_conditions": {
+              "point": 0.23897186147186147,
+              "ci95_lo": 0.15294805194805192,
+              "ci95_hi": 0.332095238095238,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "absent_group_of_one": {
+              "point": 0.03,
+              "ci95_lo": 0.0,
+              "ci95_hi": 0.08,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            }
+          }
+        },
+        "protocol_partitioned": {
+          "n_families": 50,
+          "n_scored_cutoffs": 294,
+          "pooled_counts": {
+            "in_reference": 277,
+            "absent_in_another_valid_set": 17,
+            "absent_no_recorded_conditions": 0,
+            "absent_group_of_one": 0
+          },
+          "pooled_shares": {
+            "in_reference": 0.9421768707482994,
+            "absent_in_another_valid_set": 0.05782312925170068,
+            "absent_no_recorded_conditions": 0.0,
+            "absent_group_of_one": 0.0
+          },
+          "family_mean_shares": {
+            "in_reference": {
+              "point": 0.9448015873015873,
+              "ci95_lo": 0.8986428571428572,
+              "ci95_hi": 0.9822777777777777,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "absent_in_another_valid_set": {
+              "point": 0.0551984126984127,
+              "ci95_lo": 0.017722222222222223,
+              "ci95_hi": 0.10142063492063493,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "absent_no_recorded_conditions": {
+              "point": 0.0,
+              "ci95_lo": 0.0,
+              "ci95_hi": 0.0,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            },
+            "absent_group_of_one": {
+              "point": 0.0,
+              "ci95_lo": 0.0,
+              "ci95_hi": 0.0,
+              "n_families": 50,
+              "n_observations": 50,
+              "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+            }
+          }
+        }
+      }
+    },
+    "shortfall_paired_at_cutoff": {
+      "note": "both rules restricted to the cutoffs where each names a method present in the reference set, so the difference is not between two different subsets of cutoffs",
+      "basis": "same_cutoff",
+      "oracle": "protocol_gated",
+      "pairs": {
+        "protocol_partitioned_minus_naive_latest_max": {
+          "n_families": 46,
+          "n_cutoffs": 216,
+          "paired_difference": {
+            "point": 0.00016946232980944708,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.0004941598098244257,
+            "n_families": 46,
+            "n_observations": 46,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        },
+        "protocol_partitioned_minus_naive_normalized": {
+          "n_families": 43,
+          "n_cutoffs": 181,
+          "paired_difference": {
+            "point": 0.00018128528305196665,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.0005286360756261298,
+            "n_families": 43,
+            "n_observations": 43,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        },
+        "uncertainty_aware_minus_protocol_partitioned": {
+          "n_families": 50,
+          "n_cutoffs": 277,
+          "paired_difference": {
+            "point": 0.013094016093499512,
+            "ci95_lo": 0.0030180933606088456,
+            "ci95_hi": 0.028689932376806247,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        },
+        "conservative_update_minus_protocol_partitioned": {
+          "n_families": 50,
+          "n_cutoffs": 277,
+          "paired_difference": {
+            "point": 0.04231910458444685,
+            "ci95_lo": 0.026826290285428357,
+            "ci95_hi": 0.05968012815187675,
+            "n_families": 50,
+            "n_observations": 50,
+            "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
+          }
+        }
+      }
+    },
     "basis_diagnostic": {
       "note": "naive latest-max declares a winner at cutoffs where no valid comparison set exists and the gated policies decline; these are the cutoffs present in the own-cutoffs basis and absent from the same-cutoff basis",
       "oracle": "protocol_gated",
@@ -2137,6 +2349,20 @@
         "n_observations": 18,
         "test": "family-level nonparametric bootstrap, 10000 replicates, seed 13"
       }
+    }
+  },
+  "repeated_states_outcomes": {
+    "note": "an episode still inside the band at the final cutoff has no observed outcome; it is reported as ongoing and excluded from the recovery denominator rather than counted as a non-recovery",
+    "policy": "protocol_partitioned",
+    "episodes_total": 38,
+    "episodes_with_an_observed_outcome": 15,
+    "recovered_a_lead_beyond_the_band": 0,
+    "ended_for_another_reason": 15,
+    "ongoing_at_final_cutoff": 23,
+    "ended_by_status": {
+      "fragmented_by_protocol_drift": 8,
+      "unresolved": 3,
+      "superseded_same_protocol": 4
     }
   },
   "repeated_states": {

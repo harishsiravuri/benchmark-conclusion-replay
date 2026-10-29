@@ -69,7 +69,7 @@ def save(fig, stem):
 # ---------------------------------------------------------------------------------------
 
 def fig_survival(m_all, m_test):
-    fig, ax = plt.subplots(figsize=(6.2, 3.8))
+    fig, ax = plt.subplots(figsize=(7.0, 4.2))
     for policy in ("naive_latest_max", "protocol_partitioned", "conservative_update",
                    "uncertainty_aware"):
         km = m_all["survival"][policy]["kaplan_meier"]
@@ -80,15 +80,15 @@ def fig_survival(m_all, m_test):
     ax.step(km_t["times"], km_t["survival"], where="post", color=POLICY_COLOUR["protocol_partitioned"],
             lw=1.3, ls=":", label="protocol-partitioned, held-out 31")
     ax.axhline(0.5, color=OI["black"], lw=0.7, ls="--", alpha=0.5)
-    ax.text(0.02, 0.515, "median", transform=ax.get_yaxis_transform(), fontsize=7, alpha=0.7)
-    ax.set_xlabel("cutoffs since the winner was declared")
+    ax.text(0.02, 0.515, "median", transform=ax.get_yaxis_transform(), fontsize=9, alpha=0.75)
+    ax.set_xlabel("cutoff steps since the winner was declared", fontsize=10)
     ax.set_ylabel("share of declared winners still standing")
     ax.set_ylim(0, 1.02)
     ax.set_xlim(0, 9)
     ax.set_title("Survival of the declared winner\n"
                  "A longer curve describes how long a rule holds a winner, not how good it is",
-                 fontsize=9, loc="left")
-    ax.legend(fontsize=7.5, loc="upper right")
+                 fontsize=10, loc="left")
+    ax.legend(fontsize=9, loc="upper right")
     save(fig, "fig1_survival")
 
 
@@ -165,68 +165,76 @@ def fig_unknown(m_all, m_test):
 
 
 def fig_transitions(m_all, m_test, band):
-    order = [("weakened", "weakened\n(margin inside noise band)", OI["sky"]),
-             ("fragmented_by_protocol_drift", "fragmented by\nprotocol drift", OI["blue"]),
-             ("superseded_same_protocol", "clean same-protocol\nadvance", OI["green"]),
-             ("conditionally_superseded", "conditionally\nsuperseded", OI["purple"]),
-             ("contradicted", "contradicted\n(empirical reversal)", OI["vermillion"])]
+    """Left: the episode-counted decomposition the paper reports. Right: the band sweep.
 
-    fig, axes = plt.subplots(1, 2, figsize=(10.2, 4.3),
-                             gridspec_kw={"width_ratios": [1.0, 1.05]})
-    fig.subplots_adjust(wspace=0.42)
+    The transition-counted shares are a different measurement of the same corpus and are
+    drawn as hollow markers, labelled as such, so the two are not read as one series.
+    The reversal row is named by its classifier status rather than by an interpretation.
+    """
+    order = [("weakened", "margin inside\nthe noise band", OI["sky"]),
+             ("fragmented_by_protocol_drift", "could not be combined\nacross groups", OI["blue"]),
+             ("superseded_same_protocol", "new method\ntook the lead", OI["green"]),
+             ("conditionally_superseded", "largest group\nchanged", OI["purple"]),
+             ("contradicted", "status: contradicted\n(declared leader passed)", OI["vermillion"])]
+
+    fig, axes = plt.subplots(1, 2, figsize=(10.6, 4.6),
+                             gridspec_kw={"width_ratios": [1.0, 1.0]})
+    fig.subplots_adjust(wspace=0.50)
 
     ax = axes[0]
-    dec_all = m_all["transitions"]["protocol_partitioned"]["structural_change"][
-        "decomposition_among_unsettled"]
-    dec_test = m_test["transitions"]["protocol_partitioned"]["structural_change"][
+    ep = m_all["episode_decomposition"]["shares"]
+    tr = m_all["transitions"]["protocol_partitioned"]["structural_change"][
         "decomposition_among_unsettled"]
     ys = list(range(len(order)))[::-1]
     for y, (key, label, colour) in zip(ys, order):
-        e = dec_all[key]
-        ax.barh(y, e["point"], color=colour, height=0.46, alpha=0.9)
-        ax.plot([e["ci95_lo"], e["ci95_hi"]], [y, y], color=OI["black"], lw=1.1)
-        et = dec_test[key]
-        ax.plot([et["point"]], [y - 0.29], "D", color=colour, ms=4, mfc="white", mew=1.1)
-        ax.text(max(e["ci95_hi"], e["point"]) + 0.03, y, f"{e['point']:.3f}",
-                va="center", fontsize=8.5, fontweight="bold")
+        e = ep[key]
+        ax.barh(y, e["point"], color=colour, height=0.50, alpha=0.92)
+        ax.plot([e["ci95_lo"], e["ci95_hi"]], [y, y], color=OI["black"], lw=1.3)
+        ax.text(max(e["ci95_hi"], e["point"]) + 0.035, y, f"{e['point']:.3f}",
+                va="center", fontsize=10, fontweight="bold")
+        ax.plot([tr[key]["point"]], [y - 0.31], "o", color=colour, ms=5.5,
+                mfc="white", mew=1.4)
     ax.set_yticks(ys)
-    ax.set_yticklabels([lbl for _, lbl, _ in order], fontsize=8)
+    ax.set_yticklabels([lbl for _, lbl, _ in order], fontsize=9.5)
     ax.set_xlim(0, 1.0)
-    ax.set_ylim(-0.7, len(order) - 0.4)
-    ax.set_xlabel("share of unsettled transitions")
-    ax.plot([], [], "D", color=OI["black"], ms=4, mfc="white", mew=1.1,
-            label="held-out 31 families")
-    ax.legend(fontsize=7.5, loc="lower right")
-    ax.set_title("Decomposition of unsettled transitions\n"
-                 "full 99 families, bars are 95 percent bootstrap intervals",
-                 fontsize=9, loc="left", pad=10)
+    ax.set_ylim(-0.8, len(order) - 0.35)
+    ax.set_xlabel("share of unsettled episodes", fontsize=10)
+    ax.tick_params(axis="x", labelsize=9)
+    ax.plot([], [], "o", color=OI["black"], ms=5.5, mfc="white", mew=1.4,
+            label="same corpus, counted per transition")
+    ax.legend(fontsize=8.5, loc="lower right")
+    ax.set_title("Why a comparison stopped holding, counted once per episode\n"
+                 "99 families, 117 unsettled episodes, bars are 95% intervals",
+                 fontsize=10, loc="left", pad=10)
 
     ax = axes[1]
     scales = [r["band_scale"] for r in band["by_band"]]
-    series = list(order) + [("remains_supported", "remains supported", OI["yellow"])]
+    # three series only: the two the band moves, and the status that does not move
+    series = [("weakened", "margin inside the band", OI["sky"]),
+              ("remains_supported", "lead clear of the band", OI["yellow"]),
+              ("superseded_same_protocol", "new method took the lead", OI["green"]),
+              ("contradicted", "status: contradicted", OI["vermillion"])]
     for key, label, colour in series:
         ax.plot(scales, [r["status_counts"].get(key, 0) for r in band["by_band"]],
-                marker="o", ms=3.6, lw=1.7, color=colour,
-                label=label.replace("\n", " "))
+                marker="o", ms=5.0, lw=2.2, color=colour, label=label)
     ax.set_xscale("log")
     ax.set_xticks(scales)
-    ax.set_xticklabels([str(s) for s in scales], fontsize=7.5)
-    ax.set_ylim(-16, 305)
-    ax.axvline(1.0, color=OI["black"], lw=0.8, ls="--", alpha=0.5)
-    ax.annotate("preregistered\nband", xy=(1.0, 8), xytext=(1.45, 42),
-                fontsize=7, alpha=0.85, ha="left",
-                arrowprops=dict(arrowstyle="->", lw=0.7, alpha=0.6))
-    ax.annotate("contradicted stays at 0\nacross the whole sweep",
-                xy=(0.25, -2), xytext=(0.055, 62), fontsize=7.5, color=OI["vermillion"],
-                arrowprops=dict(arrowstyle="->", lw=0.8, color=OI["vermillion"]))
-    ax.set_xlabel("noise-band scale (1.0 is the preregistered primary band)")
-    ax.set_ylabel("transition count")
-    ax.set_title("Noise-band sweep\n"
-                 "mass moves only between weakened, remains supported and clean "
-                 "advance,\nwhich sum to 245 at every band; unresolved (257) and "
-                 "established (13) are omitted",
-                 fontsize=8.5, loc="left", pad=10)
-    ax.legend(fontsize=7, loc="upper center", ncol=2, columnspacing=1.0)
+    ax.set_xticklabels([str(s) for s in scales], fontsize=9)
+    ax.tick_params(axis="y", labelsize=9)
+    ax.set_ylim(-14, 260)
+    ax.axvline(1.0, color=OI["black"], lw=1.0, ls="--", alpha=0.55)
+    ax.annotate("band used\nthroughout", xy=(1.0, 6), xytext=(1.5, 52),
+                fontsize=9, alpha=0.9, ha="left",
+                arrowprops=dict(arrowstyle="->", lw=0.9, alpha=0.65))
+    ax.annotate("stays at 0", xy=(0.3, 0), xytext=(0.07, 40), fontsize=9,
+                color=OI["vermillion"],
+                arrowprops=dict(arrowstyle="->", lw=1.0, color=OI["vermillion"]))
+    ax.set_xlabel("noise-band scale", fontsize=10)
+    ax.set_ylabel("transition count", fontsize=10)
+    ax.set_title("The band moves transitions between three kinds\n"
+                 "their total is 245 at every band; the reversal status never fires",
+                 fontsize=10, loc="left", pad=10)
+    ax.legend(fontsize=9, loc="upper center", ncol=2, columnspacing=1.0)
     save(fig, "fig4_transition_distribution")
 
 

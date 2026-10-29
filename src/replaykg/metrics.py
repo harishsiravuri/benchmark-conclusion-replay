@@ -308,6 +308,120 @@ def kaplan_meier(spells: list[dict]) -> dict:
 
 
 # ---------------------------------------------------------------------------------------
+# Why a named method is absent from the selected reference set
+# ---------------------------------------------------------------------------------------
+
+ABSENCE_CAUSES = ("in_reference", "absent_in_another_valid_set",
+                  "absent_no_recorded_conditions", "absent_group_of_one")
+
+
+def absence_causes(replayed: dict, policy: str, oracle: str = "protocol_gated",
+                   restrict_to: frozenset | None = None) -> dict | None:
+    """Split the absence rate by cause, for one family.
+
+    Absence from the reference set is not the same as having nothing to compare against.
+    A named method can be absent because the archive records no conditions for it, so it
+    sits in no group at all; because it is grouped but its group has only one member, so
+    no comparison is possible there either; or because it sits in a different valid
+    comparison set, in which case it is comparable, just not against the set we selected
+    as the reference. Only the first is an absence of recoverable information.
+    """
+    ref = reference_partition(replayed, oracle)
+    if ref is None:
+        return None
+    entries, direction = ref["entries"], ref["direction"]
+    counts = {k: 0 for k in ABSENCE_CAUSES}
+    for c in replayed["conclusions"][policy]:
+        if c.winner_method is None:
+            continue
+        if restrict_to is not None and c.cutoff not in restrict_to:
+            continue
+        if best_value_for_method(entries, c.winner_method, direction) is not None:
+            counts["in_reference"] += 1
+            continue
+        ev = replayed["evidence"][c.cutoff]
+        mine = [e for e in ev.entries if e.method == c.winner_method]
+        grouped = [e for e in mine if e.cluster_id is not None]
+        if not grouped:
+            counts["absent_no_recorded_conditions"] += 1
+        elif any(e.cluster_id in ev.valid_sets for e in grouped):
+            counts["absent_in_another_valid_set"] += 1
+        else:
+            counts["absent_group_of_one"] += 1
+    n = sum(counts.values())
+    if n == 0:
+        return None
+    return {"n_scored_cutoffs": n, "counts": counts,
+            "shares": {k: v / n for k, v in counts.items()}}
+
+
+def paired_shortfall(replayed: dict, a: str, b: str, oracle: str = "protocol_gated",
+                     restrict_to: frozenset | None = None):
+    """Mean shortfall for two rules over the cutoffs where BOTH are evaluable.
+
+    Averaging each rule over its own evaluable cutoffs compares two different subsets.
+    This restricts both to the cutoffs where each names a method that appears in the
+    reference set, so the difference is paired at the cutoff and not only at the family.
+    Returns (mean_a, mean_b, n_cutoffs) or None when they share no evaluable cutoff.
+    """
+    ref = reference_partition(replayed, oracle)
+    if ref is None:
+        return None
+    entries, direction = ref["entries"], ref["direction"]
+    best_val, spread = ref["best"].value, ref["spread"]
+    gaps = {}
+    for policy in (a, b):
+        g = {}
+        for c in replayed["conclusions"][policy]:
+            if c.winner_method is None:
+                continue
+            if restrict_to is not None and c.cutoff not in restrict_to:
+                continue
+            v = best_value_for_method(entries, c.winner_method, direction)
+            if v is not None:
+                g[c.cutoff] = abs(best_val - v) / spread
+        gaps[policy] = g
+    common = sorted(set(gaps[a]) & set(gaps[b]))
+    if not common:
+        return None
+    return (sum(gaps[a][c] for c in common) / len(common),
+            sum(gaps[b][c] for c in common) / len(common),
+            len(common))
+
+
+def weakened_episode_outcomes(replayed: dict, policy: str, band: float = 1.0) -> dict:
+    """How each within-band episode ended, including those still running at the snapshot.
+
+    An episode that is still inside the band at the final cutoff has no observed outcome.
+    Counting it as a non-recovery would treat censored follow-up as evidence, so it is
+    reported as ongoing and excluded from the recovery denominator.
+    """
+    from replaykg.transitions import family_transitions
+    statuses = [t.status for t in family_transitions(replayed, policy, band=band)]
+    out = {"recovered": 0, "ended_other": 0, "ongoing_at_final_cutoff": 0,
+           "ended_by": {}}
+    i = 0
+    while i < len(statuses):
+        if statuses[i] != "weakened":
+            i += 1
+            continue
+        j = i
+        while j + 1 < len(statuses) and statuses[j + 1] == "weakened":
+            j += 1
+        if j == len(statuses) - 1:
+            out["ongoing_at_final_cutoff"] += 1
+        else:
+            nxt = statuses[j + 1]
+            out["ended_by"][nxt] = out["ended_by"].get(nxt, 0) + 1
+            if nxt == "remains_supported":
+                out["recovered"] += 1
+            else:
+                out["ended_other"] += 1
+        i = j + 1
+    return out
+
+
+# ---------------------------------------------------------------------------------------
 # Repeated states, and the opportunity denominator for a reversal
 # ---------------------------------------------------------------------------------------
 

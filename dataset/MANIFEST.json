@@ -1,6 +1,6 @@
 {
   "resource": "replaykg: chronological replay of protocol-qualified benchmark conclusions",
-  "version": "1.2",
+  "version": "1.3",
   "license": "CC-BY-SA 4.0, matching the upstream comparability resource it is derived from. Pointers only, no excerpt text.",
   "derived_from": {
     "substrate": "upstream/data/cleaned_leaderboards/cleaned_leaderboards.jsonl",
@@ -49,8 +49,8 @@
     },
     {
       "path": "metrics/gate0_grid.json",
-      "sha256": "bad6b5ac5da3a11c02a93a1e321cf8ce709c5cda88578616b09ebb91e4bdb6fc",
-      "size_bytes": 1629,
+      "sha256": "ff3f8bf228fece5f22362d6f82511c045f7d31469536962a9e9516cf01c1ead7",
+      "size_bytes": 1676,
       "rows": 1
     },
     {
@@ -61,20 +61,20 @@
     },
     {
       "path": "metrics/metrics_all.json",
-      "sha256": "21f708847ec2a24d5450f71c9c8931202008e4d059ca21ddf61b88eeb34160f2",
-      "size_bytes": 90606,
+      "sha256": "64802302b1dc54d65206219433bccbbd1f1893462368ede219cc693ff69de924",
+      "size_bytes": 101547,
       "rows": 1
     },
     {
       "path": "metrics/metrics_dev.json",
-      "sha256": "4b3b995089f3159b05b21ff6c9357032fb89e33d8cfad54873a285357b167679",
-      "size_bytes": 89592,
+      "sha256": "63966b9cbbecb3cd65761ca33ce16597508523c0104565f853a8b4156c5ebfe4",
+      "size_bytes": 98494,
       "rows": 1
     },
     {
       "path": "metrics/metrics_test.json",
-      "sha256": "1914640d7cb3e2fe5633a2247b1143b485b22dbef0fd223049fc64b7606b460b",
-      "size_bytes": 88624,
+      "sha256": "1506546f702370a46f1913704204f0f2c1f4cc771d8543db4972678080f7ad9c",
+      "size_bytes": 99403,
       "rows": 1
     },
     {
@@ -97,8 +97,8 @@
     },
     {
       "path": "metrics/propagation_llm_analysis.json",
-      "sha256": "0a882dbd7afd5b8484cc343174a09e61299a48659cbd4d49a6634a5fe217e70e",
-      "size_bytes": 5220,
+      "sha256": "c21b9873593352552b70e2f5062cd4f3873abea1092a6eb52b2601cc08aca505",
+      "size_bytes": 5221,
       "rows": 1
     },
     {
