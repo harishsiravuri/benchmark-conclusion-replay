@@ -90,13 +90,13 @@ def build(certs, trans):
     years = sorted(part)
 
     fig, (ax, bx) = plt.subplots(
-        2, 1, figsize=(9.6, 3.7), sharex=True,
+        2, 1, figsize=(9.0, 3.3), sharex=True,
         gridspec_kw={"height_ratios": [2.35, 1.0], "hspace": 0.14},
     )
 
     # ---- top: the two declared-conclusion tracks -------------------------------------
     y_naive, y_part = 1.0, 0.0
-    ax.set_ylim(-0.46, 1.42)
+    ax.set_ylim(-0.70, 1.42)
     ax.set_yticks([y_part, y_naive])
     ax.set_yticklabels(["checks\nconditions", "ignores\nconditions"], fontsize=10)
     ax.grid(axis="y", alpha=0)
@@ -127,24 +127,38 @@ def build(certs, trans):
                     label += f"\n{val:g}"
                 off = 0.17 if track_y == y_naive else -0.17
                 va = "bottom" if track_y == y_naive else "top"
-                ax.annotate(label, xy=(yr, track_y + off),
-                            ha="center", va=va, fontsize=8.6, linespacing=1.05,
+                # the first cutoff sits on the axis edge, so its label is left-aligned
+                ha = "left" if yr == years[0] else "center"
+                ax.annotate(label, xy=(yr - (0.3 if ha == "left" else 0), track_y + off),
+                            ha=ha, va=va, fontsize=9.4, linespacing=1.05,
                             color=colour if win is not None else "#666666")
             prev = win
 
-    # transition statuses on the partitioned track, drawn between consecutive cutoffs
-    for i, yr in enumerate(years[:-1]):
+    # Transition statuses on the partitioned track. Consecutive transitions carrying the
+    # same status are one episode, which is the unit the paper counts, so each run is
+    # drawn and labelled once. Labelling every transition separately crowded the panel
+    # and repeated one status five times.
+    runs = []
+    for yr in years[:-1]:
         t = ptrans.get(yr)
         if t is None:
             continue
-        mid = yr + 0.5
-        col = STATUS_COLOUR.get(t["status"], "#666666")
-        ax.annotate("", xy=(yr + 0.92, y_part), xytext=(yr + 0.08, y_part),
-                    arrowprops=dict(arrowstyle="-", color=col, lw=2.4, alpha=0.9))
-        # stagger consecutive labels so that the long two-line ones do not collide
-        height = y_part + (0.14 if i % 2 == 0 else 0.40)
-        ax.text(mid, height, STATUS_SHORT.get(t["status"], t["status"]),
-                ha="center", va="bottom", fontsize=8.4, color=col, linespacing=1.0)
+        if runs and runs[-1][0] == t["status"] and runs[-1][2] == yr - 1:
+            runs[-1][2] = yr
+            runs[-1][3] += 1
+        else:
+            runs.append([t["status"], yr, yr, 1])
+    for i, (status, y0, y1, n) in enumerate(runs):
+        col = STATUS_COLOUR.get(status, "#666666")
+        ax.annotate("", xy=(y1 + 0.92, y_part), xytext=(y0 + 0.08, y_part),
+                    arrowprops=dict(arrowstyle="-", color=col, lw=2.6, alpha=0.9))
+        label = STATUS_SHORT.get(status, status)
+        if n > 1:
+            label += f" ({n} steps)" if "\n" not in label else f"\n({n} steps)"
+        # two heights are still needed where a one-step run abuts a longer one
+        height = y_part + (0.13 if i % 2 == 0 else 0.44)
+        ax.text((y0 + y1) / 2 + 0.5, height, label,
+                ha="center", va="bottom", fontsize=9.6, color=col, linespacing=1.05)
 
     ax.set_title(
         "One family replayed: Pubmed, accuracy. The condition-blind track always names a winner; "

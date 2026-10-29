@@ -177,7 +177,7 @@ def fig_transitions(m_all, m_test, band):
              ("fragmented_by_protocol_drift", "could not be combined\nacross groups", OI["blue"]),
              ("superseded_same_protocol", "new method\ntook the lead", OI["green"]),
              ("conditionally_superseded", "largest group\nchanged", OI["purple"]),
-             ("contradicted", "status: contradicted\n(declared leader passed)", OI["vermillion"])]
+             ("contradicted", "declared leader\nwas passed", OI["vermillion"])]
 
     fig, axes = plt.subplots(1, 2, figsize=(10.2, 3.5),
                              gridspec_kw={"width_ratios": [1.0, 1.0]})
@@ -207,13 +207,16 @@ def fig_transitions(m_all, m_test, band):
     ax = axes[1]
     scales = [r["band_scale"] for r in band["by_band"]]
     # three series only: the two the band moves, and the status that does not move
+    # One legend in clear space above the curves, rather than a legend over the data plus
+    # two floating annotations, which is what crowded this panel before.
     series = [("weakened", "margin inside the band", OI["sky"]),
               ("remains_supported", "lead clear of the band", OI["yellow"]),
               ("superseded_same_protocol", "new method took the lead", OI["green"]),
-              ("contradicted", "status: contradicted", OI["vermillion"])]
+              ("contradicted", "declared leader was passed", OI["vermillion"])]
     for key, label, colour in series:
         ax.plot(scales, [r["status_counts"].get(key, 0) for r in band["by_band"]],
-                marker="o", ms=5.0, lw=2.2, color=colour, label=label)
+                marker="o", ms=5.0, lw=2.2, color=colour,
+                label=label if label else "_nolegend_")
     ax.set_xscale("log")
     ax.set_xticks(scales)
     ax.set_xticklabels([str(s) for s in scales], fontsize=9)
@@ -223,15 +226,13 @@ def fig_transitions(m_all, m_test, band):
     ax.annotate("band used\nthroughout", xy=(1.0, 6), xytext=(1.5, 52),
                 fontsize=9, alpha=0.9, ha="left",
                 arrowprops=dict(arrowstyle="->", lw=0.9, alpha=0.65))
-    ax.annotate("stays at 0", xy=(0.3, 0), xytext=(0.07, 40), fontsize=9,
-                color=OI["vermillion"],
-                arrowprops=dict(arrowstyle="->", lw=1.0, color=OI["vermillion"]))
     ax.set_xlabel("noise-band scale", fontsize=10)
     ax.set_ylabel("transition count", fontsize=10)
     ax.set_title("The band moves transitions between three kinds\n"
                  "their total is 245 at every band; the reversal status never fires",
                  fontsize=10, loc="left", pad=10)
-    ax.legend(fontsize=9, loc="upper center", ncol=2, columnspacing=1.0)
+    ax.legend(fontsize=8.5, loc="upper left", ncol=1, handlelength=1.6,
+              borderaxespad=0.3, labelspacing=0.35)
     save(fig, "fig4_transition_distribution")
 
 
