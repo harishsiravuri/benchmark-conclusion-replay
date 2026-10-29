@@ -78,7 +78,7 @@ def load_family():
 
 def short(name):
     if name is None:
-        return "no justified\nconclusion"
+        return "no group with\nmatching conditions"
     name = name.split(" (")[0]
     return name if len(name) <= 22 else name[:21] + "."
 
@@ -90,7 +90,7 @@ def build(certs, trans):
     years = sorted(part)
 
     fig, (ax, bx) = plt.subplots(
-        2, 1, figsize=(9.4, 3.5), sharex=True,
+        2, 1, figsize=(9.6, 3.6), sharex=True,
         gridspec_kw={"height_ratios": [2.35, 1.0], "hspace": 0.14},
     )
 
@@ -98,10 +98,10 @@ def build(certs, trans):
     y_naive, y_part = 1.0, 0.0
     ax.set_ylim(-0.46, 1.42)
     ax.set_yticks([y_part, y_naive])
-    ax.set_yticklabels(["protocol-\npartitioned", "naive\nlatest-max"], fontsize=8.5)
+    ax.set_yticklabels(["checks\nconditions", "ignores\nconditions"], fontsize=10)
     ax.grid(axis="y", alpha=0)
 
-    # shade the stretch where the partitioned policy holds no justified conclusion
+    # shade the stretch where the condition-checking rule has no eligible group
     none_years = [y for y in years if part[y]["conclusion"].get("winner_method") is None]
     if none_years:
         ax.axvspan(min(none_years) - 0.45, max(none_years) + 0.45,
@@ -128,7 +128,7 @@ def build(certs, trans):
                 off = 0.15 if track_y == y_naive else -0.15
                 va = "bottom" if track_y == y_naive else "top"
                 ax.annotate(label, xy=(yr, track_y + off),
-                            ha="center", va=va, fontsize=7.2, linespacing=1.05,
+                            ha="center", va=va, fontsize=8.6, linespacing=1.05,
                             color=colour if win is not None else "#666666")
             prev = win
 
@@ -144,12 +144,12 @@ def build(certs, trans):
         # stagger consecutive labels so that the long two-line ones do not collide
         height = y_part + (0.13 if i % 2 == 0 else 0.32)
         ax.text(mid, height, STATUS_SHORT.get(t["status"], t["status"]),
-                ha="center", va="bottom", fontsize=6.4, color=col, linespacing=0.95)
+                ha="center", va="bottom", fontsize=7.6, color=col, linespacing=0.95)
 
     ax.set_title(
         "One family replayed: Pubmed, accuracy. The naive track always names a winner; "
         "the protocol-partitioned track names one only once a valid comparison set exists.",
-        fontsize=8.5, loc="left")
+        fontsize=10, loc="left")
 
     # ---- bottom: what the partition is doing underneath ------------------------------
     n_sets = [part[y]["comparison_set"]["n_valid_sets"] for y in years]
@@ -157,7 +157,7 @@ def build(certs, trans):
 
     bx.step(years, n_sets, where="mid", color=OI["purple"], lw=1.8,
             label="valid comparison sets")
-    bx.set_ylabel("valid sets", fontsize=8, color=OI["purple"])
+    bx.set_ylabel("eligible groups", fontsize=9.5, color=OI["purple"])
     bx.set_ylim(-0.25, max(n_sets) + 0.85)
     bx.set_yticks(range(0, max(n_sets) + 1))
     bx.tick_params(axis="y", labelcolor=OI["purple"], labelsize=8)
@@ -165,7 +165,7 @@ def build(certs, trans):
     cx = bx.twinx()
     cx.plot(years, unknown, color=OI["orange"], lw=1.8, marker="o", ms=3.5,
             label="unknown-comparability share")
-    cx.set_ylabel("unknown share", fontsize=8, color=OI["orange"])
+    cx.set_ylabel("ungroupable share", fontsize=9.5, color=OI["orange"])
     cx.set_ylim(-0.05, 1.08)
     cx.tick_params(axis="y", labelcolor=OI["orange"], labelsize=8)
     cx.spines["top"].set_visible(False)
@@ -178,14 +178,14 @@ def build(certs, trans):
     if split_year is not None:
         for axis in (ax, bx):
             axis.axvline(split_year, color=OI["purple"], lw=0.9, ls=":", alpha=0.8, zorder=0)
-        bx.annotate("the comparable set splits in two",
+        bx.annotate("a second group\nbecame eligible",
                     xy=(split_year, max(n_sets)), xytext=(split_year - 3.6, max(n_sets) + 0.45),
-                    fontsize=7.2, color=OI["purple"],
+                    fontsize=8.6, color=OI["purple"],
                     arrowprops=dict(arrowstyle="->", color=OI["purple"], lw=0.9))
 
-    bx.set_xlabel("cutoff year", fontsize=8.5)
+    bx.set_xlabel("cutoff year", fontsize=10)
     bx.set_xticks(years)
-    bx.set_xticklabels([str(y) for y in years], fontsize=8)
+    bx.set_xticklabels([str(y) for y in years], fontsize=9.5)
     bx.set_xlim(years[0] - 0.7, years[-1] + 0.7)
 
     return fig

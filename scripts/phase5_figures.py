@@ -69,7 +69,7 @@ def save(fig, stem):
 # ---------------------------------------------------------------------------------------
 
 def fig_survival(m_all, m_test):
-    fig, ax = plt.subplots(figsize=(7.0, 4.2))
+    fig, ax = plt.subplots(figsize=(6.4, 3.6))
     for policy in ("naive_latest_max", "protocol_partitioned", "conservative_update",
                    "uncertainty_aware"):
         km = m_all["survival"][policy]["kaplan_meier"]
@@ -132,7 +132,7 @@ def fig_regret(m_all, m_test):
 def fig_unknown(m_all, m_test):
     """Marker area is proportional to the number of visible entries, so the thin early
     years cannot be read as if they carried the same weight as the later ones."""
-    fig, ax = plt.subplots(figsize=(6.8, 3.9))
+    fig, ax = plt.subplots(figsize=(6.9, 3.7))
     thin_cut = 100
     for m, label, colour, style in ((m_all, "full 99 families", OI["blue"], "-"),
                                     (m_test, "held-out 31 families", OI["orange"], ":")):
@@ -151,16 +151,16 @@ def fig_unknown(m_all, m_test):
                    color=OI["black"], alpha=0.07, zorder=0)
         ax.text(max(thin_years) + 0.35, 1.0,
                 f"fewer than {thin_cut} visible entries;\nrates here are unstable",
-                fontsize=7, alpha=0.75, va="top")
+                fontsize=9, alpha=0.8, va="top")
 
     ax.set_ylim(0, 1.06)
     ax.set_xlim(2013.4, 2025.6)
-    ax.set_xlabel("cutoff year")
+    ax.set_xlabel("cutoff year", fontsize=10)
     ax.set_ylabel("share of visible entries in no valid comparison set")
     ax.set_title("Unknown comparability over time\n"
                  "marker area is proportional to the number of visible entries that year",
                  fontsize=9, loc="left")
-    ax.legend(fontsize=8, loc="lower left")
+    ax.legend(fontsize=9.5, loc="lower left")
     save(fig, "fig3_unknown_over_time")
 
 
@@ -177,7 +177,7 @@ def fig_transitions(m_all, m_test, band):
              ("conditionally_superseded", "largest group\nchanged", OI["purple"]),
              ("contradicted", "status: contradicted\n(declared leader passed)", OI["vermillion"])]
 
-    fig, axes = plt.subplots(1, 2, figsize=(10.6, 4.6),
+    fig, axes = plt.subplots(1, 2, figsize=(10.2, 4.1),
                              gridspec_kw={"width_ratios": [1.0, 1.0]})
     fig.subplots_adjust(wspace=0.50)
 
