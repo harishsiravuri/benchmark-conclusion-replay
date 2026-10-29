@@ -1,7 +1,9 @@
 # Chronological replay of protocol-qualified benchmark conclusions
 
-Code and released data for an anonymous submission under review. This repository
-supports the paper's claims; it does not contain author or institution names.
+Code and released data for the paper "When Leaderboards Stop Separating Methods: A
+Chronological Replay" by Harish Varma Siravuri and Hamed Alhoori, Northern
+Illinois University. This repository carries every artefact the paper's claims are
+traced to.
 
 ## What this is
 
@@ -9,7 +11,7 @@ A leaderboard records what methods scored on a dataset and metric. Readers draw 
 comparative conclusion from it, usually which method is best. This repository
 replays that conclusion through time. For each benchmark family and each yearly
 cutoff, it recomputes the justified conclusion from only the evidence available
-at that cutoff, under four update policies, and classifies what happened between
+at that cutoff, under four update rules, and classifies what happened between
 consecutive cutoffs into one of eight typed statuses. No cutoff sees a later
 result, and a test fails the run on any leak.
 
