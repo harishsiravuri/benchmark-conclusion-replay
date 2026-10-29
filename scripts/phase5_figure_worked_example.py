@@ -96,7 +96,7 @@ def build(certs, trans):
 
     # ---- top: the two declared-conclusion tracks -------------------------------------
     y_naive, y_part = 1.0, 0.0
-    ax.set_ylim(-0.70, 1.42)
+    ax.set_ylim(-0.86, 1.52)
     ax.set_yticks([y_part, y_naive])
     ax.set_yticklabels(["checks\nconditions", "ignores\nconditions"], fontsize=10)
     ax.grid(axis="y", alpha=0)
@@ -130,7 +130,7 @@ def build(certs, trans):
                 # the first cutoff sits on the axis edge, so its label is left-aligned
                 ha = "left" if yr == years[0] else "center"
                 ax.annotate(label, xy=(yr - (0.3 if ha == "left" else 0), track_y + off),
-                            ha=ha, va=va, fontsize=9.4, linespacing=1.05,
+                            ha=ha, va=va, fontsize=10.6, linespacing=1.05,
                             color=colour if win is not None else "#666666")
             prev = win
 

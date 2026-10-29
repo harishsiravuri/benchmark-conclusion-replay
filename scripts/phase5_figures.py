@@ -222,7 +222,7 @@ def fig_transitions(m_all, m_test, band):
     ax.set_xticks(scales)
     ax.set_xticklabels([str(s) for s in scales], fontsize=9)
     ax.tick_params(axis="y", labelsize=9)
-    ax.set_ylim(-14, 260)
+    ax.set_ylim(-14, 330)
     ax.axvline(1.0, color=OI["black"], lw=1.0, ls="--", alpha=0.55)
     ax.annotate("band used\nthroughout", xy=(1.0, 6), xytext=(1.5, 52),
                 fontsize=9, alpha=0.9, ha="left",
