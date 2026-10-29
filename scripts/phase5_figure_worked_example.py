@@ -147,8 +147,8 @@ def build(certs, trans):
                 ha="center", va="bottom", fontsize=7.6, color=col, linespacing=0.95)
 
     ax.set_title(
-        "One family replayed: Pubmed, accuracy. The naive track always names a winner; "
-        "the protocol-partitioned track names one only once a valid comparison set exists.",
+        "One family replayed: Pubmed, accuracy. The condition-blind track always names a winner; "
+        "the condition-checking track names one only once a group of two or more exists.",
         fontsize=10, loc="left")
 
     # ---- bottom: what the partition is doing underneath ------------------------------

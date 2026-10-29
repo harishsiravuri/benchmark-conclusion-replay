@@ -1,6 +1,6 @@
 {
   "resource": "replaykg: chronological replay of protocol-qualified benchmark conclusions",
-  "version": "1.4",
+  "version": "1.5",
   "license": "CC-BY-SA 4.0, matching the upstream comparability resource it is derived from. Pointers only, no excerpt text.",
   "derived_from": {
     "substrate": "upstream/data/cleaned_leaderboards/cleaned_leaderboards.jsonl",
@@ -61,8 +61,8 @@
     },
     {
       "path": "metrics/metrics_all.json",
-      "sha256": "48f32fc71d637a1275919cea9e40ed14046616890f944da890787c8a33a4c4d4",
-      "size_bytes": 102390,
+      "sha256": "6b80d3083033bb45c1f2a02abb3cb7c8af6bb83e3c58931a93a54f9d1f2da317",
+      "size_bytes": 102983,
       "rows": 1
     },
     {
@@ -73,8 +73,8 @@
     },
     {
       "path": "metrics/metrics_test.json",
-      "sha256": "52ec612c75b67e605eca3243da7d32c815d77c94f0233e22029e91b51fd5b183",
-      "size_bytes": 100242,
+      "sha256": "0cbd01299122d18eadf349857dc71da0726094d99859181f5b2dd36fe3bcfb48",
+      "size_bytes": 100832,
       "rows": 1
     },
     {

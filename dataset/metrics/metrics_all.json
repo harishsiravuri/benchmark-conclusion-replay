@@ -2426,6 +2426,20 @@
       }
     }
   },
+  "groupability_final_cutoff": {
+    "note": "entries at the final cutoff by why they can or cannot be compared; the headline ungroupable share is the first category, and an entry with every field but no partner is the second",
+    "n_entries": 4879,
+    "counts": {
+      "missing_a_required_field": 2335,
+      "all_fields_but_no_partner": 30,
+      "in_a_group_of_two_or_more": 2514
+    },
+    "pooled_shares": {
+      "missing_a_required_field": 0.47858167657306827,
+      "all_fields_but_no_partner": 0.006148800983808158,
+      "in_a_group_of_two_or_more": 0.5152695224431236
+    }
+  },
   "repeated_states_outcomes": {
     "note": "an episode still inside the band at the final cutoff has no observed outcome; it is reported as ongoing and excluded from the recovery denominator rather than counted as a non-recovery",
     "policy": "protocol_partitioned",

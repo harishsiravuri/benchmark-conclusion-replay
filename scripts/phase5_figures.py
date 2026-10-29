@@ -33,11 +33,13 @@ from replaykg.paths import CHECKPOINTS, FIGURES  # noqa: E402
 OI = {"blue": "#0072B2", "orange": "#E69F00", "green": "#009E73", "vermillion": "#D55E00",
       "purple": "#CC79A7", "sky": "#56B4E9", "yellow": "#F0E442", "black": "#000000"}
 
+# one name per rule, matching the paper's prose and tables
 POLICY_LABEL = {
-    "naive_latest_max": "naive latest-max",
-    "protocol_partitioned": "protocol-partitioned",
-    "uncertainty_aware": "uncertainty-aware",
-    "conservative_update": "conservative update",
+    "naive_latest_max": "condition-blind",
+    "protocol_partitioned": "condition-checking",
+    "uncertainty_aware": "band-waiting",
+    "conservative_update": "persistence",
+    "naive_normalized": "condition-blind, units reconciled",
 }
 POLICY_COLOUR = {
     "naive_latest_max": OI["vermillion"],
@@ -78,7 +80,7 @@ def fig_survival(m_all, m_test):
                 label=f"{POLICY_LABEL[policy]} (median {m_all['survival'][policy]['median_half_life_cutoffs']})")
     km_t = m_test["survival"]["protocol_partitioned"]["kaplan_meier"]
     ax.step(km_t["times"], km_t["survival"], where="post", color=POLICY_COLOUR["protocol_partitioned"],
-            lw=1.3, ls=":", label="protocol-partitioned, held-out 31")
+            lw=1.3, ls=":", label="condition-checking, held-out 31")
     ax.axhline(0.5, color=OI["black"], lw=0.7, ls="--", alpha=0.5)
     ax.text(0.02, 0.515, "median", transform=ax.get_yaxis_transform(), fontsize=9, alpha=0.75)
     ax.set_xlabel("cutoff steps since the winner was declared", fontsize=10)
@@ -88,7 +90,7 @@ def fig_survival(m_all, m_test):
     ax.set_title("Survival of the declared winner\n"
                  "A longer curve describes how long a rule holds a winner, not how good it is",
                  fontsize=10, loc="left")
-    ax.legend(fontsize=9, loc="upper right")
+    ax.legend(fontsize=10, loc="upper right")
     save(fig, "fig1_survival")
 
 

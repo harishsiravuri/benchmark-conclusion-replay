@@ -299,6 +299,41 @@ def main() -> int:
                                 for c in ep_per_family]).as_dict() for k in EP_UNS},
     }
 
+    # --- groupability at the final cutoff, split by cause -------------------------------
+    # The headline ungroupable share counts entries missing a required recorded field.
+    # An entry can also have every field and still have no partner, which is a different
+    # situation and is reported separately rather than folded in.
+    gcounts = collections.Counter(); gper = []
+    for fid, r in replayed.items():
+        if not r["years"]:
+            continue
+        ev = r["evidence"][r["years"][-1]]
+        sizes = collections.Counter(e.cluster_id for e in ev.entries
+                                    if e.cluster_id is not None)
+        c = collections.Counter()
+        for e in ev.entries:
+            if e.cluster_id is None:
+                c["missing_a_required_field"] += 1
+            elif sizes[e.cluster_id] == 1:
+                c["all_fields_but_no_partner"] += 1
+            else:
+                c["in_a_group_of_two_or_more"] += 1
+        gcounts.update(c)
+        gper.append(c)
+    gtotal = sum(gcounts.values())
+    out["groupability_final_cutoff"] = {
+        "note": ("entries at the final cutoff by why they can or cannot be compared; the "
+                 "headline ungroupable share is the first category, and an entry with every "
+                 "field but no partner is the second"),
+        "n_entries": gtotal,
+        "counts": {k: gcounts.get(k, 0) for k in
+                   ("missing_a_required_field", "all_fields_but_no_partner",
+                    "in_a_group_of_two_or_more")},
+        "pooled_shares": {k: gcounts.get(k, 0) / gtotal for k in
+                          ("missing_a_required_field", "all_fields_but_no_partner",
+                           "in_a_group_of_two_or_more")},
+    }
+
     # --- do the rules even name different methods where both are scorable? -------------
     # A paired shortfall comparison is only informative if the two rules recommend
     # different methods on the cutoffs being compared. Where they name the same method,
