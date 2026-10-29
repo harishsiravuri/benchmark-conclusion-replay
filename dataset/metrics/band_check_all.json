@@ -3,7 +3,7 @@
   "n_families": 99,
   "substrate_sha256": "b2dd904793a6f5dac0815a2936553d67aac2005e2dbb1cdc735fd79073ef2472",
   "noise_model": {
-    "source": "upstream/src/noise/model.py",
+    "source": "/Users/harish/Documents/Claude/Projects/phd_v2/paper3.2/src/noise/model.py",
     "sha256": "0d65cede988bdd74e2e4008fa7737970a93ec13d310c938092ae76dcfedb3b62",
     "k": 2.0,
     "sigma_default_rel": 0.021,

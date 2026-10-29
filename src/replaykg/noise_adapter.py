@@ -51,10 +51,10 @@ def classify_metric_range(metric_name: str) -> str:
 
 
 def beyond_noise(v1: float, v2: float, metric_name: str, band_scale: float = 1.0) -> bool:
-    """True when the two values differ by more than the the upstream resource noise band.
+    """True when the two values differ by more than the upstream noise band.
 
     `band_scale` multiplies the band and exists only for the preregistered sensitivity
-    analysis. The primary analysis always uses 1.0, that is the the upstream resource band unmodified.
+    analysis. The primary analysis always uses 1.0, that is the upstream band unmodified.
     """
     if v1 is None or v2 is None:
         return False

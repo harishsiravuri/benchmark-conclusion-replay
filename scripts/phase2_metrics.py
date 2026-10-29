@@ -24,12 +24,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from replaykg.metrics import (  # noqa: E402
     ORACLES, bootstrap_mean, bootstrap_paired_difference, bootstrap_ratio,
     common_declared_cutoffs, cross_partition_disagreement, declared_cutoffs, family_regret,
-    kaplan_meier, reference_partition,
+    kaplan_meier, reference_partition, reversal_opportunities, weakened_runs,
     ranking_reversals, structural_change_decomposition, supersession_rates, winner_spells,
 )
 from replaykg.noise_adapter import noise_model_provenance  # noqa: E402
 from replaykg.paths import CHECKPOINTS, SPLIT_MAP, ensure_dirs  # noqa: E402
-from replaykg.replay import POLICIES, replay_family  # noqa: E402
+from replaykg.replay import ALL_POLICIES, POLICIES, replay_family  # noqa: E402
 from replaykg.substrate import load_families, verify_substrate  # noqa: E402
 from replaykg.transitions import STATUSES, family_transitions  # noqa: E402
 
@@ -185,6 +185,114 @@ def main() -> int:
                     if fr is not None:
                         rows[p][fid] = fr
             _emit_regret(out, oracle, basis, rows, len(families))
+
+    # --- the normalizing baseline, reported separately ----------------------------------
+    # A fifth rule that reconciles unit scale but still ignores evaluation conditions. It
+    # is scored in its own block, against the same-cutoff basis defined by the four, so
+    # that adding it cannot move any figure computed over the four.
+    out["regret"]["normalizing_baseline"] = {
+        "note": ("naive_normalized reconciles a bounded metric reported as both a fraction "
+                 "and a percentage, then takes the argmax over every visible entry. It uses "
+                 "no comparability information, so the gap between it and protocol "
+                 "partitioning isolates the effect of checking conditions from the effect "
+                 "of fixing the unit artefact."),
+        "by_oracle": {},
+    }
+    for oracle in ORACLES:
+        pair = ("naive_normalized", PRIMARY_POLICY, "naive_latest_max")
+        rows = {p: {} for p in pair}
+        for fid, r in replayed.items():
+            keep = common_declared_cutoffs(r)          # basis from the original four
+            for p in pair:
+                fr = family_regret(r, p, oracle, keep)
+                if fr is not None:
+                    rows[p][fid] = fr
+        scored = sorted(set.intersection(*[set(rows[p]) for p in pair])) if families else []
+        out["regret"]["normalizing_baseline"]["by_oracle"][oracle] = {
+            "basis": "same_cutoff",
+            "n_families_scored": len(scored),
+            "mean_fractional_regret": {
+                p: bootstrap_mean([rows[p][f]["mean_fractional_regret"]
+                                   for f in scored]).as_dict() for p in pair},
+            "off_partition_rate": {
+                p: bootstrap_mean([rows[p][f]["off_partition_rate"]
+                                   for f in scored]).as_dict() for p in pair},
+            "mean_fractional_regret_measured_only": {
+                p: bootstrap_mean([rows[p][f]["mean_fractional_regret_measured_only"]
+                                   for f in scored
+                                   if rows[p][f]["mean_fractional_regret_measured_only"]
+                                   is not None]).as_dict() for p in pair},
+            "paired_difference_partitioned_minus_normalized": bootstrap_paired_difference(
+                [(rows[PRIMARY_POLICY][f]["mean_fractional_regret"],
+                  rows["naive_normalized"][f]["mean_fractional_regret"])
+                 for f in scored]).as_dict(),
+            "paired_difference_normalized_minus_raw": bootstrap_paired_difference(
+                [(rows["naive_normalized"][f]["mean_fractional_regret"],
+                  rows["naive_latest_max"][f]["mean_fractional_regret"])
+                 for f in scored]).as_dict(),
+        }
+
+    # --- measured gaps, with the absence penalty removed --------------------------------
+    # The penalised mean mixes a distance measured inside the reference set with a fixed
+    # penalty for naming a method that is not in it. Scoring only the cutoffs where the
+    # named method IS in the reference set answers a different and narrower question: when
+    # a rule names a method we can place, how good is that method?
+    POL5 = ("naive_latest_max", "naive_normalized", PRIMARY_POLICY,
+            "uncertainty_aware", "conservative_update")
+    meas = {p: {} for p in POL5}
+    for fid, r in replayed.items():
+        keep = common_declared_cutoffs(r)
+        for p in POL5:
+            fr = family_regret(r, p, "protocol_gated", keep)
+            if fr and fr["mean_fractional_regret_measured_only"] is not None:
+                meas[p][fid] = fr["mean_fractional_regret_measured_only"]
+    common = sorted(set.intersection(*[set(meas[p]) for p in POL5])) if families else []
+    out["regret"]["measured_gaps_only"] = {
+        "note": ("same-cutoff basis, protocol-gated reference, restricted to cutoffs where "
+                 "the named method appears in the reference set; the absence penalty is "
+                 "excluded rather than assigned"),
+        "n_families_scored": len(common),
+        "mean_fractional_regret": {
+            p: bootstrap_mean([meas[p][f] for f in common]).as_dict() for p in POL5},
+        "paired_difference": {
+            f"{a}_minus_{b}": bootstrap_paired_difference(
+                [(meas[a][f], meas[b][f]) for f in common]).as_dict()
+            for a, b in ((PRIMARY_POLICY, "naive_latest_max"),
+                         (PRIMARY_POLICY, "naive_normalized"),
+                         ("naive_normalized", "naive_latest_max"),
+                         ("uncertainty_aware", PRIMARY_POLICY),
+                         ("conservative_update", PRIMARY_POLICY))},
+    }
+
+    # --- repeated states, and the opportunity denominator for a reversal ----------------
+    runs = [weakened_runs(r, PRIMARY_POLICY) for r in replayed.values()]
+    opps = [reversal_opportunities(r, PRIMARY_POLICY) for r in replayed.values()]
+    all_runs = [n for w in runs for n in w["run_lengths"]]
+    out["repeated_states"] = {
+        "note": ("a family whose leading margin sits inside the band stays there until "
+                 "something changes, so every cutoff in that stretch is another weakened "
+                 "transition; first entries count distinct episodes"),
+        "policy": PRIMARY_POLICY,
+        "weakened_first_entry": sum(w["first_entry"] for w in runs),
+        "weakened_continuation": sum(w["continuation"] for w in runs),
+        "weakened_exit_to_separated": sum(w["exit_to_separated"] for w in runs),
+        "episode_count": len(all_runs),
+        "episode_length_median": (sorted(all_runs)[len(all_runs)//2] if all_runs else None),
+        "episode_length_max": (max(all_runs) if all_runs else None),
+    }
+    out["reversal_opportunities"] = {
+        "note": ("an opportunity is a method already in the comparison set when the leader "
+                 "was declared that later receives a fresh measurement in that same set, so "
+                 "the recorded order between the two could have changed"),
+        "policy": PRIMARY_POLICY,
+        "opportunities": sum(o["opportunities"] for o in opps),
+        "reversed": sum(o["reversed"] for o in opps),
+        "transitions_with_opportunity": sum(o["transitions_with_opportunity"] for o in opps),
+        "families_with_opportunity": sum(1 for o in opps if o["opportunities"]),
+        "unassessable_leader_absent": sum(o["unassessable_leader_absent"] for o in opps),
+        "unassessable_set_changed": sum(o["unassessable_set_changed"] for o in opps),
+        "reversals": [d for o in opps for d in o["reversals"]],
+    }
 
     # --- why the two bases differ -------------------------------------------------------
     # The cutoffs naive latest-max is scored on but the gated policies are not. These are

@@ -6,10 +6,10 @@ constructed, and it is the only object the policies are given, so a policy has n
 later entry. `tests/test_leakage.py` additionally checks the behavioural form of the
 invariant, namely that perturbing an entry dated after t changes no conclusion at t.
 
-The valid comparison sets are the the upstream resource comparable clusters, consumed frozen. Each
+The valid comparison sets are the upstream comparable clusters, consumed frozen. Each
 cluster is a maximal set of entries agreeing on the observed must-agree facets split, metric
 surface, and unit, which is exactly the query-induced maximal compatible subset of the
-the upstream resource framework. Entries missing a must-agree facet are the comparability-unknown mass
+upstream framework. Entries missing a must-agree facet are the comparability-unknown mass
 and are excluded from every valid comparison set.
 """
 
@@ -17,7 +17,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from replaykg.noise_adapter import beyond_noise
+from replaykg.noise_adapter import beyond_noise, classify_metric_range
 from replaykg.substrate import Entry, Family
 
 POLICIES = (
@@ -26,6 +26,12 @@ POLICIES = (
     "uncertainty_aware",
     "conservative_update",
 )
+
+# A diagnostic baseline, reported beside the four but deliberately NOT a member of
+# POLICIES. POLICIES defines the same-cutoff comparison basis, and adding a fifth rule
+# there would silently move every published same-cutoff figure.
+DIAGNOSTIC_POLICIES = ("naive_normalized",)
+ALL_POLICIES = POLICIES + DIAGNOSTIC_POLICIES
 
 # Preregistered policy parameters (see PREREGISTRATION.md).
 CONSERVATIVE_K = 2                 # consecutive cutoffs a challenger must lead
@@ -186,7 +192,7 @@ def _cluster_winners(ev: CutoffEvidence) -> dict:
 
 
 def _answer_status(cw: dict, ev: CutoffEvidence) -> str:
-    """the upstream resource framework status of the argmax answer over the valid comparison sets."""
+    """Upstream framework status of the argmax answer over the valid comparison sets."""
     if ev.metric_direction not in ("higher", "lower"):
         return "undefined"
     if not cw:
@@ -255,6 +261,77 @@ def conclude_naive(ev: CutoffEvidence, band: float = 1.0) -> Conclusion:
         cluster_winners=cw,
         shared_methods_across_sets=_shared_methods(ev),
         notes=["protocol ignored by construction"],
+    )
+
+
+def unit_reconciled_values(ev: CutoffEvidence) -> dict:
+    """Entry index to a value brought onto one scale, for the normalizing baseline.
+
+    A bounded metric is reported both as a fraction and as a percentage in this archive,
+    so 0.8976 and 79.0 can sit on the same board. Comparing them without reconciling the
+    scale is a unit error rather than a comparability failure, and a baseline that makes
+    that error understates what an ordinary reader of a leaderboard would do.
+
+    The rule is deliberately narrow. For a bounded metric only, when the visible values
+    straddle the 1.5 boundary, values at or below 1.5 are read as fractions and multiplied
+    by 100. Unbounded metrics are left alone, since no fixed scale relation holds for
+    them. Nothing here uses the evaluation conditions, so this baseline remains blind to
+    comparability by construction.
+    """
+    vals = {e.entry_index: e.value for e in ev.entries if e.value is not None}
+    if classify_metric_range(ev.metric) != "bounded" or not vals:
+        return vals
+    low = [v for v in vals.values() if abs(v) <= 1.5]
+    high = [v for v in vals.values() if abs(v) > 1.5]
+    if not (low and high):
+        return vals
+    return {i: (v * 100.0 if abs(v) <= 1.5 else v) for i, v in vals.items()}
+
+
+def conclude_naive_normalized(ev: CutoffEvidence, band: float = 1.0) -> Conclusion:
+    """Argmax over every visible entry after reconciling unit scale, protocol ignored.
+
+    This isolates the effect of checking evaluation conditions from the effect of fixing a
+    unit artefact. It differs from naive latest-maximum only in the scale reconciliation,
+    and from protocol partitioning in using no comparability information at all.
+    """
+    vals = unit_reconciled_values(ev)
+    direction = ev.metric_direction
+    best = None
+    if direction in ("higher", "lower"):
+        for e in ev.entries:
+            v = vals.get(e.entry_index)
+            if v is None:
+                continue
+            if best is None:
+                best = (e, v)
+            elif is_better(v, best[1], direction) or (v == best[1] and e.entry_index < best[0].entry_index):
+                best = (e, v)
+    margin = bn = None
+    if best is not None:
+        others = [(e, vals[e.entry_index]) for e in ev.entries
+                  if e.method != best[0].method and e.entry_index in vals]
+        runner = None
+        for e, v in others:
+            if runner is None or is_better(v, runner[1], direction):
+                runner = (e, v)
+        if runner is not None:
+            margin = abs(best[1] - runner[1])
+            bn = beyond_noise(best[1], runner[1], ev.metric, band)
+    return Conclusion(
+        **_base(ev, "naive_normalized"),
+        winner_method=best[0].method if best else None,
+        winner_value=best[1] if best else None,
+        winner_cluster=best[0].cluster_id if best else None,
+        principal_signature=dict(best[0].protocol) if (best and best[0].protocol) else None,
+        comparison_set_size=ev.n_entries,
+        n_valid_sets=len(ev.valid_sets),
+        answer_status="undefined" if direction not in ("higher", "lower") else "naive",
+        margin_over_runner_up=margin,
+        margin_beyond_noise=bn,
+        cluster_winners=_cluster_winners(ev),
+        shared_methods_across_sets=_shared_methods(ev),
+        notes=["unit scale reconciled; protocol ignored by construction"],
     )
 
 
@@ -374,11 +451,12 @@ def replay_family(family: Family, k: int = CONSERVATIVE_K, band: float = 1.0) ->
     """
     years = cutoff_years(family)
     evidence = {t: evidence_at(family, t) for t in years}
-    out: dict[str, list[Conclusion]] = {p: [] for p in POLICIES}
+    out: dict[str, list[Conclusion]] = {p: [] for p in ALL_POLICIES}
 
     for t in years:
         ev = evidence[t]
         out["naive_latest_max"].append(conclude_naive(ev, band))
+        out["naive_normalized"].append(conclude_naive_normalized(ev, band))
         out["protocol_partitioned"].append(conclude_protocol_partitioned(ev, band))
 
     incumbent = None

@@ -18,7 +18,7 @@ The off-partition penalty is a stated modelling choice, it is bounded, and the o
 rate is reported beside the regret so a reader can separate the two effects. Regret is
 reported in two units: FRACTIONAL regret in the interval 0 to 1, normalised by the reference
 spread, which is the primary cross-family quantity because it is scale free; and NORMALISED
-POINTS on a 0 to 100 scale, which is comparable to the the upstream resource noise band.
+POINTS on a 0 to 100 scale, which is comparable to the upstream noise band.
 """
 
 from __future__ import annotations
@@ -29,6 +29,7 @@ from dataclasses import dataclass
 from replaykg.replay import (
     POLICIES, CutoffEvidence, best_entry, best_value_for_method, principal_cluster,
 )
+from replaykg.noise_adapter import beyond_noise
 from replaykg.transitions import CHANGE_STATUSES, PROTOCOL_CONDITIONAL_STATUSES
 
 BOOTSTRAP_REPLICATES = 10000
@@ -167,7 +168,7 @@ def reference_partition(replayed: dict, oracle: str = "protocol_gated"):
 
 
 def _to_points(v: float, reference_max: float) -> float:
-    """upstream convention: values on a 0 to 1 scale are read as a 0 to 100 point scale."""
+    """Upstream convention: values on a 0 to 1 scale are read as a 0 to 100 point scale."""
     return v * 100.0 if reference_max <= 1.5 else v
 
 
@@ -205,6 +206,7 @@ def family_regret(replayed: dict, policy: str, oracle: str = "protocol_gated",
     scale_ref = max(abs(ref["best"].value), abs(ref["worst"].value))
 
     frac, pts = [], []
+    measured = []                      # cutoffs where the declared method IS in the reference
     off_partition = no_conclusion = skipped = 0
     for c in replayed["conclusions"][policy]:
         if c.winner_method is None:
@@ -216,9 +218,10 @@ def family_regret(replayed: dict, policy: str, oracle: str = "protocol_gated",
         v = best_value_for_method(entries, c.winner_method, direction)
         if v is None:
             off_partition += 1
-            gap = spread
+            gap = spread                # the absence penalty, not a measured gap
         else:
             gap = abs(best_val - v)
+            measured.append(gap / spread)
         frac.append(gap / spread)
         pts.append(_to_points(gap, scale_ref))
     n = len(frac)
@@ -231,6 +234,12 @@ def family_regret(replayed: dict, policy: str, oracle: str = "protocol_gated",
         "n_cutoffs_scored": n,
         "mean_fractional_regret": sum(frac) / n,
         "mean_regret_points": sum(pts) / n,
+        # The penalised mean above mixes two different quantities: a distance measured
+        # inside the reference set, and a fixed penalty for a method that is not in the
+        # reference set at all. The next two fields separate them, so a reader can see how
+        # much of a rule's regret is a measured shortfall and how much is absence.
+        "mean_fractional_regret_measured_only": (sum(measured)/len(measured)) if measured else None,
+        "n_cutoffs_measured": len(measured),
         "off_partition_rate": off_partition / n,
         "no_conclusion_cutoffs": no_conclusion,
         "cutoffs_skipped_by_restriction": skipped,
@@ -296,6 +305,117 @@ def kaplan_meier(spells: list[dict]) -> dict:
             break
     return {"times": out_t, "survival": out_s, "median": median,
             "n": len(spells), "n_events": sum(s["event"] for s in spells)}
+
+
+# ---------------------------------------------------------------------------------------
+# Repeated states, and the opportunity denominator for a reversal
+# ---------------------------------------------------------------------------------------
+
+def weakened_runs(replayed: dict, policy: str, band: float = 1.0) -> dict:
+    """Separate entering the within-band state from staying in it.
+
+    A leaderboard whose leading margin has fallen inside the band stays there until
+    something changes, and every cutoff in that stretch is another `weakened` transition.
+    Counting transitions therefore counts one episode many times. This splits them:
+
+      first_entry   the transition that moved the family into the state
+      continuation  a transition whose predecessor was already in the state
+      exit_to_separated  the state ended with the leader clear of the band again
+
+    The first-entry count is the number of distinct episodes, which is the quantity a
+    reader means by "how often did this happen".
+    """
+    from replaykg.transitions import family_transitions
+    statuses = [t.status for t in family_transitions(replayed, policy, band=band)]
+    first_entry = continuation = exit_to_separated = 0
+    runs, run, prev = [], 0, None
+    for s in statuses:
+        if s == "weakened":
+            if prev == "weakened":
+                continuation += 1
+                run += 1
+            else:
+                first_entry += 1
+                run = 1
+        else:
+            if prev == "weakened":
+                runs.append(run)
+                run = 0
+                if s == "remains_supported":
+                    exit_to_separated += 1
+        prev = s
+    if run:
+        runs.append(run)
+    return {"first_entry": first_entry, "continuation": continuation,
+            "exit_to_separated": exit_to_separated, "run_lengths": runs}
+
+
+def reversal_opportunities(replayed: dict, policy: str = "protocol_partitioned",
+                           band: float = 1.0) -> dict:
+    """How often an order reversal could have been observed, and how often it was.
+
+    The empty `contradicted` count is not evidence of stability on its own, because that
+    status only compares the previous leader with the method that becomes the new leader.
+    An opportunity here is wider and is the denominator a reader needs: a method that was
+    already in the comparison set when the leader was declared, that later receives a
+    fresh measurement in that same set, so the recorded order between the two could have
+    changed. Transitions where the comparison set itself changed are excluded, since a
+    different set is not the same comparison. Transitions where the previous leader has no
+    value in the set are counted as unassessable rather than as evidence either way.
+    """
+    from replaykg.transitions import _first_year_in_set
+    years, evidence = replayed["years"], replayed["evidence"]
+    concl = replayed["conclusions"][policy]
+    opportunities = reversed_ = 0
+    transitions_with_opportunity = 0
+    unassessable_leader_absent = unassessable_set_changed = 0
+    detail = []
+    for i in range(1, len(years)):
+        prev, cur = concl[i - 1], concl[i]
+        ev = evidence[years[i]]
+        if not (prev.has_conclusion and cur.has_conclusion):
+            continue
+        if prev.winner_cluster is None or cur.winner_cluster is None:
+            continue
+        if cur.winner_cluster != prev.winner_cluster:
+            unassessable_set_changed += 1
+            continue
+        cid = cur.winner_cluster
+        entries = ev.clusters.get(cid, ())
+        leader = prev.winner_method
+        leader_val = best_value_for_method(entries, leader, ev.metric_direction)
+        if leader_val is None:
+            unassessable_leader_absent += 1
+            continue
+        reference = prev.declared_since if prev.declared_since is not None else prev.cutoff
+        found = 0
+        for method in sorted({e.method for e in entries}):
+            if method == leader:
+                continue
+            first = _first_year_in_set(ev, cid, method)
+            if first is None or first > reference:
+                continue
+            if not any(e.method == method and e.year is not None and e.year > reference
+                       for e in entries):
+                continue
+            found += 1
+            value = best_value_for_method(entries, method, ev.metric_direction)
+            ahead = (value > leader_val if ev.metric_direction == "higher"
+                     else value < leader_val)
+            if ahead and beyond_noise(value, leader_val, ev.metric, band):
+                reversed_ += 1
+                detail.append({"family_id": replayed["family"].leaderboard_id,
+                               "from_cutoff": prev.cutoff, "to_cutoff": cur.cutoff,
+                               "leader": leader, "overtaken_by": method,
+                               "leader_value": leader_val, "other_value": value})
+        if found:
+            transitions_with_opportunity += 1
+            opportunities += found
+    return {"opportunities": opportunities, "reversed": reversed_,
+            "transitions_with_opportunity": transitions_with_opportunity,
+            "unassessable_leader_absent": unassessable_leader_absent,
+            "unassessable_set_changed": unassessable_set_changed,
+            "reversals": detail}
 
 
 # ---------------------------------------------------------------------------------------

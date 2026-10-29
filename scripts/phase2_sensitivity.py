@@ -8,7 +8,7 @@ on a threshold choice.
                         (primary 0.5; a value above 1 disables the rule entirely, so the only
                         route to unresolved is the absence of any valid comparison set);
   conservative_k        consecutive cutoffs a challenger must lead (primary 2);
-  band_scale            multiplier on the the upstream resource noise band (primary 1.0).
+  band_scale            multiplier on the upstream noise band (primary 1.0).
 
 Writes `checkpoints/sensitivity_<split>.json`.
 """

@@ -120,3 +120,29 @@ number, which is what gating refuses when that number is not comparable.
 
 `phase6_oracle_sensitivity.py` and `phase7_language_subset.py` use the `same_cutoff`
 basis throughout.
+
+## The reframed results
+
+The paper reports regret in two parts, and `phase2_metrics.py` writes both.
+
+- `regret.measured_gaps_only` is the mean shortfall over cutoffs where the named
+  method appears in the reference set, on the 63 families where every rule names
+  such a method. Expect `protocol_partitioned_minus_naive_latest_max` of
+  **-0.003 [-0.011, +0.004]**, an interval including zero.
+- `regret.by_oracle.protocol_gated.same_cutoff` carries the penalised means, where
+  an absent method takes the maximum. Expect **-0.188 [-0.251, -0.128]**. That
+  figure is dominated by the absence rate and is not a measured shortfall.
+- `regret.normalizing_baseline` reports a fifth rule that reconciles a bounded
+  metric reported as both a fraction and a percentage while still ignoring
+  evaluation conditions.
+
+`reversal_opportunities` carries the wider reversal count the paper reports: 168
+eligible comparisons, 3 reversed, with the three named in `reversals`. The
+`contradicted` status is empty because it compares only the previous leader with
+the method that becomes the new leader.
+
+`repeated_states` separates entering the within-band state from staying in it: 62
+first entries, 110 continuations, 0 returns to a separated ranking.
+
+`scripts/check_proposal_statuses.py` checks the eight status definitions as stated
+in prose against the classifier, and exits non-zero on any disagreement.

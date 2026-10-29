@@ -13,7 +13,7 @@ route two toward `contradicted` or `superseded_same_protocol`. If reversals exis
 merely being masked, they must surface as the band narrows.
 
 The sweep therefore runs the full classification at band scales from 0.05, that is a band
-twenty times narrower than the the upstream resource default, up to 4.0, and reports the whole status
+twenty times narrower than the upstream default, up to 4.0, and reports the whole status
 distribution at each. The primary analysis is band 1.0 and is not changed by this script.
 
 Writes `checkpoints/band_check.json`.

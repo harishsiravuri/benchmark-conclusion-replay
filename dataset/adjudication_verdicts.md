@@ -21,7 +21,7 @@ span in the sheet and the model caught it.
 Agreement is therefore 47 of 47, including the single positive case. The measured rate of
 0.019 [0.008, 0.032] for explicit split statement is consistent with what the spans contain.
 
-## Result 2: the the upstream resource `split` field is a pipeline inference, not a reading of the span
+## Result 2: the upstream `split` field is a pipeline inference, not a reading of the span
 
 This is the consequential finding of the adjudication, and it changes how the deterministic
 census must be read.

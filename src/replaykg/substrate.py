@@ -2,7 +2,7 @@
 
 The substrate is `upstream/data/cleaned_leaderboards/cleaned_leaderboards.jsonl`, one JSON
 object per canonical (dataset, metric) benchmark family. This module flattens each family
-into dated result records and preserves the the upstream resource deterministic comparability structure,
+into dated result records and preserves the upstream deterministic comparability structure,
 namely the comparable clusters (each carrying an observed protocol signature over the facets
 split, metric surface, and unit) and the comparability-unknown entries (entries missing at
 least one must-agree facet).

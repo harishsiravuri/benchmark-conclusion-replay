@@ -86,7 +86,7 @@ def fig_survival(m_all, m_test):
     ax.set_ylim(0, 1.02)
     ax.set_xlim(0, 9)
     ax.set_title("Survival of the declared winner\n"
-                 "A longer curve describes how long a policy holds a winner, not how good it is",
+                 "A longer curve describes how long a rule holds a winner, not how good it is",
                  fontsize=9, loc="left")
     ax.legend(fontsize=7.5, loc="upper right")
     save(fig, "fig1_survival")
@@ -222,8 +222,10 @@ def fig_transitions(m_all, m_test, band):
     ax.set_xlabel("noise-band scale (1.0 is the preregistered primary band)")
     ax.set_ylabel("transition count")
     ax.set_title("Noise-band sweep\n"
-                 "the band redistributes mass only among the top three series",
-                 fontsize=9, loc="left", pad=10)
+                 "mass moves only between weakened, remains supported and clean "
+                 "advance,\nwhich sum to 245 at every band; unresolved (257) and "
+                 "established (13) are omitted",
+                 fontsize=8.5, loc="left", pad=10)
     ax.legend(fontsize=7, loc="upper center", ncol=2, columnspacing=1.0)
     save(fig, "fig4_transition_distribution")
 

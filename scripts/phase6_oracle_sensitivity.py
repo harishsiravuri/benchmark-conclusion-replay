@@ -124,6 +124,8 @@ def regret_against(replayed, policy, ref, restrict_to=None):
     for c in replayed["conclusions"][policy]:
         if c.winner_method is None:
             continue
+        if restrict_to is not None and c.cutoff not in restrict_to:
+            continue
         v = best_value_for_method(entries, c.winner_method, direction)
         if v is None:
             off += 1
@@ -181,6 +183,7 @@ def main():
         "note": ("Sensitivity of the regret result to the hindsight reference. Deterministic, "
                  "zero model cost. The primary analysis uses the largest valid comparison set."),
         "seed": SEED, "bootstrap_replicates": REPLICATES,
+        "basis": "same_cutoff: every policy scored only on cutoffs where all four declared",
         "n_families": len(families),
         "by_reference": {},
     }

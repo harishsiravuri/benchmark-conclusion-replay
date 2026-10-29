@@ -1,6 +1,6 @@
-"""Replay certificate: the the upstream resource certificate schema extended for chronological replay.
+"""Replay certificate: the upstream certificate schema extended for chronological replay.
 
-One certificate is emitted per family, per cutoff, per policy. It reuses the the upstream resource
+One certificate is emitted per family, per cutoff, per policy. It reuses the upstream
 certificate fields (query, cell, per-facet relations, compatible and incompatible and missing
 dimensions, status, provenance-only flag) and adds the four fields the study protocol
 requires: the cutoff year, the policy, the evidence set size, and the transition status.
@@ -13,7 +13,7 @@ from __future__ import annotations
 
 CERTIFICATE_VERSION = "replay-1.0"
 
-# The must-agree facet set, that is the Q-official style constraint the the upstream resource clustering
+# The must-agree facet set, that is the Q-official style constraint the upstream clustering
 # already enforces.
 MUST_AGREE_FACETS = ["split", "metric_surface", "unit"]
 
