@@ -42,8 +42,10 @@ FAMILY = "pwc-dataset:pubmed|metric:accuracy"
 STATUS_SHORT = {
     "unresolved": "unresolved",
     "established": "established",
-    "superseded_same_protocol": "superseded\n(same protocol)",
-    "fragmented_by_protocol_drift": "fragmented\n(protocol drift)",
+    # Single words here. The prose names each status in full, and the parenthetical
+    # qualifiers made two adjacent labels wide enough to collide.
+    "superseded_same_protocol": "superseded",
+    "fragmented_by_protocol_drift": "fragmented",
     "weakened": "weakened",
     "remains_supported": "remains\nsupported",
     "conditionally_superseded": "conditionally\nsuperseded",
@@ -89,14 +91,17 @@ def build(certs, trans):
     ptrans = {t["from_cutoff"]: t for t in trans if t["policy"] == "protocol_partitioned"}
     years = sorted(part)
 
-    fig, (ax, bx) = plt.subplots(
-        2, 1, figsize=(9.0, 3.3), sharex=True,
-        gridspec_kw={"height_ratios": [2.35, 1.0], "hspace": 0.14},
+    # Three panels rather than two. The group count and the ungroupable share were
+    # drawn on twin axes of one panel, which asked the reader to track two scales and
+    # two colours at once. Each now has its own panel and its own axis.
+    fig, (ax, bx, cx) = plt.subplots(
+        3, 1, figsize=(9.0, 3.35), sharex=True,
+        gridspec_kw={"height_ratios": [2.1, 0.62, 0.62], "hspace": 0.17},
     )
 
     # ---- top: the two declared-conclusion tracks -------------------------------------
     y_naive, y_part = 1.0, 0.0
-    ax.set_ylim(-0.95, 1.60)
+    ax.set_ylim(-0.95, 1.95)
     ax.set_yticks([y_part, y_naive])
     ax.set_yticklabels(["checks\nconditions", "ignores\nconditions"], fontsize=10)
     ax.grid(axis="y", alpha=0)
@@ -125,12 +130,17 @@ def build(certs, trans):
                 label = short(win)
                 if val is not None:
                     label += f"\n{val:g}"
+                    # One value on this track is recorded on a 0 to 1 scale while the
+                    # rest are on 0 to 100. Naming the odd one, with a note for the
+                    # others, is the artefact the condition-blind rule walks into.
+                    if val <= 1.0:
+                        label += "\non a 0 to 1 scale"
                 off = 0.17 if track_y == y_naive else -0.17
                 va = "bottom" if track_y == y_naive else "top"
                 # the first cutoff sits on the axis edge, so its label is left-aligned
                 ha = "left" if yr == years[0] else "center"
                 ax.annotate(label, xy=(yr - (0.3 if ha == "left" else 0), track_y + off),
-                            ha=ha, va=va, fontsize=11.8, linespacing=1.05,
+                            ha=ha, va=va, fontsize=10.5, linespacing=1.05,
                             color=colour if win is not None else "#666666")
             prev = win
 
@@ -155,10 +165,18 @@ def build(certs, trans):
         label = STATUS_SHORT.get(status, status)
         if n > 1:
             label += f" ({n} steps)" if "\n" not in label else f"\n({n} steps)"
-        # two heights are still needed where a one-step run abuts a longer one
-        height = y_part + (0.13 if i % 2 == 0 else 0.44)
+        # Two heights are still needed where a one-step run abuts a longer one. A
+        # two-line label starts lower so that its top clears the other track.
+        if i % 2 == 0:
+            height = y_part + 0.12
+        else:
+            height = y_part + (0.44 if "\n" not in label else 0.28)
         ax.text((y0 + y1) / 2 + 0.5, height, label,
-                ha="center", va="bottom", fontsize=9.6, color=col, linespacing=1.05)
+                ha="center", va="bottom", fontsize=9.2, color=col, linespacing=1.02)
+
+    ax.text(years[-1] + 0.4, y_naive + 0.40, "other values\non a 0 to 100 scale",
+            ha="right", va="bottom", fontsize=9.0, color=OI["vermillion"],
+            alpha=0.9, linespacing=1.05)
 
     ax.set_title(
         "One family replayed: Pubmed, accuracy. The condition-blind track always names a winner; "
@@ -169,37 +187,37 @@ def build(certs, trans):
     n_sets = [part[y]["comparison_set"]["n_valid_sets"] for y in years]
     unknown = [part[y]["comparison_set"]["unknown_share"] for y in years]
 
-    bx.step(years, n_sets, where="mid", color=OI["purple"], lw=1.8,
-            label="valid comparison sets")
-    bx.set_ylabel("eligible groups", fontsize=9.5, color=OI["purple"])
-    bx.set_ylim(-0.25, max(n_sets) + 0.85)
+    bx.step(years, n_sets, where="mid", color=OI["purple"], lw=1.8)
+    bx.set_ylabel("eligible\ngroups", fontsize=9.5, color=OI["purple"],
+                  linespacing=0.95)
+    bx.set_ylim(-0.3, max(n_sets) + 0.5)
     bx.set_yticks(range(0, max(n_sets) + 1))
     bx.tick_params(axis="y", labelcolor=OI["purple"], labelsize=8)
 
-    cx = bx.twinx()
-    cx.plot(years, unknown, color=OI["orange"], lw=1.8, marker="o", ms=3.5,
-            label="unknown-comparability share")
-    cx.set_ylabel("ungroupable share", fontsize=9.5, color=OI["orange"])
+    cx.plot(years, unknown, color=OI["orange"], lw=1.8, marker="o", ms=3.5)
+    cx.set_ylabel("ungroupable\nshare", fontsize=9.5, color=OI["orange"],
+                  linespacing=0.95)
     cx.set_ylim(-0.05, 1.08)
+    cx.set_yticks([0.0, 0.5, 1.0])
     cx.tick_params(axis="y", labelcolor=OI["orange"], labelsize=8)
-    cx.spines["top"].set_visible(False)
-    cx.grid(False)
 
-    # mark the split that produces the fragmentation transition
+    # One numbered marker for the single event that drives the rest of the history,
+    # explained in the text rather than in a floating label on the figure.
     split_year = next((t["to_cutoff"] for t in trans
                        if t["policy"] == "protocol_partitioned"
                        and t["status"] == "fragmented_by_protocol_drift"), None)
     if split_year is not None:
-        for axis in (ax, bx):
-            axis.axvline(split_year, color=OI["purple"], lw=0.9, ls=":", alpha=0.8, zorder=0)
-        bx.annotate("a second group\nbecame eligible",
-                    xy=(split_year, max(n_sets)), xytext=(split_year - 3.6, max(n_sets) + 0.45),
-                    fontsize=8.6, color=OI["purple"],
-                    arrowprops=dict(arrowstyle="->", color=OI["purple"], lw=0.9))
+        for axis in (ax, bx, cx):
+            axis.axvline(split_year, color="#555555", lw=0.9, ls=":", alpha=0.85,
+                         zorder=0)
+        bx.annotate("1", xy=(split_year, max(n_sets) + 0.02), ha="center",
+                    va="center", fontsize=9, color="#333333", zorder=5,
+                    bbox=dict(boxstyle="circle,pad=0.2", fc="white", ec="#555555",
+                              lw=0.9))
 
-    bx.set_xlabel("cutoff year", fontsize=10)
-    bx.set_xticks(years)
-    bx.set_xticklabels([str(y) for y in years], fontsize=9.5)
+    cx.set_xlabel("cutoff year", fontsize=10)
+    cx.set_xticks(years)
+    cx.set_xticklabels([str(y) for y in years], fontsize=9.5)
     bx.set_xlim(years[0] - 0.7, years[-1] + 0.7)
 
     return fig
