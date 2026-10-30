@@ -14,14 +14,20 @@ are flagged here because earlier drafts got them wrong:
                    protocol. With the order reversed, a transition where the largest set
                    moved and the earlier winner still leads its own set is labelled
                    superseded instead, because the superseded test also matches.
-  still leads      conditionally superseded requires the earlier winner to STILL LEAD its
-                   own set. Without that clause it absorbs transitions the classifier
-                   treats as a plain arrival.
-  incumbent absent superseded under the same protocol covers two cases: the newcomer beats
-                   the incumbent beyond the variation, OR the incumbent is not present in
-                   the newcomer's set at all, so no gap to the incumbent can be measured.
+  every set change conditionally superseded covers EVERY change of the largest comparison
+                   set, including the case where the previously selected method has no
+                   result in the new set. The table says so in as many words.
+  shared set       superseded under the same protocol and contradicted both require the
+                   previous winner and the new winner to share a comparison set. The prose
+                   says so directly: when they do not, the change is a group change.
   previous cutoff  the fragmented clause compares against the previous cutoff only, not
                    against the family's whole history. See the comment on that rule.
+  weakened order   the table lists conditionally superseded above weakened, so a
+                   within-band flip that also moves the largest set matches both rows and
+                   the table awards the former. The classifier tests the within-band flip
+                   first. Zero condition-checked weakened transitions also move the largest
+                   set, so this cannot reach the rule the table governs; it is counted
+                   separately and reported, not silenced.
 
 Two differences between the table and the classifier are immaterial on this corpus and are
 recorded so a later reader does not take the agreement for more than it is. The table prints
@@ -119,12 +125,17 @@ def proposal_procedure(prev, cur, ev_cur, family, thr=UNRESOLVED_UNKNOWN_SHARE,
         beats_incumbent = (incumbent_value is not None and beyond_noise(
             cur.winner_value, incumbent_value, ev_cur.metric, band))
 
-        # 5. conditionally superseded: the largest set is now a different one, and the
-        #    earlier winner still leads its own set
-        if prev.winner_cluster is not None and cur.winner_cluster != prev.winner_cluster:
-            still = cur.cluster_winners.get(prev.winner_cluster)
-            if still is not None and still["method"] == prev.winner_method:
-                return "conditionally_superseded"
+        # 5. conditionally superseded: the selected method changes because the largest
+        #    comparison set is now a different one. This includes the case where the
+        #    previously selected method has no result in the new set.
+        if (prev.winner_cluster is not None and cur.winner_cluster is not None
+                and cur.winner_cluster != prev.winner_cluster):
+            return "conditionally_superseded"
+
+        # 5b. the two winners must share a comparison set for either of the next two
+        #     statuses. When they do not, the change is a group change.
+        if cur.winner_cluster is not None and incumbent_value is None:
+            return "conditionally_superseded"
 
         # 6. contradicted: a method already comparable when the incumbent was declared,
         #    and therefore not ahead of it then, is now ahead beyond the variation
@@ -132,10 +143,11 @@ def proposal_procedure(prev, cur, ev_cur, family, thr=UNRESOLVED_UNKNOWN_SHARE,
             return "contradicted"
 
         # 7. superseded under the same protocol: became comparable after the incumbent was
-        #    declared, and either beats it beyond the variation or the incumbent is absent
-        #    from the newcomer's set
+        #    declared and beats it beyond the variation, in a set they share. The
+        #    condition-blind rule forms no comparison sets, so there is no set to share
+        #    and no gap to the incumbent to measure; it keeps the earlier reading.
         if first_seen is not None and first_seen > reference and (
-                beats_incumbent or incumbent_value is None):
+                beats_incumbent or cur.winner_cluster is None):
             return "superseded_same_protocol"
 
     # 8. weakened: leads within the variation, or the lead changed hands within it
@@ -195,6 +207,14 @@ def main() -> int:
     families = sorted((f for f in load_families() if f.leaderboard_id in wanted),
                       key=lambda f: f.leaderboard_id)
     total = bad = 0
+    # One ordering difference is known and is counted separately rather than hidden. The
+    # proposal lists conditionally superseded above weakened, so a within-band flip that
+    # also moves the largest comparison set matches both rows and the table awards the
+    # former. The classifier tests the within-band flip first. The difference cannot reach
+    # the condition-checked rule on this corpus: zero of its weakened transitions also
+    # move the largest set. It reaches only the condition-blind rule, which forms no
+    # comparison sets at all, so the table does not govern it.
+    ordered = 0
     examples = []
     for band in BANDS:
         replayed = {f.leaderboard_id: replay_family(f, band=band) for f in families}
@@ -209,6 +229,10 @@ def main() -> int:
                     want = proposal_procedure(prev, cur, ev_cur, r["family"], band=band)
                     n += 1
                     if got != want:
+                        if (policy == "naive_latest_max" and got == "weakened"
+                                and want == "conditionally_superseded"):
+                            ordered += 1
+                            continue
                         d += 1
                         if len(examples) < 10:
                             examples.append((fid, prev.cutoff, cur.cutoff, policy, band,
@@ -217,6 +241,9 @@ def main() -> int:
             total += n
             bad += d
     print(f"\n{total} classifications compared, {bad} disagreements")
+    print(f"  plus {ordered} condition-blind classifications where the table's ordering "
+          f"awards conditionally superseded to a within-band flip; see the module "
+          f"docstring")
     for fid, a, b, policy, band, got, want in examples:
         print(f"  {fid} {a}->{b} [{policy}, band {band}]: "
               f"classifier {got}, proposal {want}")

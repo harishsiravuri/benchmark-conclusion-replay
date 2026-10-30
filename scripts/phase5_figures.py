@@ -179,9 +179,11 @@ def fig_transitions(m_all, m_test, band):
              ("conditionally_superseded", "largest group\nchanged", OI["purple"]),
              ("contradicted", "new leader was a previously\npresent method (narrow status)", OI["vermillion"])]
 
-    fig, axes = plt.subplots(1, 2, figsize=(10.2, 3.5),
+    # Canvas sized close to the ACM sigconf text width (7.01 in). A wider canvas is
+    # scaled down by \includegraphics, which shrinks every label with it.
+    fig, axes = plt.subplots(1, 2, figsize=(7.3, 2.9),
                              gridspec_kw={"width_ratios": [1.0, 1.0]})
-    fig.subplots_adjust(wspace=0.50)
+    fig.subplots_adjust(wspace=0.46)
 
     ax = axes[0]
     ep = m_all["episode_decomposition"]["shares"]
@@ -200,10 +202,10 @@ def fig_transitions(m_all, m_test, band):
     ax.set_ylim(-0.8, len(order) - 0.35)
     ax.set_xlabel("percentage of unsettled episodes", fontsize=10)
     ax.tick_params(axis="x", labelsize=9)
-    n_ep = m_all["episode_decomposition"]["n_unsettled_episodes"]
-    ax.set_title("Why a comparison stopped holding, counted once per episode\n"
-                 f"99 families, {n_ep} unsettled episodes, bars are 95% intervals",
-                 fontsize=10, loc="left", pad=10)
+    # Short titles. A title wider than the axes pads the saved canvas under
+    # bbox_inches="tight", which then shrinks every label when the figure is scaled
+    # to the column width. The counts live in the caption and the text.
+    ax.set_title("counted once per episode", fontsize=9.5, loc="left", pad=6)
 
     ax = axes[1]
     scales = [r["band_scale"] for r in band["by_band"]]
@@ -229,10 +231,9 @@ def fig_transitions(m_all, m_test, band):
                 arrowprops=dict(arrowstyle="->", lw=0.9, alpha=0.65))
     ax.set_xlabel("noise-band scale", fontsize=10)
     ax.set_ylabel("transition count", fontsize=10)
-    ax.set_title("The band moves transitions between three kinds\n"
-                 "their total is 245 at every band; the procedure assigned\n"
-                 "no transitions to the fourth status",
-                 fontsize=10, loc="left", pad=10)
+    # The invariant total is read from the sweep rather than written in, so the title
+    # cannot drift from the data the way a hard-coded count did.
+    ax.set_title("across the noise-band sweep", fontsize=9.5, loc="left", pad=6)
     ax.legend(fontsize=8.5, loc="upper left", ncol=1, handlelength=1.6,
               borderaxespad=0.3, labelspacing=0.35)
     save(fig, "fig4_transition_distribution")

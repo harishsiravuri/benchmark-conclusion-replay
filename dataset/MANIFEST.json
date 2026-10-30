@@ -1,44 +1,44 @@
 {
   "resource": "replaykg: chronological replay of protocol-qualified benchmark conclusions",
-  "version": "1.7",
-  "license": "CC-BY-SA 4.0, matching the upstream comparability resource it is derived from. Pointers only, no excerpt text.",
+  "version": "1.0",
+  "license": "CC-BY-SA 4.0, matching the Chapter 3 substrate it is derived from. Pointers only, no excerpt text.",
   "derived_from": {
-    "substrate": "upstream/data/cleaned_leaderboards/cleaned_leaderboards.jsonl",
+    "substrate": "paper3.2/data/cleaned_leaderboards/cleaned_leaderboards.jsonl",
     "substrate_sha256": "b2dd904793a6f5dac0815a2936553d67aac2005e2dbb1cdc735fd79073ef2472",
     "snapshot": "Papers-with-Code archive frozen 2025-07-28",
-    "extraction": "upstream/data/extractions/tuples.parquet (Phase 3 only)"
+    "extraction": "paper3.2/data/extractions/tuples.parquet (Phase 3 only)"
   },
   "evidence_policy": "POINTERS ONLY (arxiv_id, arxiv_abs_url, source_location); NO excerpt text. Enforced by a guard in scripts/phase5_release.py.",
   "seed": 13,
   "files": [
     {
       "path": "DATASHEET.md",
-      "sha256": "620230e3b90d8807d9a5bd29790b574e1865f1f8e75ffa19e85225d51691dd6e",
-      "size_bytes": 9736,
+      "sha256": "a48a5807141e6ea038566c04954a01958c6578d3f22a0e18c1cb80825719af94",
+      "size_bytes": 9429,
       "rows": 1
     },
     {
       "path": "REPRODUCE.md",
-      "sha256": "5d1c800e1fced055e95f9a7f139becefc69052b7b8c9e42f9ced46f54564787b",
-      "size_bytes": 7291,
+      "sha256": "d80ca17479f73e65c43f9ba84631f0f66a3daa8d0960a4222d6b873be8955f38",
+      "size_bytes": 5664,
       "rows": 1
     },
     {
       "path": "adjudication_sheet.json",
       "sha256": "5b3e9ae7b9808679314b224dc6746c03ec164a79f591b1a20963f2ed3120d626",
       "size_bytes": 46455,
-      "rows": 1
+      "rows": 47
     },
     {
       "path": "adjudication_verdicts.md",
-      "sha256": "30168543de765c3b4e79fc6cfef8657547d68c4351c3d99a92a34e1c5b60f0bf",
-      "size_bytes": 5566,
+      "sha256": "ef54256048d2da6e30fe97936f0f0ac8af01db9ccaca0252e98049b15e6a63e4",
+      "size_bytes": 5511,
       "rows": 1
     },
     {
       "path": "metrics/band_check_all.json",
-      "sha256": "d6e5cc065264902abd34d2a5b65094d41bb913d319c3aced52aa9dca8879d48b",
-      "size_bytes": 13884,
+      "sha256": "a3f565dab66494773d4db7896a1db9cc43b4bf9e9de4d30a5379e3cb9a2dcee7",
+      "size_bytes": 13885,
       "rows": 1
     },
     {
@@ -49,39 +49,27 @@
     },
     {
       "path": "metrics/gate0_grid.json",
-      "sha256": "ff3f8bf228fece5f22362d6f82511c045f7d31469536962a9e9516cf01c1ead7",
-      "size_bytes": 1676,
+      "sha256": "c2644864750d6ec2d3951f0dfe1ca2760a4db91b6de500f0d31970e371ba0843",
+      "size_bytes": 1642,
       "rows": 1
     },
     {
-      "path": "metrics/language_subset.json",
-      "rows": 1,
-      "sha256": "ae12d9317e58c51a88a849231800cd3f0f11bc245082d655cd170e10764d959a",
-      "size_bytes": 23915
-    },
-    {
       "path": "metrics/metrics_all.json",
-      "sha256": "034bdcb8682f0d3465dcc2bcebad36923b6f25f5a92844cea9bd524cf12102e8",
-      "size_bytes": 104410,
+      "sha256": "8970aae5e18ae138311f1c43947f536e75255b6411af9b473823c9a2a8e648fe",
+      "size_bytes": 104373,
       "rows": 1
     },
     {
       "path": "metrics/metrics_dev.json",
-      "sha256": "63966b9cbbecb3cd65761ca33ce16597508523c0104565f853a8b4156c5ebfe4",
-      "size_bytes": 98494,
+      "sha256": "9daa62f9a113ad27d2a435424ccf2e042b479c587aaaeaaeb067ee5285851d96",
+      "size_bytes": 103435,
       "rows": 1
     },
     {
       "path": "metrics/metrics_test.json",
-      "sha256": "a900b71b7d0d53c334fc01b787906badbb40e97be7fa91065d117fee1107f60d",
-      "size_bytes": 102262,
+      "sha256": "31010603e68cb1d82442b8cb6e4090bbd6938760d97bd8b466dc8bb0961528fc",
+      "size_bytes": 102071,
       "rows": 1
-    },
-    {
-      "path": "metrics/oracle_sensitivity.json",
-      "rows": 1,
-      "sha256": "e0191342a21d932ea038c9e1e82eda9ee7cc29f7f02a3a3c86d1e9d192a31e7a",
-      "size_bytes": 14671
     },
     {
       "path": "metrics/phase3_cost_projection.json",
@@ -103,14 +91,14 @@
     },
     {
       "path": "metrics/sensitivity_all.json",
-      "sha256": "7c80d25eb06a0cf4fa3c17e325a53c00443893884b9852ec901aca385697e49b",
-      "size_bytes": 43902,
+      "sha256": "0c5062ad9f0c59b01636f2fbb21937e903cd4c0ed768b47bd0497cb1faed0771",
+      "size_bytes": 43993,
       "rows": 1
     },
     {
       "path": "metrics/sensitivity_dev.json",
-      "sha256": "ff68ab91c1f7b1818cf6cc85ae25dda45887355837acb2149b4edd9cf04616ef",
-      "size_bytes": 30372,
+      "sha256": "5bb5bd8bb8b887f8612a4b9a1585bd53d6cf5b942e29a715d155c6c5b5ed0f33",
+      "size_bytes": 43908,
       "rows": 1
     },
     {
@@ -127,8 +115,8 @@
     },
     {
       "path": "replay_certificates.jsonl",
-      "sha256": "4fe29d13646ef47b3c7c559a5855d87f229dc9aa82251cd3933732d655644e88",
-      "size_bytes": 3513882,
+      "sha256": "0f237dd0a99929569f06f8eefab481c01765b3e6485daf22d65037637344666a",
+      "size_bytes": 3514872,
       "rows": 2580
     },
     {
@@ -145,8 +133,8 @@
     },
     {
       "path": "transitions.jsonl",
-      "sha256": "4c00e22a6fda43184a3b037377dea724d31b83b92c92902ae80c3674c3142f9a",
-      "size_bytes": 894313,
+      "sha256": "379af97e794d089559a84f13cbb89942e3f9764047115b608609c3a744d33b2d",
+      "size_bytes": 895303,
       "rows": 2184
     }
   ]

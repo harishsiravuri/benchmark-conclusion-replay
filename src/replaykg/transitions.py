@@ -1,11 +1,13 @@
 """Classification of cutoff-to-cutoff transitions in the declared conclusion.
 
-The seven statuses the study protocol fixes are:
+The seven statuses the chapter protocol fixes are:
 
   remains_supported            the declared winner stands and its lead is beyond the band;
-  superseded_same_protocol     a method not previously in the comparison set arrives and wins;
-  conditionally_superseded     the winner flips only because the principal partition changed,
-                               the earlier winner still leading within its own partition;
+  superseded_same_protocol     a method not previously in the comparison set arrives and wins,
+                               sharing a comparison set with the method it replaces;
+  conditionally_superseded     the selected method changes because the largest comparison
+                               set is now a different one, including the case where the
+                               previously selected method has no result in the new set;
   contradicted                 a within-protocol reversal beyond the band among methods that
                                were already in the comparison set;
   fragmented_by_protocol_drift the comparable partition splits and the argmax answer stops
@@ -161,17 +163,36 @@ def classify(prev: Conclusion, cur: Conclusion,
                 reason="the winner flipped but the new lead is inside the noise band",
                 **common)
 
-    #    5b. the flip is an artefact of which partition is principal.
-    if (prev.winner_cluster is not None and cur.winner_cluster != prev.winner_cluster):
+    #    5b. the largest comparison set is now a different one. The proposal routes every
+    #        such change here, including the case where the previously selected method has
+    #        no result in the new set, because the two winners never shared a set and the
+    #        change therefore says nothing about overtaking under matching conditions.
+    if (prev.winner_cluster is not None and cur.winner_cluster is not None
+            and cur.winner_cluster != prev.winner_cluster):
         still = cur.cluster_winners.get(prev.winner_cluster)
         if still is not None and still["method"] == prev.winner_method:
+            tail = "the earlier winner still leads its own partition"
+        else:
+            tail = "the earlier winner does not lead the set it was selected from"
+        return Transition(
+            status="conditionally_superseded",
+            reason=f"the principal partition moved from cluster {prev.winner_cluster} to "
+                   f"{cur.winner_cluster}; {tail}",
+            **common)
+
+    #    5c. arrival and reversal both require the two winners to share a comparison set.
+    #        Without a shared set there is no comparison between them to supersede.
+    if cur.winner_cluster is not None:
+        shared = best_value_for_method(
+            ev_cur.clusters.get(cur.winner_cluster, ()), prev.winner_method,
+            ev_cur.metric_direction)
+        if shared is None:
             return Transition(
                 status="conditionally_superseded",
-                reason=f"the principal partition moved from cluster {prev.winner_cluster} to "
-                       f"{cur.winner_cluster}; the earlier winner still leads its own partition",
-                **common)
+                reason=f"the previous winner has no result in cluster {cur.winner_cluster}, "
+                       f"so the two winners never shared a comparison set", **common)
 
-    #    5c. arrival versus reversal, measured against the cutoff at which the incumbent was
+    #    5d. arrival versus reversal, measured against the cutoff at which the incumbent was
     #        declared rather than against the previous cutoff, so a policy's declaration lag
     #        cannot turn an arrival into an apparent reversal.
     reference = prev.declared_since if prev.declared_since is not None else prev.cutoff
@@ -183,7 +204,7 @@ def classify(prev: Conclusion, cur: Conclusion,
                    f"so the change is a within-protocol reversal beyond the noise band",
             **common)
 
-    #    5d. otherwise a new method arrived and won within the same protocol.
+    #    5e. otherwise a new method arrived and won within the same comparison set.
     return Transition(
         status="superseded_same_protocol",
         reason=f"a method first comparable at cutoff {first_seen} arrived and won", **common)

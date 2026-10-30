@@ -95,7 +95,7 @@ def build(certs, trans):
     # drawn on twin axes of one panel, which asked the reader to track two scales and
     # two colours at once. Each now has its own panel and its own axis.
     fig, (ax, bx, cx) = plt.subplots(
-        3, 1, figsize=(9.0, 2.35), sharex=True,
+        3, 1, figsize=(7.6, 2.05), sharex=True,
         gridspec_kw={"height_ratios": [2.1, 0.62, 0.62], "hspace": 0.17},
     )
 

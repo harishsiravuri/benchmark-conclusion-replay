@@ -1,6 +1,6 @@
 # Datasheet: replaykg, a chronological replay of protocol-qualified benchmark conclusions
 
-Version 1.0. Licence CC-BY-SA 4.0, matching the upstream comparability resource this resource is derived
+Version 1.0. Licence CC-BY-SA 4.0, matching the Chapter 3 substrate this resource is derived
 from. Pointers only, no excerpt text. Seed 13 throughout.
 
 House style applies: no contractions, no em dashes, hedged claims, bootstrap 95 percent
@@ -22,7 +22,7 @@ whether the protocol qualifier travels with them.
 
 ### Who created it and who funded it?
 
-Created for this study of a solo-authored doctoral project on protocol-qualified scientific
+Created for Chapter 5 of a solo-authored doctoral dissertation on protocol-qualified scientific
 evidence. No external funding is associated with this resource.
 
 ## Composition
@@ -41,10 +41,7 @@ Four kinds of instance.
    per policy, carrying the ordered classifier's status and its stated reason.
 3. **Citation-propagation pairs**, 807 rows in `propagation_pairs.jsonl`, with the model
    readings joined in `propagation_llm.jsonl`. One row per (source reading, later quoting
-   reading) of the same canonical (method, dataset, metric) cell. Note that 611 rows in
-   `propagation_llm.jsonl` carry a `same_quantity.rationale` field. These are the model's own
-   paraphrased justifications, not quotations: they are machine-generated text, and they
-   contain no passage copied from a source paper. The pointers-only policy is unaffected.
+   reading) of the same canonical (method, dataset, metric) cell.
 4. **Supporting records**: the frozen family list, the split map, the manual adjudication
    sheet and its written verdicts, and every computed metrics checkpoint.
 
@@ -109,7 +106,7 @@ This is required by the substrate licence.
 
 ### How was the data acquired?
 
-It is derived, not collected. The replay is computed deterministically from the frozen Study
+It is derived, not collected. The replay is computed deterministically from the frozen Chapter
 3 cleaned-leaderboard resource, sha256
 `b2dd904793a6f5dac0815a2936553d67aac2005e2dbb1cdc735fd79073ef2472`, itself built from a
 Papers-with-Code archive snapshot frozen 2025-07-28. Publication years come from arXiv
@@ -132,9 +129,9 @@ No human subjects are involved, so no review was sought. The resource redistribu
 
 ### What preprocessing was done?
 
-Comparability partitioning is consumed frozen from the upstream resource and was not recomputed. The only
+Comparability partitioning is consumed frozen from Chapter 3 and was not recomputed. The only
 value normalisation applied is a deterministic percent-versus-fraction reconciliation. The
-noise model is the upstream preregistered model, imported rather than copied so that this
+noise model is the Chapter 3 preregistered model, imported rather than copied so that this
 resource cannot drift from the instrument it reuses.
 
 ### Is the raw data available?
@@ -177,7 +174,7 @@ protocol qualifier, and not about individual conduct.
 
 ## Distribution and maintenance
 
-Distributed with the project repository under CC-BY-SA 4.0, matching the substrate.
+Distributed with the dissertation repository under CC-BY-SA 4.0, matching the substrate.
 `MANIFEST.json` pins a sha256 for every file. The resource is a frozen snapshot tagged
 `v1.0-experiments` and is not intended to be updated in place; a changed substrate would be a
 new version. Errata will be recorded in the repository `REPORT.md` under Deviations.

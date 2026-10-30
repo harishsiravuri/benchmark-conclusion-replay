@@ -83,7 +83,10 @@ def main() -> int:
         "n_certificates": n_cert,
         "n_transitions": n_trans,
         "n_self_inconsistent_certificates": n_inconsistent,
-        "substrate": {"path": str(CLEANED_LEADERBOARDS), "sha256": digest},
+        # Name and digest only. An absolute path carries the machine account name
+        # into the released manifest.
+        "substrate": {"file": CLEANED_LEADERBOARDS.name,
+                      "from": "companion comparability resource", "sha256": digest},
         "family_content_hash_sha256": frozen["content_hash_sha256"],
         "policies": list(POLICIES),
         "policy_parameters": {

@@ -1,9 +1,16 @@
-# Tracking benchmark rankings with incomplete evaluation conditions
+# Chronological replay of benchmark leaderboards
 
-Code and released data for the paper "Tracking Benchmark Rankings with Incomplete
-Evaluation Conditions" by Harish Varma Siravuri and Hamed Alhoori, Northern
-Illinois University. This repository carries every artefact the paper's claims are
-traced to.
+<!-- ANONYMITY NOTE, review period only.
+     The paper title, author names and affiliation are withheld while the
+     associated manuscript is under double-blind review. The identified heading is
+     preserved at README_IDENTIFIED.md in the maintainers' working copy and is
+     restored here on acceptance or withdrawal. Do not re-add the title, the author
+     names or the affiliation to this file before then. -->
+
+Code and released data for a study that replays benchmark leaderboard conclusions
+through time. The associated manuscript is under double-blind review, so its title
+and authors are withheld here until the review period ends. This repository carries
+every artefact the study's claims are traced to.
 
 ## What this is
 

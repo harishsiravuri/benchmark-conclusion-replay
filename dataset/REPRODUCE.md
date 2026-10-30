@@ -9,11 +9,11 @@ phase that spends, and its calls are cached by sha256 of the full request, so a 
 
 | input | pin |
 |---|---|
-| `upstream/data/cleaned_leaderboards/cleaned_leaderboards.jsonl` | sha256 `b2dd904793a6f5dac0815a2936553d67aac2005e2dbb1cdc735fd79073ef2472`, verified at the start of every script |
-| `upstream/src/noise/model.py` | imported, not copied; sha256 recorded in every checkpoint |
-| `upstream/src/census/surface.py`, `upstream/src/judge/rules.py` | imported for the split and surface normalisers |
-| `upstream/data/extractions/tuples.parquet` | Phase 3 only |
-| frozen Papers-with-Code papers table | date robustness join only, via `upstream/data/manifests/pwc_papers-with-abstracts.manifest.json` |
+| `paper3.2/data/cleaned_leaderboards/cleaned_leaderboards.jsonl` | sha256 `b2dd904793a6f5dac0815a2936553d67aac2005e2dbb1cdc735fd79073ef2472`, verified at the start of every script |
+| `paper3.2/src/noise/model.py` | imported, not copied; sha256 recorded in every checkpoint |
+| `paper3.2/src/census/surface.py`, `paper3.2/src/judge/rules.py` | imported for the split and surface normalisers |
+| `paper3.2/data/extractions/tuples.parquet` | Phase 3 only |
+| frozen Papers-with-Code papers table | date robustness join only, via `paper3.2/data/manifests/pwc_papers-with-abstracts.manifest.json` |
 
 ## Environment
 
@@ -56,8 +56,6 @@ Phase 3 additionally needs `OPENROUTER_API_KEY` in `.env`. No other phase needs 
 | development and held-out split, seed 13 | `phase0_gate0.py` | `data/split_map.json` |
 | transition distribution and decomposition (section 4.1) | `phase2_metrics.py --split all` | `checkpoints/metrics_all.json` |
 | dual-oracle regret (section 4.2) and the caution negative (4.3) | `phase2_metrics.py --split all` | `checkpoints/metrics_all.json` |
-| hindsight-reference sweep, six definitions | `phase6_oracle_sensitivity.py` | `checkpoints/oracle_sensitivity.json` |
-| dataset-group subsets | `phase7_language_subset.py` | `checkpoints/language_subset.json` |
 | stability, drift, unknown mass (section 4.4) | `phase2_metrics.py --split all` | `checkpoints/metrics_all.json` |
 | seven-variant sensitivity (section 4.5) | `phase2_sensitivity.py --split all` | `checkpoints/sensitivity_all.json` |
 | noise-band sweep and the no-reversal gate (section 4.6) | `phase5_band_check.py` | `checkpoints/band_check_all.json` |
@@ -94,29 +92,3 @@ agent rather than an independent human coder, and it is labelled that way.
 
 The guard in `src/replaykg/common/costlog.py` refuses any non-cached call once cumulative
 spend reaches the sub-cap.
-
-## Two comparison bases for regret
-
-Regret is reported on two bases, and `phase2_metrics.py` writes both under
-`regret.by_oracle.<oracle>`:
-
-- `same_cutoff` restricts every policy to the cutoffs at which all four declared a
-  winner, so the per-policy means cover identical cutoffs. This is the basis the paper
-  leads with. Expect `paired_difference_vs_naive.protocol_partitioned` of
-  **-0.188 [-0.251, -0.128]** against the protocol-gated reference.
-- `own_cutoffs` averages each policy over its own declarations. Naive latest-max declares
-  at 48 cutoffs where no valid comparison set exists and the gated policies decline, and
-  those are the cutoffs on which it does worst, so this basis is permissive toward
-  gating. Expect **-0.260 [-0.320, -0.204]**.
-
-`regret.basis_diagnostic` quantifies the difference: 428 shared cutoffs against 48
-naive-only ones, in 25 of the 72 scored families, with naive regret 0.903 on the
-naive-only cutoffs against 0.350 on the shared ones.
-
-Against the ungated reference the two bases disagree in sign. On `same_cutoff` gating is
-worse than naive by +0.033 [+0.018, +0.050]; on `own_cutoffs` the difference is
-indistinguishable from zero. The ungated reference rewards naming the highest reported
-number, which is what gating refuses when that number is not comparable.
-
-`phase6_oracle_sensitivity.py` and `phase7_language_subset.py` use the `same_cutoff`
-basis throughout.

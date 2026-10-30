@@ -21,15 +21,15 @@ span in the sheet and the model caught it.
 Agreement is therefore 47 of 47, including the single positive case. The measured rate of
 0.019 [0.008, 0.032] for explicit split statement is consistent with what the spans contain.
 
-## Result 2: the upstream `split` field is a pipeline inference, not a reading of the span
+## Result 2: the Chapter 3 `split` field is a pipeline inference, not a reading of the span
 
 This is the consequential finding of the adjudication, and it changes how the deterministic
 census must be read.
 
-For the large majority of the forty-six spans with no stated split, the frozen the upstream resource
+For the large majority of the forty-six spans with no stated split, the frozen Chapter 3
 extraction nevertheless records `split = test`. Representative examples, quoted in full:
 
-| item | citing span | the upstream resource split |
+| item | citing span | Chapter 3 split |
 |---|---|---|
 | 171 | `90.02` | test |
 | 586 | `27.35` | test |
@@ -39,7 +39,7 @@ extraction nevertheless records `split = test`. Representative examples, quoted 
 
 A span reading `90.02` cannot support the reading `test`. The label must come from a table
 caption, from surrounding section context, or from a default applied when no split is
-observed. Nothing here is wrong with the upstream pipeline, whose split field was built for a
+observed. Nothing here is wrong with the Chapter 3 pipeline, whose split field was built for a
 different purpose, but it means the deterministic qualifier-preservation census in section 8.1
 measures the propagation of a **pipeline-assigned** split rather than of a **stated** one.
 
@@ -51,22 +51,22 @@ such pairs.
 
 ## Result 3: value extraction is ambiguous on multi-number table rows
 
-The model reads the same number as the upstream extraction on 0.763 [0.727, 0.796] of pairs.
+The model reads the same number as the Chapter 3 extraction on 0.763 [0.727, 0.796] of pairs.
 Adjudication shows the disagreements are concentrated where a span is a table row carrying many
 numbers and it is genuinely undecidable from the span alone which one belongs to the cell.
 
-- Item 690, `GCN | 86.10 | 86.50 | 78.70 | 85.80 | 71.60 | 74.60`. the upstream resource took 85.80, the
+- Item 690, `GCN | 86.10 | 86.50 | 78.70 | 85.80 | 71.60 | 74.60`. Chapter 3 took 85.80, the
   model took 86.10. Neither is demonstrably right from the span.
-- Item 409, `DLinear | 0.381 | 0.405 | 0.398 | 0.418 | 0.375 | 0.399`. the upstream resource records 0.331,
+- Item 409, `DLinear | 0.381 | 0.405 | 0.398 | 0.418 | 0.375 | 0.399`. Chapter 3 records 0.331,
   which does not appear in the span at all.
-- Item 386, `byte mLSTM ... | 86.8 | 90.6 | 94.7 | 88.8 | 90.4 | 91.7 | 54.6 | 92.2`. the upstream resource
+- Item 386, `byte mLSTM ... | 86.8 | 90.6 | 94.7 | 88.8 | 90.4 | 91.7 | 54.6 | 92.2`. Chapter 3
   took 94.7, the model took 92.2.
 
 The model returns a null value rather than guessing on several ambiguous rows, for example
 items 439, 593, and 428, which is the conservative behaviour the prompt asks for.
 
 Consequence, applied in the report: the copy-fidelity numbers carry an extraction-ambiguity
-floor and are reported as bounded rather than exact. No claim in the study rests on the raw
+floor and are reported as bounded rather than exact. No claim in the chapter rests on the raw
 copy-fidelity mismatch rate.
 
 ## Result 4: the same-quantity adjudicator behaves as intended

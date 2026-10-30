@@ -12,7 +12,7 @@ from replaykg.replay import (
     POLICIES, best_entry, conclude_naive, conclude_protocol_partitioned, cutoff_years,
     evidence_at, is_better, principal_cluster, replay_family,
 )
-from replaykg.substrate import Entry, Family, arxiv_year
+from replaykg.substrate import Entry, Family, arxiv_year, load_families
 from replaykg.transitions import STATUSES, family_transitions
 
 
@@ -246,6 +246,74 @@ def test_fragmented_by_protocol_drift():
     assert _statuses(entries) == ["fragmented_by_protocol_drift"]
 
 
+ABSENT_INCUMBENT_CASES = (
+    # family, from cutoff, to cutoff, previous winner, new winner
+    ("pwc-dataset:coco|metric:miou", 2023, 2024, "Mask2Former", "UniMatch V1"),
+    ("pwc-dataset:imagenet|metric:accuracy", 2021, 2022,
+     "ResNeXt-101 32x48d", "MAE-H + DAT"),
+)
+
+
+@pytest.mark.parametrize("fid,frm,to,prev_w,cur_w", ABSENT_INCUMBENT_CASES)
+def test_absent_incumbent_routes_to_conditionally_superseded(fid, frm, to, prev_w, cur_w):
+    """The two corpus transitions where the previous winner is absent from the new set.
+
+    The proposal's table sends every change of the largest comparison set to
+    conditionally superseded, naming this case in as many words. Before the routing was
+    aligned these two were labelled superseded under the same protocol, which asserts
+    overtaking between two methods that never shared a comparison set. Both also sit on
+    the two leaderboards that carry the pairwise reversals, so the label matters.
+    """
+    from replaykg.replay import best_value_for_method
+    fam = next(f for f in load_families() if f.leaderboard_id == fid)
+    replayed = replay_family(fam)
+    by_cutoff = {c.cutoff: c for c in replayed["conclusions"]["protocol_partitioned"]}
+    prev, cur = by_cutoff[frm], by_cutoff[to]
+    assert (prev.winner_method, cur.winner_method) == (prev_w, cur_w)
+    assert prev.winner_cluster != cur.winner_cluster
+    ev = replayed["evidence"][to]
+    # the premise of the case: the previous winner has no result in the new set
+    assert best_value_for_method(ev.clusters.get(cur.winner_cluster, ()),
+                                 prev.winner_method, ev.metric_direction) is None
+    got = next(t for t in family_transitions(replayed, "protocol_partitioned")
+               if t.from_cutoff == frm and t.to_cutoff == to)
+    assert got.status == "conditionally_superseded"
+
+
+def test_superseded_requires_a_shared_comparison_set():
+    """An arrival inside the incumbent's own set is still superseded under the protocol."""
+    entries = [
+        _entry("A", 80.0, 2018, 0, 0, P_TEST),
+        _entry("Z", 70.0, 2018, 0, 1, P_TEST),
+        _entry("B", 95.0, 2019, 0, 2, P_TEST),
+    ]
+    assert _statuses(entries) == ["superseded_same_protocol"]
+
+
+def test_corpus_routing_counts_match_the_proposal():
+    """Lock the four counts the routing change moves, on the 99 selected families."""
+    import collections, json
+    from replaykg.paths import SPLIT_MAP
+    wanted = set(json.loads(SPLIT_MAP.read_text(encoding="utf-8"))["assignment"])
+    counts = collections.Counter()
+    for fam in load_families():
+        if fam.leaderboard_id not in wanted:
+            continue
+        for t in family_transitions(replay_family(fam), "protocol_partitioned"):
+            counts[t.status] += 1
+    assert counts["superseded_same_protocol"] == 22
+    assert counts["conditionally_superseded"] == 5
+    assert counts["contradicted"] == 0
+    structural = sum(counts[k] for k in ("superseded_same_protocol",
+                                         "conditionally_superseded", "contradicted",
+                                         "fragmented_by_protocol_drift"))
+    attributable = counts["conditionally_superseded"] + counts["fragmented_by_protocol_drift"]
+    assert (structural, attributable) == (55, 33)
+    assert round(attributable / structural, 3) == 0.600
+    assert (counts["weakened"] + counts["remains_supported"]
+            + counts["superseded_same_protocol"]) == 243
+
+
 def test_every_status_is_declared_in_the_status_tuple():
     produced = set()
     for fn in (test_remains_supported, test_weakened_when_the_margin_falls_inside_the_band,
@@ -288,7 +356,7 @@ def test_certificate_withholds_a_conclusion_only_for_a_stated_cause():
 
     The two admissible causes are the absence of a valid comparison set, and an unknown
     metric direction. The second case is real in the corpus: one family per split reports a
-    metric whose direction the upstream resource could not determine.
+    metric whose direction the Chapter 3 resource could not determine.
     """
     from replaykg.certificate import build_replay_certificate, self_consistent
     from replaykg.replay import evidence_at

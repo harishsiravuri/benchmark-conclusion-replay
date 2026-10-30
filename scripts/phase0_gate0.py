@@ -51,7 +51,11 @@ def main() -> int:
 
     # --- Gate 0 -----------------------------------------------------------------------
     g0 = gate0(families)
-    g0["substrate"] = {"path": str(CLEANED_LEADERBOARDS), "sha256": digest}
+    # Record the file's name and digest, not its absolute path: an absolute path
+    # carries the machine account name into the released dataset.
+    g0["substrate"] = {"file": CLEANED_LEADERBOARDS.name,
+                       "from": "companion comparability resource",
+                       "sha256": digest}
     write_json(CHECKPOINTS / "gate0_grid.json", g0)
 
     qualifying = qualifying_families(families)
