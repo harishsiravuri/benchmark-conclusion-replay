@@ -95,7 +95,7 @@ def build(certs, trans):
     # drawn on twin axes of one panel, which asked the reader to track two scales and
     # two colours at once. Each now has its own panel and its own axis.
     fig, (ax, bx, cx) = plt.subplots(
-        3, 1, figsize=(9.0, 3.35), sharex=True,
+        3, 1, figsize=(9.0, 2.35), sharex=True,
         gridspec_kw={"height_ratios": [2.1, 0.62, 0.62], "hspace": 0.17},
     )
 
@@ -103,7 +103,7 @@ def build(certs, trans):
     y_naive, y_part = 1.0, 0.0
     ax.set_ylim(-0.95, 1.95)
     ax.set_yticks([y_part, y_naive])
-    ax.set_yticklabels(["checks\nconditions", "ignores\nconditions"], fontsize=10)
+    ax.set_yticklabels(["checks\nconditions", "ignores\nconditions"], fontsize=8.8)
     ax.grid(axis="y", alpha=0)
 
     # shade the stretch where the condition-checking rule has no eligible group
@@ -140,7 +140,7 @@ def build(certs, trans):
                 # the first cutoff sits on the axis edge, so its label is left-aligned
                 ha = "left" if yr == years[0] else "center"
                 ax.annotate(label, xy=(yr - (0.3 if ha == "left" else 0), track_y + off),
-                            ha=ha, va=va, fontsize=10.5, linespacing=1.05,
+                            ha=ha, va=va, fontsize=8.8, linespacing=1.05,
                             color=colour if win is not None else "#666666")
             prev = win
 
@@ -172,32 +172,33 @@ def build(certs, trans):
         else:
             height = y_part + (0.44 if "\n" not in label else 0.28)
         ax.text((y0 + y1) / 2 + 0.5, height, label,
-                ha="center", va="bottom", fontsize=9.2, color=col, linespacing=1.02)
+                ha="center", va="bottom", fontsize=8.2, color=col, linespacing=1.02)
 
     ax.text(years[-1] + 0.4, y_naive + 0.40, "other values\non a 0 to 100 scale",
-            ha="right", va="bottom", fontsize=9.0, color=OI["vermillion"],
+            ha="right", va="bottom", fontsize=8.0, color=OI["vermillion"],
             alpha=0.9, linespacing=1.05)
 
-    ax.set_title(
-        "One family replayed: Pubmed, accuracy. The condition-blind track always names a winner; "
-        "the condition-checking track names one only once a group of two or more exists.",
-        fontsize=10, loc="left")
+    # No title. It ran wider than the axes, and with bbox_inches="tight" that padded
+    # the saved canvas with empty space, which shrank the plot once the figure was
+    # scaled to the column width. The caption and the text carry the same sentence.
 
     # ---- bottom: what the partition is doing underneath ------------------------------
     n_sets = [part[y]["comparison_set"]["n_valid_sets"] for y in years]
     unknown = [part[y]["comparison_set"]["unknown_share"] for y in years]
 
     bx.step(years, n_sets, where="mid", color=OI["purple"], lw=1.8)
-    bx.set_ylabel("eligible\ngroups", fontsize=9.5, color=OI["purple"],
-                  linespacing=0.95)
-    bx.set_ylim(-0.3, max(n_sets) + 0.5)
+    # Horizontal labels inside each panel. Rotated two-line y-labels overlapped each
+    # other once the panels were made short.
+    bx.text(-0.048, 0.5, "eligible\ngroups", transform=bx.transAxes, ha="right",
+            va="center", fontsize=8.0, color=OI["purple"], linespacing=1.0)
+    bx.set_ylim(-0.3, max(n_sets) + 0.45)
     bx.set_yticks(range(0, max(n_sets) + 1))
     bx.tick_params(axis="y", labelcolor=OI["purple"], labelsize=8)
 
     cx.plot(years, unknown, color=OI["orange"], lw=1.8, marker="o", ms=3.5)
-    cx.set_ylabel("ungroupable\nshare", fontsize=9.5, color=OI["orange"],
-                  linespacing=0.95)
-    cx.set_ylim(-0.05, 1.08)
+    cx.text(-0.048, 0.5, "ungroupable\nshare", transform=cx.transAxes, ha="right",
+            va="center", fontsize=8.0, color=OI["orange"], linespacing=1.0)
+    cx.set_ylim(-0.08, 1.12)
     cx.set_yticks([0.0, 0.5, 1.0])
     cx.tick_params(axis="y", labelcolor=OI["orange"], labelsize=8)
 
@@ -215,9 +216,9 @@ def build(certs, trans):
                     bbox=dict(boxstyle="circle,pad=0.2", fc="white", ec="#555555",
                               lw=0.9))
 
-    cx.set_xlabel("cutoff year", fontsize=10)
+    cx.set_xlabel("cutoff year", fontsize=9)
     cx.set_xticks(years)
-    cx.set_xticklabels([str(y) for y in years], fontsize=9.5)
+    cx.set_xticklabels([str(y) for y in years], fontsize=8.5)
     bx.set_xlim(years[0] - 0.7, years[-1] + 0.7)
 
     return fig
